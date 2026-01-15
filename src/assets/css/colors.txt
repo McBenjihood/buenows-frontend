@@ -1,0 +1,2 @@
+Primary: rgb(23, 23, 23);
+Secondary: rgb(49, 46, 58)

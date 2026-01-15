@@ -1,22 +1,70 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import homeIcon from '@/assets/img/icons/navbar/home.svg'
+import aboutIcon from '@/assets/img/icons/navbar/about_us.svg'
+import contactIcon from '@/assets/img/icons/navbar/contact.svg'
+</script>
 
 <template>
   <ul class="navbar">
-    <li><router-link to="/">Home</router-link></li>
-    <li><router-link to="/about">About</router-link></li>
-    <li><router-link to="/contact">Contact</router-link></li>
+    <li>
+      <router-link to="/">
+        <img :src="homeIcon" alt="Home" class="nav-icon" />
+        <span>Home</span>
+      </router-link>
+    </li>
+    <li>
+      <router-link to="/about">
+        <img :src="aboutIcon" alt="About" class="nav-icon" />
+        <span>About</span>
+      </router-link>
+    </li>
+    <li>
+      <router-link to="/contact">
+        <img :src="contactIcon" alt="Contact" class="nav-icon" />
+        <span>Contact</span>
+      </router-link>
+    </li>
   </ul>
 </template>
 
 <style scoped>
 .navbar {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
   display: flex;
-  justify-content: space-around;
-  background-color: lightgray;
+  align-items: center;
+  gap: 2em;
+}
+
+.navbar li a {
+  text-decoration: none;
+  color: #e1e1e1;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 0.75em 1.5em;
+  border-radius: 0.5em;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.nav-icon {
+  height: 1.2em;
+  width: auto;
+  display: block;
+}
+
+.navbar li a:hover {
+  background-color: rgb(49, 46, 58);
   color: white;
-  padding: 10px;
+}
+
+.router-link-active {
+  color: #42b883 !important;
 }
 </style>

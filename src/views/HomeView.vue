@@ -1,12 +1,10 @@
 <script setup lang="ts">
 
+import Overview from '@/components/App/HomeView/Overview.vue'
 </script>
 
 <template>
-  <div class="titleDiv">
-    <h1>Grossartige Websiten,</h1>
-    <h1>noch grossartigere Preise</h1>
-  </div>
+  <Overview/>
 </template>
 
 <style scoped></style>
