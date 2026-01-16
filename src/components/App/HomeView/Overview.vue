@@ -48,13 +48,23 @@ const technologies = [
     <div class="solutionsDiv">
       <div class="solutions-block">
         <h1>Dienstleistungen</h1>
-        <div class="solutions-content">
-          <h3>Full-Stack Entwicklung</h3>
-          <p>
-            Wir bauen keine leeren Fassaden. Wir liefern vollwertige Webanwendungen inklusive
-            leistungsstarkem Backend. Ob Datenbank-Anbindungen, Benutzer-Logins oder komplexe
-            Verwaltungs-Tools – wir programmieren die komplette Logik, die Ihr Unternehmen benötigt.
-          </p>
+        <div class="solutions-grid">
+          <div class="solutions-content">
+            <h3>Full-Stack Entwicklung</h3>
+            <p>
+              Wir bauen keine leeren Fassaden. Wir liefern vollwertige Webanwendungen inklusive
+              leistungsstarkem Backend. Ob Datenbank-Anbindungen, Benutzer-Logins oder komplexe
+              Verwaltungs-Tools – wir programmieren die komplette Logik, die Ihr Unternehmen
+              benötigt.
+            </p>
+          </div>
+          <div class="solutions-content">
+            <h3>Professionelles Cloud-Hosting</h3>
+            <p>
+              Wir bieten professionelles Cloud-Hosting mit hoher Verfügbarkeit und Sicherheit.
+              Unsere Plattformen sind skalierbar und können auf Anforderungen und Bedarf anpassen.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -70,8 +80,20 @@ const technologies = [
     </div>
   </div>
 </template>
-
 <style scoped>
+.solutions-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 3rem;
+  text-align: center;
+}
+
+.solutions-content {
+  flex: 1;
+}
+
 .container {
   background-color: #1a1a1a;
   color: #ffffff;
@@ -127,14 +149,14 @@ const technologies = [
   padding: 4rem;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  max-width: 800px;
+  max-width: 1100px;
   width: 100%;
-  text-align: center;
 }
 
 .solutions-block h1 {
+  text-align: center;
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   font-weight: 700;
 }
 
@@ -206,6 +228,11 @@ const technologies = [
 }
 
 @media (max-width: 768px) {
+  .solutions-grid {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
   .infoDiv {
     flex-direction: column;
   }
