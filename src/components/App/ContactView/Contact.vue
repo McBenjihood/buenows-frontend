@@ -1,4 +1,22 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import { ref } from 'vue'
+
+const url = "localhost:8080/api/user"
+
+const email = ref("");
+const title = ref("");
+const message = ref("");
+
+async function submitForm(){
+  try{
+    const response = await fetch(url + "")
+  }catch (error) {
+    
+  }
+}
+
+</script>
 
 <template>
   <div class="container">
@@ -57,12 +75,12 @@
         <form class="contact-form" @submit.prevent>
           <div class="form-group">
             <label for="email">E-Mail</label>
-            <input type="email" id="email" placeholder="ihre@mail.de" required />
+            <input v-model="email" type="email" id="email" placeholder="ihre@mail.de" required />
           </div>
 
           <div class="form-group">
             <label for="anliegen">Anliegen</label>
-            <input type="text" id="anliegen" placeholder="Zusammenarbeit, Support, etc." required />
+            <input v-model="title" type="text" id="anliegen" placeholder="Zusammenarbeit, Support, etc." required />
           </div>
 
           <div class="form-group">
@@ -71,10 +89,12 @@
               id="beschreibung"
               rows="4"
               placeholder="Beschreiben Sie Ihr Anliegen..."
+              v-model="message"
+
             ></textarea>
           </div>
 
-          <button type="submit" class="submit-btn">Nachricht senden</button>
+          <button @click="submitForm" class="submit-btn">Nachricht senden</button>
         </form>
       </div>
     </div>
