@@ -2,6 +2,7 @@
 import homeIcon from '@/assets/img/icons/navbar/home.svg'
 import aboutIcon from '@/assets/img/icons/navbar/about_us.svg'
 import contactIcon from '@/assets/img/icons/navbar/contact.svg'
+import accountIcon from '@/assets/img/icons/navbar/account_circle.svg'
 </script>
 
 <template>
@@ -24,6 +25,12 @@ import contactIcon from '@/assets/img/icons/navbar/contact.svg'
         <span>Contact</span>
       </router-link>
     </li>
+    <li>
+      <router-link to="/account/login">
+        <img :src="accountIcon" alt="Account" class="nav-icon" />
+        <span>Account</span>
+      </router-link>
+    </li>
   </ul>
 </template>
 
@@ -34,7 +41,7 @@ import contactIcon from '@/assets/img/icons/navbar/contact.svg'
   padding: 0;
   display: flex;
   align-items: center;
-  gap: 2em;
+  gap: 0.5em;
 }
 
 .navbar li a {
@@ -42,7 +49,7 @@ import contactIcon from '@/assets/img/icons/navbar/contact.svg'
   color: #e1e1e1;
   font-size: 1.25rem;
   font-weight: 500;
-  padding: 0.75em 1.5em;
+  padding: 0.75em 0.75em;
   border-radius: 0.5em;
   transition:
     background-color 0.2s ease,
