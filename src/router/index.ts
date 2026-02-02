@@ -26,12 +26,14 @@ const router = createRouter({
         {
           path: '/account/login',
           name: 'Login',
-          component: () => import('/src/views/AccountView/LoginView.vue')
+          component: () => import('@/components/App/AccountView/CredentialView.vue'),
+          meta: {title: 'Welcome back ...', button_text:'Sign In', info_text: "Don't have an Account?", action_string: 'register', action_button: 'Create one'}
         },
         {
           path: '/account/register',
           name: 'Register',
-          component: () => import('/src/views/AccountView/RegisterView.vue')
+          component: () => import('@/components/App/AccountView/CredentialView.vue'),
+          meta: {title: 'Welcome back to BuenoWS', button_text:'Register', info_text: "Already have an Account?", action_string: 'login', action_button: 'Sign In'}
         }
       ]
     }

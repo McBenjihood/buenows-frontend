@@ -1,0 +1,215 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute();
+
+const dynRoute = computed(() => "/account/" + route.meta.action_string);
+</script>
+<template>
+  <div class="container">
+    <div class="login-wrapper">
+      <div class="solutions-block">
+        <h1>{{$route.meta.title}}</h1>
+
+        <form class="contact-form" @submit.prevent="handleLogin">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+              <img src="@/assets/img/icons/account/login/email.svg" class="input-icon" alt="Email" />
+              <input
+                type="email"
+                id="email"
+                v-model="email"
+                placeholder="name@company.com"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="password">Password</label>
+              <a href="#" class="sub-text contact-link-small">Forgot password?</a>
+            </div>
+            <div class="input-wrapper">
+              <img src="@/assets/img/icons/account/login/key_vertical.svg" class="input-icon" alt="Password" />
+              <input
+                type="password"
+                id="password"
+                v-model="password"
+                placeholder="••••••••"
+                required
+              >
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            {{$route.meta.button_text}}
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          <p class="sub-text">
+            {{$route.meta.info_text}}
+            <router-link :to="dynRoute" class="contact-link">{{$route.meta.action_button}}</router-link>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+<style scoped>
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.85rem;
+  height: 1.2rem;
+  width: auto;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.container {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: 'Google Sans', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.5em;
+  min-height: 100%;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 1em;
+}
+
+.solutions-block {
+  background-color: #252525;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 450px;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.form-group label {
+  color: #42b883;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.form-group input {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 0.8rem 1rem 0.8rem 2.8rem;
+  color: white;
+  font-family: inherit;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #42b883;
+}
+
+.submit-btn {
+  background-color: #42b883;
+  color: #1a1a1a;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background-color: #33a06f;
+  transform: translateY(-2px);
+}
+
+.auth-footer {
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.contact-link {
+  color: #42b883;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: #33a06f;
+}
+
+.contact-link-small {
+  font-size: 0.85rem;
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-link-small:hover {
+  color: #42b883;
+}
+
+.sub-text {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .solutions-block {
+    padding: 2rem;
+    max-width: 100%;
+  }
+}
+</style>
