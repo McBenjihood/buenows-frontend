@@ -1,29 +1,116 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-const route = useRoute();
+type AuthResponse = {
+  token?: string
+  accessToken?: string
+  jwt?: string
+  message?: string
+}
 
-const dynRoute = computed(() => "/account/" + route.meta.action_string);
+const route = useRoute()
+const router = useRouter()
+
+const email = ref('')
+const password = ref('')
+const errorMsg = ref<string | null>(null)
+const isLoading = ref(false)
+
+const isLoginPage = computed(() => route.path === '/account/login')
+const switchRoute = computed(() => `/account/${String(route.meta.action_string || 'login')}`)
+
+function getApiBaseUrl(): string {
+  const base = import.meta.env.VITE_API_BASE_URL
+  return typeof base === 'string' ? base.replace(/\/+$/, '') : ''
+}
+
+function extractToken(data: AuthResponse): string | null {
+  return data.token || data.accessToken || data.jwt || null
+}
+
+function saveToken(token: string) {
+  localStorage.setItem('auth_token', token)
+}
+
+async function postAuth(endpoint: 'login' | 'register') {
+  const apiBase = getApiBaseUrl()
+  if (!apiBase) {
+    throw new Error('VITE_API_BASE_URL fehlt. Bitte .env prüfen und Server neu starten.')
+  }
+
+  const res = await fetch(`${apiBase}/api/user/${endpoint}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email.value.trim(),
+      password: password.value,
+    }),
+  })
+
+  const data: AuthResponse = await res.json().catch(() => ({}))
+
+  if (!res.ok) {
+    throw new Error(data.message || 'Login/Register fehlgeschlagen')
+  }
+
+  return data
+}
+
+async function handleSubmit() {
+  errorMsg.value = null
+  isLoading.value = true
+
+  try {
+    const endpoint: 'login' | 'register' = isLoginPage.value ? 'login' : 'register'
+    const data = await postAuth(endpoint)
+
+    const token = extractToken(data)
+    if (token) saveToken(token)
+
+    if (endpoint === 'login') {
+      await router.push('/')
+    } else {
+      await router.push('/account/login')
+    }
+  } catch (e) {
+    errorMsg.value = e instanceof Error ? e.message : 'Unbekannter Fehler'
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
+
 <template>
   <div class="container">
     <div class="login-wrapper">
       <div class="solutions-block">
-        <h1>{{$route.meta.title}}</h1>
+        <h1>{{ $route.meta.title }}</h1>
 
-        <form class="contact-form" @submit.prevent="handleLogin">
+        <p
+          v-if="errorMsg"
+          style="color:#ff6b6b; margin-bottom: 1rem; text-align:center;"
+        >
+          {{ errorMsg }}
+        </p>
+
+        <form class="contact-form" @submit.prevent="handleSubmit">
           <div class="form-group">
             <label for="email">Email Address</label>
             <div class="input-wrapper">
-              <img src="@/assets/img/icons/account/login/email.svg" class="input-icon" alt="Email" />
+              <img
+                src="@/assets/img/icons/account/login/email.svg"
+                class="input-icon"
+                alt="Email"
+              />
               <input
+                v-model.trim="email"
                 type="email"
                 id="email"
-                v-model="email"
                 placeholder="name@company.com"
+                autocomplete="email"
                 required
-              >
+              />
             </div>
           </div>
 
@@ -33,31 +120,37 @@ const dynRoute = computed(() => "/account/" + route.meta.action_string);
               <a href="#" class="sub-text contact-link-small">Forgot password?</a>
             </div>
             <div class="input-wrapper">
-              <img src="@/assets/img/icons/account/login/key_vertical.svg" class="input-icon" alt="Password" />
+              <img
+                src="@/assets/img/icons/account/login/key_vertical.svg"
+                class="input-icon"
+                alt="Password"
+              />
               <input
+                v-model="password"
                 type="password"
                 id="password"
-                v-model="password"
                 placeholder="••••••••"
+                autocomplete="current-password"
                 required
-              >
+              />
             </div>
           </div>
 
-          <button type="submit" class="submit-btn">
-            {{$route.meta.button_text}}
+          <button type="submit" class="submit-btn" :disabled="isLoading">
+            {{ isLoading ? 'Loading...' : $route.meta.button_text }}
           </button>
         </form>
 
         <div class="auth-footer">
           <p class="sub-text">
-            {{$route.meta.info_text}}
-            <router-link :to="dynRoute" class="contact-link">{{$route.meta.action_button}}</router-link>
+            {{ $route.meta.info_text }}
+            <router-link :to="switchRoute" class="contact-link">
+              {{ $route.meta.action_button }}
+            </router-link>
           </p>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <style scoped>
@@ -164,7 +257,9 @@ h1 {
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
   margin-top: 0.5rem;
   width: 100%;
 }

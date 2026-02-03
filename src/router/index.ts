@@ -6,37 +6,50 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: () => import('/src/views/HomeView.vue')
+      component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/about',
       name: 'About',
-      component: () => import('/src/views/AboutView.vue')
+      component: () => import('@/views/AboutView.vue')
     },
     {
       path: '/contact',
       name: 'Contact',
-      component: () => import('/src/views/ContactView.vue')
+      component: () => import('@/views/ContactView.vue')
     },
     {
       path: '/account',
       name: 'Account',
-      component: () => import('/src/views/AccountView.vue'),
+      component: () => import('@/views/AccountView.vue'),
+      redirect: '/account/login',
       children: [
         {
-          path: '/account/login',
+          path: 'login',
           name: 'Login',
           component: () => import('@/components/App/AccountView/CredentialView.vue'),
-          meta: {title: 'Welcome back ...', button_text:'Sign In', info_text: "Don't have an Account?", action_string: 'register', action_button: 'Create one'}
+          meta: {
+            title: 'Welcome back ...',
+            button_text: 'Sign In',
+            info_text: "Don't have an Account?",
+            action_string: 'register',
+            action_button: 'Create one',
+          },
         },
         {
-          path: '/account/register',
+          path: 'register',
           name: 'Register',
           component: () => import('@/components/App/AccountView/CredentialView.vue'),
-          meta: {title: 'Welcome back to BuenoWS', button_text:'Register', info_text: "Already have an Account?", action_string: 'login', action_button: 'Sign In'}
-        }
-      ]
-    }
+          meta: {
+            title: 'Welcome back to BuenoWS',
+            button_text: 'Register',
+            info_text: 'Already have an Account?',
+            action_string: 'login',
+            action_button: 'Sign In',
+          },
+        },
+      ],
+    },
   ],
 })
 
