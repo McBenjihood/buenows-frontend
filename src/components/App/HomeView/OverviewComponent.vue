@@ -80,6 +80,7 @@ const technologies = [
     </div>
   </div>
 </template>
+
 <style scoped>
 .solutions-grid {
   display: flex;

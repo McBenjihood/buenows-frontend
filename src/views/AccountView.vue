@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<router-view :key="$route.fullPath" class="account-view"/>
+  <router-view :key="$route.fullPath" class="account-view"/>
 </template>
 
 <style scoped>

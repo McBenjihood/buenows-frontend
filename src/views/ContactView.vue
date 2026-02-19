@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Contact from '@/components/App/ContactView/Contact.vue'
+import ContactComponent from '@/components/App/ContactView/ContactComponent.vue'
 </script>
 
 <template>
-<Contact />
+<ContactComponent />
 </template>
 
 <style scoped></style>

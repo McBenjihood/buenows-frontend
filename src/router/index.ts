@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { authStore } from '@/assets/ts/auth.ts'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +16,7 @@ const router = createRouter({
     },
     {
       path: '/contact',
-      name: 'Contact',
+      name: 'ContactComponent',
       component: () => import('@/views/ContactView.vue')
     },
     {
@@ -27,7 +28,7 @@ const router = createRouter({
         {
           path: 'login',
           name: 'Login',
-          component: () => import('@/components/App/AccountView/CredentialView.vue'),
+          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
           meta: {
             title: 'Welcome back ...',
             button_text: 'Sign In',
@@ -39,7 +40,7 @@ const router = createRouter({
         {
           path: 'register',
           name: 'Register',
-          component: () => import('@/components/App/AccountView/CredentialView.vue'),
+          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
           meta: {
             title: 'Welcome back to BuenoWS',
             button_text: 'Register',
@@ -47,10 +48,18 @@ const router = createRouter({
             action_string: 'login',
             action_button: 'Sign In',
           },
-        },
+        }
       ],
     },
   ],
+})
+
+router.beforeEach((to) => {
+  if (to.path.includes('/account')) {
+    if (authStore.isAuthenticated) {
+      return {name: 'Login'}
+    }
+  }
 })
 
 export default router

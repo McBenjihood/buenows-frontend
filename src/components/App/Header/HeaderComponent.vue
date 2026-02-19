@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import NavBar from '@/components/App/Header/NavBar.vue'
-import Logo from '@/components/App/Header/Logo.vue'
+import NavBarComponent from '@/components/App/Header/NavBarComponent.vue'
+import LogoComponent from '@/components/App/Header/LogoComponent.vue'
 </script>
 
 <template>
   <header class="header">
-    <Logo />
-    <nav-bar />
+    <LogoComponent />
+    <nav-bar-component />
   </header>
 </template>
 

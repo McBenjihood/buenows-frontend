@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import Header from '@/components/App/Header/Header.vue'
-import Footer from '@/components/App/Footer/Footer.vue'
+import HeaderComponent from '@/components/App/Header/HeaderComponent.vue'
+import FooterComponent from '@/components/App/Footer/FooterComponent.vue'
 </script>
 
 <template>
   <div class="app-wrapper">
-    <Header />
+    <HeaderComponent />
 
     <main class="content">
       <router-view />
     </main>
 
-    <Footer />
+    <FooterComponent />
   </div>
 </template>
 
