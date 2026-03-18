@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { authStore } from '@/assets/ts/auth.ts'
+import api from '@/services/api'
 
 const route = useRoute()
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -12,10 +14,46 @@ const isLoading = ref(false)
 
 const switchRoute = computed(() => `/account/${String(route.meta.action_string)}`)
 
-function handleSubmit() {
+async function handleSubmit() {
+  if (!email.value || !password.value) {
+    errorMsg.value = 'Please enter email and password.'
+    return
+  }
 
+  isLoading.value = true
+  errorMsg.value = null
+
+  const isLogin = route.path.includes('login')
+  const endpoint = isLogin ? '/api/user/auth/login' : '/api/user/auth/register'
+
+  try {
+    const response = await api.post(endpoint, {
+      email: email.value,
+      password: password.value,
+    })
+
+    const apiResponse = response.data
+    const loginData = apiResponse.data
+
+    if (isLogin) {
+      if (loginData && loginData.JWTToken) {
+        authStore.setAuthenticated(true, loginData.JWTToken)
+        console.log('Login success:', apiResponse.message)
+        router.push('/')
+      } else {
+        errorMsg.value = 'Login failed: No JWTToken received from server.'
+      }
+    } else {
+      alert('Registration successful! Please login.')
+      router.push('/account/login')
+    }
+  } catch (error: any) {
+    console.error('API Error:', error)
+    errorMsg.value = error.response?.data?.message || 'Connection to server failed.'
+  } finally {
+    isLoading.value = false
+  }
 }
-
 </script>
 
 <template>
@@ -28,7 +66,7 @@ function handleSubmit() {
           {{ errorMsg }}
         </p>
 
-        <form class="contact-form" @submit.prevent="">
+        <form class="contact-form" @submit.prevent="handleSubmit">
           <div class="form-group">
             <label for="email">Email Address</label>
             <div class="input-wrapper">
