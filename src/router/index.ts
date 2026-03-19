@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { authStore } from '@/assets/ts/auth.ts'
-
+import { authStore } from '../assets/ts/auth'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,15 +19,14 @@ const router = createRouter({
       component: () => import('@/views/ContactView.vue')
     },
     {
-      path: '/account',
-      name: 'Account',
-      component: () => import('@/views/AccountView.vue'),
-      redirect: '/account/login',
+      path: '/auth',
+      name: 'Auth',
+      component: () => import('@/views/AuthView.vue'),
       children: [
         {
           path: 'login',
           name: 'Login',
-          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
+          component: () => import('@/components/App/AuthView/CredentialComponent.vue'),
           meta: {
             title: 'Welcome back ...',
             button_text: 'Sign In',
@@ -40,7 +38,7 @@ const router = createRouter({
         {
           path: 'register',
           name: 'Register',
-          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
+          component: () => import('@/components/App/AuthView/CredentialComponent.vue'),
           meta: {
             title: 'Welcome back to BuenoWS',
             button_text: 'Register',
@@ -51,13 +49,18 @@ const router = createRouter({
         }
       ],
     },
+    {
+      path: '/account',
+      name: 'Account',
+      component: () => '@/views/AccountView.vue'
+    }
   ],
 })
 
 router.beforeEach((to) => {
-  if (to.path.includes('/account')) {
-    if (authStore.isAuthenticated) {
-      return {name: 'Login'}
+  if (to.path.startsWith('/account')) {
+    if (!authStore.isAuthenticated) {
+      return { name: 'Login' }
     }
   }
 })

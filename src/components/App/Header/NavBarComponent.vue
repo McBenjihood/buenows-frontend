@@ -3,6 +3,8 @@ import homeIcon from '@/assets/img/icons/navbar/home.svg'
 import aboutIcon from '@/assets/img/icons/navbar/about_us.svg'
 import contactIcon from '@/assets/img/icons/navbar/contact.svg'
 import accountIcon from '@/assets/img/icons/navbar/account_circle.svg'
+import {authStore} from '@/assets/ts/auth'
+
 </script>
 
 <template>
@@ -25,12 +27,18 @@ import accountIcon from '@/assets/img/icons/navbar/account_circle.svg'
         <span>Contact</span>
       </router-link>
     </li>
-    <li>
-      <router-link to="/account/login">
+    <li v-if="!authStore.isAuthenticated">
+      <router-link to="/auth/login">
         <img :src="accountIcon" alt="Account" class="nav-icon" />
         <span>Account</span>
       </router-link>
-    </li>
+    </li >
+    <li v-else>
+      <router-link to="/account">
+        <img :src="accountIcon" alt="Account" class="nav-icon" />
+        <span>Personal Area</span>
+      </router-link>
+    </li >
   </ul>
 </template>
 

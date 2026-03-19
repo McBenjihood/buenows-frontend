@@ -12,7 +12,7 @@ const password = ref('')
 const errorMsg = ref<string | null>(null)
 const isLoading = ref(false)
 
-const switchRoute = computed(() => `/account/${String(route.meta.action_string)}`)
+const switchRoute = computed(() => `/auth/${String(route.meta.action_string)}`)
 
 async function handleSubmit() {
   if (!email.value || !password.value) {
@@ -45,7 +45,7 @@ async function handleSubmit() {
       }
     } else {
       alert('Registration successful! Please login.')
-      router.push('/account/login')
+      router.push('/auth/login')
     }
   } catch (error: any) {
     console.error('API Error:', error)

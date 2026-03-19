@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import HeaderComponent from '@/components/App/Header/HeaderComponent.vue'
 import FooterComponent from '@/components/App/Footer/FooterComponent.vue'
+
+import { authStore } from '@/assets/ts/auth'
+
+authStore.initialize()
+
 </script>
 
 <template>
