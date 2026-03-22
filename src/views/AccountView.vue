@@ -1,21 +1,43 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
+import { getCurrentUser } from '@/services/api.ts'
 
 const router = useRouter()
+
+const isLoading = ref(true)
+const errorMsg = ref('')
+
+const userProfile = ref<{
+  id: string
+  email: string
+  authorities: string[]
+} | null>(null)
 
 async function handleLogout() {
   authStore.logout()
   await router.push('/auth/login')
 }
 
-const services = [
-  'Webseiten erstellen',
-  'Webseiten erneuern',
-  'Backend Entwicklung',
-  'Automatische E-Mail Antworten',
-  'AI Telefon Assistent',
-]
+async function loadCurrentUser() {
+  isLoading.value = true
+  errorMsg.value = ''
+
+  try {
+    const response = await getCurrentUser()
+    userProfile.value = response.data
+  } catch (error: any) {
+    console.error('Error loading current user:', error)
+    errorMsg.value = error.response?.data?.message || 'Benutzerdaten konnten nicht geladen werden.'
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(() => {
+  loadCurrentUser()
+})
 </script>
 
 <template>
@@ -26,7 +48,17 @@ const services = [
         <p class="subtitle">Willkommen in Ihrem persönlichen Bereich bei BuenoWS.</p>
       </div>
 
-      <div class="grid">
+      <div v-if="isLoading" class="card">
+        <h2>Laden</h2>
+        <p>Benutzerdaten werden geladen ...</p>
+      </div>
+
+      <div v-else-if="errorMsg" class="card">
+        <h2>Fehler</h2>
+        <p>{{ errorMsg }}</p>
+      </div>
+
+      <div v-else class="grid">
         <div class="card">
           <h2>Kontostatus</h2>
           <p v-if="authStore.isAuthenticated">Sie sind aktuell erfolgreich eingeloggt.</p>
@@ -34,26 +66,24 @@ const services = [
         </div>
 
         <div class="card">
-          <h2>Konto-Aktionen</h2>
-          <p>Hier können Sie Ihr Konto verwalten und sich sicher abmelden.</p>
-          <button class="primary-button" @click="handleLogout">Logout</button>
+          <h2>Benutzerdaten</h2>
+          <p><strong>E-Mail:</strong> {{ userProfile?.email }}</p>
+          <p><strong>User ID:</strong> {{ userProfile?.id }}</p>
         </div>
 
         <div class="card">
-          <h2>Ihre Interessen</h2>
+          <h2>Berechtigungen</h2>
           <ul class="service-list">
-            <li v-for="service in services" :key="service">
-              {{ service }}
+            <li v-for="authority in userProfile?.authorities" :key="authority">
+              {{ authority }}
             </li>
           </ul>
         </div>
 
         <div class="card">
-          <h2>Profilbereich</h2>
-          <p>
-            Später können hier persönliche Daten wie Name, E-Mail oder Firmendaten angezeigt und
-            bearbeitet werden.
-          </p>
+          <h2>Konto-Aktionen</h2>
+          <p>Hier können Sie Ihr Konto verwalten und sich sicher abmelden.</p>
+          <button class="primary-button" @click="handleLogout">Logout</button>
         </div>
       </div>
     </div>

@@ -20,4 +20,9 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+export async function getCurrentUser() {
+  const response = await api.get('/api/user/me')
+  return response.data
+}
+
 export default api
