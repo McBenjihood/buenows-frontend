@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export function checkAuth() {
-  return !!localStorage.getItem('JWT');
+export function checkAuth(): boolean {
+  return !!localStorage.getItem('JWT')
 }
 
 const api = axios.create({
