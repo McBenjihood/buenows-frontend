@@ -49,9 +49,6 @@ async function handleLogout() {
           <span>Personal Area</span>
         </router-link>
       </li>
-      <li>
-        <button class="logout-button" @click="handleLogout">Logout</button>
-      </li>
     </template>
   </ul>
 </template>
