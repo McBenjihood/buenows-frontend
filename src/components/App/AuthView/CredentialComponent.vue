@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { authStore } from '@/assets/ts/auth.ts'
+import { authStore } from '@/services/auth.ts'
 import api from '@/services/api'
 
 const route = useRoute()

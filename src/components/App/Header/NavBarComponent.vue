@@ -3,7 +3,7 @@ import homeIcon from '@/assets/img/icons/navbar/home.svg'
 import aboutIcon from '@/assets/img/icons/navbar/about_us.svg'
 import contactIcon from '@/assets/img/icons/navbar/contact.svg'
 import accountIcon from '@/assets/img/icons/navbar/account_circle.svg'
-import {authStore} from '@/assets/ts/auth'
+import {authStore} from '@/services/auth.ts'
 
 </script>
 
