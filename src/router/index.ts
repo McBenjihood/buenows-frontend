@@ -60,6 +60,14 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: '/account/editor',
+      name: 'PostEditor',
+      component: () => import('@/views/PostEditorView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 })
 

@@ -4,13 +4,12 @@ import aboutIcon from '@/assets/img/icons/navbar/about_us.svg'
 import contactIcon from '@/assets/img/icons/navbar/contact.svg'
 import accountIcon from '@/assets/img/icons/navbar/account_circle.svg'
 import { authStore } from '@/services/auth.ts'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
-const router = useRouter()
+const route = useRoute()
 
-async function handleLogout() {
-  authStore.logout()
-  await router.push('/auth/login')
+function isPersonalAreaRoute() {
+  return route.path.startsWith('/account')
 }
 </script>
 
@@ -44,7 +43,7 @@ async function handleLogout() {
 
     <template v-else>
       <li>
-        <router-link to="/account">
+        <router-link to="/account" :class="{ 'active-personal-area': isPersonalAreaRoute() }">
           <img :src="accountIcon" alt="Account" class="nav-icon" />
           <span>Personal Area</span>
         </router-link>
@@ -90,23 +89,8 @@ async function handleLogout() {
   color: white;
 }
 
-.logout-button {
-  background: transparent;
-  border: none;
-  color: #e1e1e1;
-  font-size: 1.25rem;
-  font-weight: 500;
-  padding: 0.75em 0.75em;
-  border-radius: 0.5em;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.logout-button:hover {
-  background-color: rgb(49, 46, 58);
-  color: white;
+.active-personal-area {
+  color: #42b883 !important;
 }
 
 .router-link-active {
