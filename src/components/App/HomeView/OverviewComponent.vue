@@ -10,240 +10,442 @@ const technologies = [
   { name: 'PostgreSQL', icon: postgresIcon },
   { name: 'AWS Cloud', icon: awsIcon },
 ]
+
+const services = [
+  {
+    title: 'Websites erstellen',
+    text: 'Wir entwickeln moderne und professionelle Websites, die zu Ihrem Unternehmen passen und Vertrauen aufbauen.',
+  },
+  {
+    title: 'Websites erneuern',
+    text: 'Bestehende Auftritte modernisieren wir technisch, optisch und strukturell, damit Ihre Website wieder zeitgemäss wirkt.',
+  },
+  {
+    title: 'Backend & Logik',
+    text: 'Von Login-Systemen bis zu Datenbank-Anbindungen entwickeln wir die technische Grundlage für leistungsstarke Weblösungen.',
+  },
+  {
+    title: 'Automatisierungen',
+    text: 'Wir bauen digitale Abläufe, die Zeit sparen, Prozesse vereinfachen und wiederkehrende Aufgaben automatisieren.',
+  },
+  {
+    title: 'AI-Lösungen',
+    text: 'Ob automatische Antworten oder intelligente Unterstützung im Kundenkontakt – wir entwickeln moderne AI-gestützte Funktionen.',
+  },
+  {
+    title: 'Hosting & Weiterentwicklung',
+    text: 'Wir begleiten Projekte auch nach dem Launch mit Hosting, Wartung und technischer Weiterentwicklung.',
+  },
+]
+
+const benefits = [
+  'Individuelle Lösungen statt Baukastensysteme',
+  'Moderne Technologien für stabile und skalierbare Systeme',
+  'Klare Kommunikation und saubere Umsetzung',
+  'Websites und Funktionen mit echtem Nutzen im Alltag',
+]
+
+const targetGroups = [
+  'Kleine und mittlere Unternehmen',
+  'Handwerksbetriebe und lokale Firmen',
+  'Dienstleister mit modernem Online-Auftritt',
+  'Unternehmen mit Bedarf an Automatisierung',
+]
 </script>
 
 <template>
-  <div class="container">
-    <div class="titleDiv">
-      <h1>Ihr Partner</h1>
-      <h1>im Webdevelopment</h1>
-    </div>
-
-    <div class="infoDiv">
-      <div class="info">
-        <h3>Innovation</h3>
-        <p>
-          Wir setzen auf modernste Technologien, damit Ihr digitaler Auftritt auch morgen noch
-          zukunftssicher bleibt.
+  <section class="home-page">
+    <div class="page-wrapper">
+      <div class="hero-card">
+        <span class="section-label">Bueno Web Solutions</span>
+        <h1>Moderne Websites, smarte Automatisierungen und digitale Lösungen für Unternehmen.</h1>
+        <p class="hero-text">
+          Wir entwickeln professionelle Webauftritte, starke Backend-Lösungen und digitale
+          Funktionen, die nicht nur gut aussehen, sondern im Alltag echten Mehrwert schaffen.
         </p>
+
+        <div class="hero-actions">
+          <router-link to="/contact" class="primary-button">Projekt anfragen</router-link>
+          <router-link to="/about" class="secondary-button">Mehr über uns</router-link>
+        </div>
       </div>
 
-      <div class="info">
-        <h3>Individualität</h3>
-        <p>
-          Unsere Lösungen sind keine Stangenware, sondern werden exakt auf Ihre spezifischen
-          Geschäftsziele zugeschnitten.
-        </p>
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <h2>Modern</h2>
+          <p>
+            Wir setzen auf zeitgemässe Technologien und klare Strukturen für einen starken digitalen
+            Auftritt.
+          </p>
+        </div>
+
+        <div class="highlight-card">
+          <h2>Individuell</h2>
+          <p>Jede Lösung wird an Ihr Unternehmen, Ihre Ziele und Ihre Anforderungen angepasst.</p>
+        </div>
+
+        <div class="highlight-card">
+          <h2>Zuverlässig</h2>
+          <p>
+            Von der Idee bis zur Umsetzung begleiten wir Projekte direkt, transparent und sauber.
+          </p>
+        </div>
       </div>
 
-      <div class="info">
-        <h3>Zuverlässigkeit</h3>
-        <p>
-          Von der ersten Planung bis zum finalen Launch begleiten wir Sie transparent, termingerecht
-          und professionell.
-        </p>
-      </div>
-    </div>
+      <div class="section-card">
+        <div class="section-heading">
+          <span class="section-label">Leistungen</span>
+          <h2>Unsere Dienstleistungen</h2>
+          <p>
+            Wir verbinden Design, Technik und praktische Funktionen zu Lösungen, die Unternehmen
+            professionell unterstützen.
+          </p>
+        </div>
 
-    <div class="solutionsDiv">
-      <div class="solutions-block">
-        <h1>Dienstleistungen</h1>
-        <div class="solutions-grid">
-          <div class="solutions-content">
-            <h3>Full-Stack Entwicklung</h3>
-            <p>
-              Wir bauen keine leeren Fassaden. Wir liefern vollwertige Webanwendungen inklusive
-              leistungsstarkem Backend. Ob Datenbank-Anbindungen, Benutzer-Logins oder komplexe
-              Verwaltungs-Tools – wir programmieren die komplette Logik, die Ihr Unternehmen
-              benötigt.
-            </p>
-          </div>
-          <div class="solutions-content">
-            <h3>Professionelles Cloud-Hosting</h3>
-            <p>
-              Wir bieten professionelles Cloud-Hosting mit hoher Verfügbarkeit und Sicherheit.
-              Unsere Plattformen sind skalierbar und können auf Anforderungen und Bedarf anpassen.
-            </p>
+        <div class="services-grid">
+          <div v-for="service in services" :key="service.title" class="service-card">
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.text }}</p>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="technologiesDiv">
-      <h1>Technologien</h1>
-      <div class="tech-grid">
-        <div v-for="tech in technologies" :key="tech.name" class="tech-card">
-          <img :src="tech.icon" :alt="tech.name" />
-          <span>{{ tech.name }}</span>
+      <div class="two-column-grid">
+        <div class="section-card">
+          <div class="section-heading">
+            <span class="section-label">Vorteile</span>
+            <h2>Warum BuenoWS?</h2>
+          </div>
+
+          <ul class="bullet-list">
+            <li v-for="benefit in benefits" :key="benefit">
+              {{ benefit }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="section-card">
+          <div class="section-heading">
+            <span class="section-label">Zielgruppen</span>
+            <h2>Für wen wir arbeiten</h2>
+          </div>
+
+          <ul class="bullet-list">
+            <li v-for="group in targetGroups" :key="group">
+              {{ group }}
+            </li>
+          </ul>
         </div>
       </div>
+
+      <div class="section-card">
+        <div class="section-heading center">
+          <span class="section-label">Technologien</span>
+          <h2>Technische Grundlage für starke Lösungen</h2>
+          <p>
+            Wir arbeiten mit modernen Technologien, damit Ihre Website zuverlässig, wartbar und
+            zukunftssicher bleibt.
+          </p>
+        </div>
+
+        <div class="tech-grid">
+          <div v-for="tech in technologies" :key="tech.name" class="tech-card">
+            <img :src="tech.icon" :alt="tech.name" />
+            <span>{{ tech.name }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-card">
+        <span class="section-label">Kontakt</span>
+        <h2>Sie planen ein Projekt oder möchten Ihren Webauftritt verbessern?</h2>
+        <p>
+          Schreiben Sie uns und lassen Sie uns gemeinsam besprechen, wie Ihre Website oder digitale
+          Lösung aussehen kann.
+        </p>
+
+        <router-link to="/contact" class="primary-button">Jetzt Kontakt aufnehmen</router-link>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped>
-.solutions-grid {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  gap: 3rem;
-  text-align: center;
-}
-
-.solutions-content {
-  flex: 1;
-}
-
-.container {
+.home-page {
+  min-height: 100vh;
   background-color: #1a1a1a;
   color: #ffffff;
   padding: 4rem 2rem;
-  min-height: 100vh;
 }
 
-.titleDiv {
-  text-align: center;
-  margin-bottom: 5rem;
-}
-
-.titleDiv h1 {
-  margin: 0;
-  line-height: 1.2;
-  font-weight: 700;
-  font-size: 2.5rem;
-}
-
-.infoDiv {
-  display: flex;
-  justify-content: space-between;
-  gap: 4rem;
+.page-wrapper {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.info {
-  flex: 1;
+.section-label {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #42b883;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.info h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
+.hero-card,
+.section-card,
+.cta-card {
+  background-color: #252525;
+  border-radius: 18px;
+  padding: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.hero-card {
+  margin-bottom: 2rem;
+}
+
+.hero-card h1 {
+  margin: 0 0 1rem 0;
+  font-size: 3rem;
+  line-height: 1.15;
+  max-width: 950px;
+}
+
+.hero-text {
+  margin: 0;
+  max-width: 850px;
+  color: #d2d2d2;
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 0.95rem 1.4rem;
+  font-weight: 700;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.primary-button {
+  background-color: #42b883;
+  color: white;
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.secondary-button {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #3a3a3a;
+}
+
+.secondary-button:hover {
+  background-color: #2e2e2e;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.highlight-card {
+  background-color: #252525;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+.highlight-card h2 {
+  margin-top: 0;
   margin-bottom: 1rem;
   color: #42b883;
 }
 
-.info p {
-  color: #d1d1d1;
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-.solutionsDiv {
-  margin-top: 6rem;
-  display: flex;
-  justify-content: center;
-}
-
-.solutions-block {
-  background-color: #252525;
-  padding: 4rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  max-width: 1100px;
-  width: 100%;
-}
-
-.solutions-block h1 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 3rem;
-  font-weight: 700;
-}
-
-.solutions-content h3 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #42b883;
-}
-
-.solutions-content p {
+.highlight-card p {
   color: #e0e0e0;
-  line-height: 1.8;
-  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0;
 }
 
-.technologiesDiv {
-  margin-top: 6rem;
+.section-card {
+  margin-bottom: 2rem;
+}
+
+.section-heading {
+  margin-bottom: 2rem;
+}
+
+.section-heading.center {
   text-align: center;
-  max-width: 1200px;
+}
+
+.section-heading h2 {
+  margin: 0 0 0.8rem 0;
+  font-size: 2rem;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #d2d2d2;
+  line-height: 1.7;
+  max-width: 800px;
+}
+
+.section-heading.center p {
   margin-left: auto;
   margin-right: auto;
 }
 
-.technologiesDiv h1 {
-  font-weight: 700;
-  margin-bottom: 3rem;
-  font-size: 2rem;
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.service-card {
+  background-color: #1f1f1f;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.service-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  color: #42b883;
+}
+
+.service-card p {
+  margin: 0;
+  color: #dfdfdf;
+  line-height: 1.7;
+}
+
+.two-column-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.bullet-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.bullet-list li {
+  margin-bottom: 0.9rem;
+  color: #e0e0e0;
+  line-height: 1.6;
 }
 
 .tech-grid {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .tech-card {
-  background-color: #252525;
+  background-color: #1f1f1f;
   border-radius: 16px;
   padding: 2rem;
-  width: 200px;
+  width: 190px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .tech-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(66, 184, 131, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(66, 184, 131, 0.08);
 }
 
 .tech-card img {
-  height: 80px;
+  height: 72px;
   width: auto;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   display: block;
 }
 
 .tech-card span {
   color: #42b883;
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
+}
+
+.cta-card {
+  text-align: center;
+}
+
+.cta-card h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 2.2rem;
+}
+
+.cta-card p {
+  max-width: 760px;
+  margin: 0 auto 2rem auto;
+  color: #d2d2d2;
+  line-height: 1.7;
+}
+
+@media (max-width: 992px) {
+  .highlights-grid,
+  .services-grid,
+  .two-column-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-  .solutions-grid {
-    flex-direction: column;
-    gap: 2rem;
+  .home-page {
+    padding: 2rem 1rem;
   }
 
-  .infoDiv {
-    flex-direction: column;
+  .hero-card,
+  .section-card,
+  .cta-card {
+    padding: 1.5rem;
   }
 
-  .solutions-block {
-    padding: 2rem;
+  .hero-card h1 {
+    font-size: 2.1rem;
+  }
+
+  .section-heading h2,
+  .cta-card h2 {
+    font-size: 1.7rem;
   }
 
   .tech-card {
-    width: 40%;
+    width: 42%;
     min-width: 140px;
   }
 }
