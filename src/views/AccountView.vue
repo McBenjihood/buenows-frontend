@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
-import { getCurrentUser } from '@/services/api.ts'
+import { getCurrentUserFromToken } from '@/services/api.ts'
 
 const router = useRouter()
 
@@ -10,33 +10,45 @@ const isLoading = ref(true)
 const errorMsg = ref('')
 
 const userProfile = ref<{
-  id: string
   email: string
   authorities: string[]
+  issuedAt: number | null
+  expiresAt: number | null
+  issuer: string
 } | null>(null)
+
+const openEditor = async () => {
+  await router.push('/account/editor')
+}
 
 async function handleLogout() {
   authStore.logout()
   await router.push('/auth/login')
 }
 
-async function loadCurrentUser() {
+function loadCurrentUserFromToken() {
   isLoading.value = true
   errorMsg.value = ''
 
   try {
-    const response = await getCurrentUser()
-    userProfile.value = response.data
-  } catch (error: any) {
-    console.error('Error loading current user:', error)
-    errorMsg.value = error.response?.data?.message || 'Benutzerdaten konnten nicht geladen werden.'
+    const profile = getCurrentUserFromToken()
+
+    if (!profile) {
+      errorMsg.value = 'Kein JWT gefunden.'
+      return
+    }
+
+    userProfile.value = profile
+  } catch (error) {
+    console.error('Error parsing token:', error)
+    errorMsg.value = 'Token konnte nicht gelesen werden.'
   } finally {
     isLoading.value = false
   }
 }
 
 onMounted(() => {
-  loadCurrentUser()
+  loadCurrentUserFromToken()
 })
 </script>
 
@@ -45,7 +57,9 @@ onMounted(() => {
     <div class="account-wrapper">
       <div class="hero-card">
         <h1>Personal Area</h1>
-        <p class="subtitle">Willkommen in Ihrem persönlichen Bereich bei BuenoWS.</p>
+        <p class="subtitle">
+          Verwalten Sie hier Inhalte, Beiträge und Einstellungen Ihrer Website.
+        </p>
       </div>
 
       <div v-if="isLoading" class="card">
@@ -60,29 +74,47 @@ onMounted(() => {
 
       <div v-else class="grid">
         <div class="card">
-          <h2>Kontostatus</h2>
-          <p v-if="authStore.isAuthenticated">Sie sind aktuell erfolgreich eingeloggt.</p>
-          <p v-else>Sie sind aktuell nicht eingeloggt.</p>
+          <h2>Website bearbeiten</h2>
+          <p>
+            Bearbeiten Sie später Texte, Abschnitte, Dienstleistungen und Inhalte Ihrer Website
+            direkt in diesem Bereich.
+          </p>
+          <button class="primary-button" @click="openEditor">Editor öffnen</button>
         </div>
 
         <div class="card">
-          <h2>Benutzerdaten</h2>
+          <h2>Beiträge verwalten</h2>
+          <p>
+            Erstellen, speichern und veröffentlichen Sie hier künftig eigene Posts und Inhalte für
+            Ihre Website.
+          </p>
+          <button class="secondary-button" disabled>Bald verfügbar</button>
+        </div>
+
+        <div class="card">
+          <h2>Design anpassen</h2>
+          <p>
+            Farben, Bilder, Layouts und einzelne Bereiche Ihrer Website können hier später
+            individuell angepasst werden.
+          </p>
+          <button class="secondary-button" disabled>Bald verfügbar</button>
+        </div>
+
+        <div class="card">
+          <h2>Konto</h2>
           <p><strong>E-Mail:</strong> {{ userProfile?.email }}</p>
-          <p><strong>User ID:</strong> {{ userProfile?.id }}</p>
+          <p><strong>Status:</strong> Aktiv eingeloggt</p>
+          <p v-if="userProfile?.authorities?.length">
+            <strong>Rolle:</strong> {{ userProfile.authorities.join(', ') }}
+          </p>
         </div>
 
-        <div class="card">
-          <h2>Berechtigungen</h2>
-          <ul class="service-list">
-            <li v-for="authority in userProfile?.authorities" :key="authority">
-              {{ authority }}
-            </li>
-          </ul>
-        </div>
-
-        <div class="card">
+        <div class="card card-wide">
           <h2>Konto-Aktionen</h2>
-          <p>Hier können Sie Ihr Konto verwalten und sich sicher abmelden.</p>
+          <p>
+            Hier können Sie sich sicher abmelden. Weitere Einstellungen für Ihr Konto können später
+            an dieser Stelle ergänzt werden.
+          </p>
           <button class="primary-button" @click="handleLogout">Logout</button>
         </div>
       </div>
@@ -118,6 +150,7 @@ onMounted(() => {
 .subtitle {
   margin: 0;
   color: #cfcfcf;
+  line-height: 1.6;
 }
 
 .grid {
@@ -131,6 +164,10 @@ onMounted(() => {
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.card-wide {
+  grid-column: 1 / -1;
 }
 
 .card h2 {
@@ -154,26 +191,35 @@ onMounted(() => {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .primary-button:hover {
   opacity: 0.9;
+  transform: translateY(-1px);
 }
 
-.service-list {
-  padding-left: 1.2rem;
-  margin: 0;
-}
-
-.service-list li {
-  margin-bottom: 0.6rem;
-  color: #e1e1e1;
+.secondary-button {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #bdbdbd;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 0.85rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .card-wide {
+    grid-column: auto;
   }
 
   .account-page {
