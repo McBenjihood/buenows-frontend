@@ -1,204 +1,196 @@
 <script setup lang="ts">
-
 import { ref } from 'vue'
 
-const url = "localhost:8080/api/user"
+const url = 'localhost:8080/api/user'
 
-const email = ref("");
-const title = ref("");
-const message = ref("");
-
-async function submitForm(){
-  try{
-    const response = await fetch(url + "")
-  }catch (error) {
-    
-  }
-}
-
+const email = ref('')
+const title = ref('')
+const message = ref('')
 </script>
 
 <template>
-  <div class="container">
-    <div class="titleDiv">
-      <h1>Kontaktieren Sie uns</h1>
-    </div>
-
-    <div class="infoDiv">
-      <div class="info">
-        <h3>Lassen Sie uns reden</h3>
-        <p>
-          Haben Sie eine Idee für ein Projekt oder benötigen Sie Unterstützung bei Ihrer digitalen
-          Infrastruktur? Wir freuen uns darauf, von Ihnen zu hören und gemeinsam Lösungen zu
-          entwickeln.
+  <section class="contact-page">
+    <div class="contact-wrapper">
+      <div class="hero-card">
+        <span class="section-label">Kontakt</span>
+        <h1>Lassen Sie uns über Ihr Projekt sprechen.</h1>
+        <p class="hero-text">
+          Ob neue Website, Modernisierung, Backend-Lösung oder digitale Automatisierung – schreiben
+          Sie uns kurz, worum es geht, und wir melden uns bei Ihnen.
         </p>
       </div>
-      <div class="info">
-        <h3>Erreichbarkeit</h3>
-        <p>
-          Wir bemühen uns, alle Anfragen innerhalb von 24 Stunden zu beantworten. Für dringende
-          technische Anliegen nutzen Sie bitte die telefonische Kontaktaufnahme.
-        </p>
-      </div>
-    </div>
 
-    <div class="solutionsDiv">
-      <div class="solutions-block">
-        <h1>Kontaktdaten</h1>
-        <div class="solutions-grid">
-          <div class="solutions-content">
-            <div class="contact-icon-box">
-              <h3>Telefon</h3>
-              <p>
-                <a href="tel:+410775238836" class="contact-link">+41 077 523 88 36</a>
-              </p>
-              <p class="sub-text">Mo - Fr: 09:00 - 18:00 Uhr</p>
-            </div>
+      <div class="contact-grid">
+        <div class="info-card">
+          <h2>Direkter Kontakt</h2>
+
+          <div class="contact-item">
+            <h3>Telefon</h3>
+            <a href="tel:+410775238836" class="contact-link">+41 077 523 88 36</a>
+            <p>Mo – Fr, 09:00 bis 18:00 Uhr</p>
           </div>
 
-          <div class="solutions-content">
-            <div class="contact-icon-box">
-              <h3>E-Mail</h3>
-              <p>
-                <a href="mailto:info.buenows@gmail.com" class="contact-link"
-                  >info.buenows@gmail.com</a
-                >
-              </p>
-              <p class="sub-text">Wir antworten schnellstmöglich.</p>
-            </div>
+          <div class="contact-item">
+            <h3>E-Mail</h3>
+            <a href="mailto:info.buenows@gmail.com" class="contact-link">info.buenows@gmail.com</a>
+            <p>Wir antworten so schnell wie möglich.</p>
+          </div>
+
+          <div class="contact-item">
+            <h3>Was Sie uns schreiben können</h3>
+            <p>
+              Beschreiben Sie kurz Ihr Vorhaben, Ihre aktuelle Situation oder Ihr Ziel. Je klarer
+              Ihre Anfrage ist, desto besser können wir Sie unterstützen.
+            </p>
           </div>
         </div>
-      </div>
 
-      <div class="solutions-block">
-        <h1>Direkter Kontakt</h1>
-        <form class="contact-form" @submit.prevent>
-          <div class="form-group">
-            <label for="email">E-Mail</label>
-            <input v-model="email" type="email" id="email" placeholder="ihre@mail.de" required />
-          </div>
+        <div class="form-card">
+          <h2>Nachricht senden</h2>
 
-          <div class="form-group">
-            <label for="anliegen">Anliegen</label>
-            <input v-model="title" type="text" id="anliegen" placeholder="Zusammenarbeit, Support, etc." required />
-          </div>
+          <form class="contact-form" @submit.prevent>
+            <div class="form-group">
+              <label for="email">E-Mail</label>
+              <input v-model="email" type="email" id="email" placeholder="ihre@mail.de" required />
+            </div>
 
-          <div class="form-group">
-            <label for="beschreibung">Beschreibung</label>
-            <textarea
-              id="beschreibung"
-              rows="4"
-              placeholder="Beschreiben Sie Ihr Anliegen..."
-              v-model="message"
+            <div class="form-group">
+              <label for="title">Anliegen</label>
+              <input
+                v-model="title"
+                type="text"
+                id="title"
+                placeholder="Neue Website, Support, Automatisierung ..."
+                required
+              />
+            </div>
 
-            ></textarea>
-          </div>
+            <div class="form-group">
+              <label for="message">Beschreibung</label>
+              <textarea
+                id="message"
+                rows="6"
+                placeholder="Beschreiben Sie kurz Ihr Projekt oder Ihre Anfrage ..."
+                v-model="message"
+                required
+              ></textarea>
+            </div>
 
-          <button @click="submitForm" class="submit-btn">Nachricht senden</button>
-        </form>
+            <button class="submit-btn" type="submit">Nachricht senden</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped>
-.container {
+.contact-page {
+  min-height: 100vh;
   background-color: #1a1a1a;
   color: #ffffff;
   padding: 4rem 2rem;
-  min-height: 100vh;
 }
 
-.titleDiv {
-  text-align: center;
-  margin-bottom: 5rem;
-}
-
-.titleDiv h1 {
-  margin: 0;
-  line-height: 1.2;
-  font-weight: 700;
-  font-size: 2.5rem;
-}
-
-.infoDiv {
-  display: flex;
-  justify-content: space-between;
-  gap: 4rem;
+.contact-wrapper {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.info {
-  flex: 1;
+.hero-card {
+  background-color: #252525;
+  border-radius: 18px;
+  padding: 3rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.info h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
+.section-label {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #42b883;
   margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hero-card h1 {
+  margin: 0 0 1rem 0;
+  font-size: 2.6rem;
+  line-height: 1.2;
+}
+
+.hero-text {
+  margin: 0;
+  max-width: 820px;
+  color: #d2d2d2;
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 2rem;
+}
+
+.info-card,
+.form-card {
+  background-color: #252525;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.info-card h2,
+.form-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
   color: #42b883;
 }
 
-.info p {
+.contact-item + .contact-item {
+  margin-top: 2rem;
+}
+
+.contact-item h3 {
+  margin-bottom: 0.6rem;
+  color: #ffffff;
+}
+
+.contact-item p {
   color: #d1d1d1;
-  line-height: 1.6;
-  font-size: 1rem;
+  line-height: 1.7;
 }
 
-.solutionsDiv {
-  margin-top: 6rem;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+.contact-link {
+  display: inline-block;
+  color: #42b883;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
 }
 
-.solutions-block {
-  background-color: #252525;
-  padding: 3rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  flex: 1;
-  min-width: 350px;
-  max-width: 600px;
-}
-
-.solutions-block h1 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 3rem;
-  font-weight: 700;
-  font-size: 2rem;
-}
-
-.solutions-grid {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3rem;
-  text-align: center;
+.contact-link:hover {
+  text-decoration: underline;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  text-align: left;
 }
 
 .form-group label {
   color: #42b883;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
@@ -206,11 +198,11 @@ async function submitForm(){
 .form-group textarea {
   background-color: #1a1a1a;
   border: 1px solid #333;
-  border-radius: 8px;
-  padding: 0.8rem;
+  border-radius: 10px;
+  padding: 0.95rem 1rem;
   color: white;
   font-family: inherit;
-  transition: border-color 0.3s;
+  transition: border-color 0.2s ease;
 }
 
 .form-group input:focus,
@@ -221,63 +213,57 @@ async function submitForm(){
 
 .submit-btn {
   background-color: #42b883;
-  color: #1a1a1a;
+  color: #ffffff;
   border: none;
-  padding: 1rem;
-  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
   font-weight: 700;
   cursor: pointer;
   transition:
-    transform 0.2s,
-    background-color 0.2s;
-  margin-top: 1rem;
-}
-
-.submit-btn:hover {
-  background-color: #33a06f;
-  transform: translateY(-2px);
-}
-
-.solutions-content h3 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #42b883;
-}
-
-.contact-link {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.contact-link:hover {
-  color: #42b883;
-}
-
-.sub-text {
-  font-size: 0.85rem;
-  color: #888;
+    transform 0.2s ease,
+    opacity 0.2s ease;
   margin-top: 0.5rem;
 }
 
+.submit-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
-  .solutionsDiv {
-    flex-direction: column;
-    align-items: center;
+  .contact-page {
+    padding: 2rem 1rem;
   }
 
-  .solutions-block {
-    width: 100%;
-    min-width: unset;
-    padding: 2rem;
+  .hero-card,
+  .info-card,
+  .form-card {
+    padding: 1.5rem;
   }
 
-  .infoDiv {
-    flex-direction: column;
-    gap: 2rem;
+  .hero-card h1 {
+    font-size: 2rem;
   }
+}
+
+.form-group input,
+.form-group textarea {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 0.95rem 1rem;
+  color: white;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.form-group textarea {
+  resize: vertical;
 }
 </style>
