@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import homeIcon from '@/assets/img/icons/navbar/home.svg'
 import aboutIcon from '@/assets/img/icons/navbar/about_us.svg'
+import servicesIcon from '@/assets/img/icons/navbar/about_us.svg'
 import contactIcon from '@/assets/img/icons/navbar/contact.svg'
 import accountIcon from '@/assets/img/icons/navbar/account_circle.svg'
 import { authStore } from '@/services/auth.ts'
@@ -25,6 +26,12 @@ function isPersonalAreaRoute() {
       <router-link to="/about">
         <img :src="aboutIcon" alt="About" class="nav-icon" />
         <span>About</span>
+      </router-link>
+    </li>
+    <li>
+      <router-link to="/services">
+        <img :src="servicesIcon" alt="Services" class="nav-icon" />
+        <span>Services</span>
       </router-link>
     </li>
     <li>
