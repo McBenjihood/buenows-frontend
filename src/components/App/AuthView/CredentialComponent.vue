@@ -36,12 +36,12 @@ async function handleSubmit() {
     const loginData = apiResponse.data
 
     if (isLogin) {
-      if (loginData && loginData.JWTToken) {
-        authStore.setAuthenticated(true, loginData.JWTToken)
+      if (loginData && loginData.JWT) {
+        authStore.setAuthenticated(true, loginData.JWT)
         console.log('Login success:', apiResponse.message)
-        await router.push('/')
+        await router.push('/account')
       } else {
-        errorMsg.value = 'Login failed: No JWTToken received from server.'
+        errorMsg.value = 'Login failed: No JWT received from server.'
       }
     } else {
       alert('Registration successful! Please login.')

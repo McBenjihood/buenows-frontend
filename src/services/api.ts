@@ -14,9 +14,17 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('JWT')
-  if (token) {
+  const url = config.url ?? ''
+
+  const isAuthRoute =
+    url.includes('/api/user/auth/login') ||
+    url.includes('/api/user/auth/register') ||
+    url.includes('/api/user/auth/refresh')
+
+  if (token && !isAuthRoute) {
     config.headers.Authorization = `Bearer ${token}`
   }
+
   return config
 })
 
