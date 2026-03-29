@@ -1,11 +1,40 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-
-const url = 'localhost:8080/api/user'
+import api from '@/services/api.ts'
 
 const email = ref('')
 const title = ref('')
 const message = ref('')
+
+const isLoading = ref(false)
+const successMsg = ref('')
+const errorMsg = ref('')
+
+async function submitForm() {
+  isLoading.value = true
+  successMsg.value = ''
+  errorMsg.value = ''
+
+  try {
+    const response = await api.post('/api/inquiry/contact-submissions', {
+      email: email.value,
+      title: title.value,
+      message: message.value,
+    })
+
+    successMsg.value = response.data?.message || 'Nachricht erfolgreich gesendet.'
+
+    email.value = ''
+    title.value = ''
+    message.value = ''
+  } catch (error: any) {
+    console.error('Error sending contact form:', error)
+    errorMsg.value =
+      error.response?.data?.message || 'Beim Senden der Nachricht ist ein Fehler aufgetreten.'
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
 
 <template>
@@ -48,7 +77,7 @@ const message = ref('')
         <div class="form-card">
           <h2>Nachricht senden</h2>
 
-          <form class="contact-form" @submit.prevent>
+          <form class="contact-form" @submit.prevent="submitForm">
             <div class="form-group">
               <label for="email">E-Mail</label>
               <input v-model="email" type="email" id="email" placeholder="ihre@mail.de" required />
@@ -76,7 +105,11 @@ const message = ref('')
               ></textarea>
             </div>
 
-            <button class="submit-btn" type="submit">Nachricht senden</button>
+            <button class="submit-btn" type="submit" :disabled="isLoading">
+              {{ isLoading ? 'Wird gesendet ...' : 'Nachricht senden' }}
+            </button>
+            <p v-if="successMsg" class="success-message">{{ successMsg }}</p>
+            <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
           </form>
         </div>
       </div>
@@ -265,5 +298,29 @@ const message = ref('')
 
 .form-group textarea {
   resize: vertical;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.success-message {
+  margin: 0;
+  color: #42b883;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.error-message {
+  margin: 0;
+  color: #ff7b7b;
+  font-weight: 600;
+  line-height: 1.5;
 }
 </style>
