@@ -3,10 +3,12 @@ import App from './App.vue'
 import router from './router'
 import { authStore } from './services/auth.ts'
 
-authStore.initialize()
+async function bootstrap() {
+  await authStore.initialize()
 
-const app = createApp(App)
+  const app = createApp(App)
+  app.use(router)
+  app.mount('#app')
+}
 
-app.use(router)
-
-app.mount('#app')
+bootstrap()

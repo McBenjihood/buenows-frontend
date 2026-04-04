@@ -1,12 +1,12 @@
 import { reactive } from 'vue'
-import { checkAuth, parseJwt } from '@/services/api.ts'
+import api, { checkAuth, parseJwt } from '@/services/api.ts'
 
 export const authStore = reactive({
   isAuthenticated: false,
   token: null as string | null,
   refreshToken: null as string | null,
 
-  initialize() {
+  async initialize() {
     const savedToken = localStorage.getItem('JWT')
     const savedRefreshToken = localStorage.getItem('REFRESH_TOKEN')
 
@@ -14,6 +14,13 @@ export const authStore = reactive({
     this.refreshToken = savedRefreshToken
 
     if (!savedToken || !checkAuth()) {
+      if (savedRefreshToken) {
+        const refreshed = await this.refreshSession(savedRefreshToken)
+        if (refreshed) {
+          return
+        }
+      }
+
       this.logout()
       return
     }
@@ -23,13 +30,50 @@ export const authStore = reactive({
       const nowInSeconds = Math.floor(Date.now() / 1000)
 
       if (!payload.exp || payload.exp <= nowInSeconds) {
+        if (savedRefreshToken) {
+          const refreshed = await this.refreshSession(savedRefreshToken)
+          if (refreshed) {
+            return
+          }
+        }
+
         this.logout()
         return
       }
 
       this.isAuthenticated = true
     } catch {
+      if (savedRefreshToken) {
+        const refreshed = await this.refreshSession(savedRefreshToken)
+        if (refreshed) {
+          return
+        }
+      }
+
       this.logout()
+    }
+  },
+
+  async refreshSession(refreshToken: string): Promise<boolean> {
+    try {
+      const response = await api.post('/api/user/auth/refresh', {
+        refresh_token: refreshToken,
+      })
+
+      const apiResponse = response.data
+      const refreshData = apiResponse.data
+
+      if (refreshData?.JWT) {
+        this.setAuthenticated(true, refreshData.JWT, refreshData.RefreshToken ?? refreshToken)
+        return true
+      }
+
+      this.logout()
+      return false
+    } catch (error) {
+      console.error('Refresh failed:', error)
+      this.logout()
+      return false
     }
   },
 
