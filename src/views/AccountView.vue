@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
 import api, { getCurrentUserFromToken } from '@/services/api.ts'
@@ -25,6 +25,15 @@ async function handleLogout() {
   authStore.logout()
   await router.push('/auth/login')
 }
+
+watch(
+  () => authStore.isAuthenticated,
+  (isAuth) => {
+    if (!isAuth) {
+      router.push('/auth/login')
+    }
+  },
+)
 
 async function checkBackendAuth() {
   try {
