@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import { checkAuth } from '@/services/api.ts'
+import { checkAuth, parseJwt } from '@/services/api.ts'
 
 export const authStore = reactive({
   isAuthenticated: false,
@@ -12,7 +12,25 @@ export const authStore = reactive({
 
     this.token = savedToken
     this.refreshToken = savedRefreshToken
-    this.isAuthenticated = checkAuth()
+
+    if (!savedToken || !checkAuth()) {
+      this.logout()
+      return
+    }
+
+    try {
+      const payload = parseJwt(savedToken)
+      const nowInSeconds = Math.floor(Date.now() / 1000)
+
+      if (!payload.exp || payload.exp <= nowInSeconds) {
+        this.logout()
+        return
+      }
+
+      this.isAuthenticated = true
+    } catch {
+      this.logout()
+    }
   },
 
   setAuthenticated(auth: boolean, jwtToken: string | null, refreshToken: string | null = null) {
