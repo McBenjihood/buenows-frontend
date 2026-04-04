@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { authStore } from '@/services/auth.ts'
 
 export function checkAuth(): boolean {
   return !!localStorage.getItem('JWT')
@@ -27,6 +28,45 @@ api.interceptors.request.use((config) => {
 
   return config
 })
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config
+    const status = error.response?.status
+    const url = originalRequest?.url ?? ''
+
+    const isAuthRoute =
+      url.includes('/api/user/auth/login') ||
+      url.includes('/api/user/auth/register') ||
+      url.includes('/api/user/auth/refresh')
+
+    if (status === 401 && !isAuthRoute && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      const refreshToken = authStore.getRefreshToken()
+
+      if (refreshToken) {
+        const refreshed = await authStore.refreshSession(refreshToken)
+
+        if (refreshed) {
+          const newToken = localStorage.getItem('JWT')
+
+          if (newToken) {
+            originalRequest.headers = originalRequest.headers ?? {}
+            originalRequest.headers.Authorization = `Bearer ${newToken}`
+          }
+
+          return api(originalRequest)
+        }
+      }
+
+      authStore.logout()
+    }
+
+    return Promise.reject(error)
+  },
+)
 
 export function getStoredToken(): string | null {
   return localStorage.getItem('JWT')

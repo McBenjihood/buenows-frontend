@@ -77,6 +77,10 @@ export const authStore = reactive({
     }
   },
 
+  getRefreshToken(): string | null {
+    return this.refreshToken || localStorage.getItem('REFRESH_TOKEN')
+  },
+
   setAuthenticated(auth: boolean, jwtToken: string | null, refreshToken: string | null = null) {
     this.isAuthenticated = auth
     this.token = jwtToken
