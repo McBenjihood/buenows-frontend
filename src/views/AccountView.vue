@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
-import { getCurrentUserFromToken } from '@/services/api.ts'
+import api, { getCurrentUserFromToken } from '@/services/api.ts'
 
 const router = useRouter()
 
@@ -26,7 +26,16 @@ async function handleLogout() {
   await router.push('/auth/login')
 }
 
-function loadCurrentUserFromToken() {
+async function checkBackendAuth() {
+  try {
+    await api.get('/api/user/auth')
+  } catch (error) {
+    console.error('Backend auth check failed:', error)
+    errorMsg.value = 'Sitzung konnte nicht bestätigt werden.'
+  }
+}
+
+async function loadCurrentUserFromToken() {
   isLoading.value = true
   errorMsg.value = ''
 
@@ -39,6 +48,7 @@ function loadCurrentUserFromToken() {
     }
 
     userProfile.value = profile
+    await checkBackendAuth()
   } catch (error) {
     console.error('Error parsing token:', error)
     errorMsg.value = 'Token konnte nicht gelesen werden.'
@@ -47,8 +57,8 @@ function loadCurrentUserFromToken() {
   }
 }
 
-onMounted(() => {
-  loadCurrentUserFromToken()
+onMounted(async () => {
+  await loadCurrentUserFromToken()
 })
 </script>
 
