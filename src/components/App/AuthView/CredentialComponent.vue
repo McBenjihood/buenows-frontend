@@ -37,13 +37,17 @@ async function handleSubmit() {
 
     if (isLogin) {
       if (loginData && loginData.JWT) {
-        authStore.setAuthenticated(true, loginData.JWT)
+        authStore.setAuthenticated(true, loginData.JWT, loginData.RefreshToken ?? null)
         console.log('Login success:', apiResponse.message)
         await router.push('/account')
       } else {
         errorMsg.value = 'Login failed: No JWT received from server.'
       }
     } else {
+      if (loginData && loginData.JWT) {
+        authStore.setAuthenticated(true, loginData.JWT, loginData.RefreshToken ?? null)
+      }
+
       alert('Registration successful! Please login.')
       await router.push('/auth/login')
     }
