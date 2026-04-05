@@ -29,6 +29,21 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+let isRefreshing = false
+let refreshQueue: ((token: string) => void)[] = []
+
+const processQueue = (error: any, token: string | null = null) => {
+  refreshQueue.forEach((prom) => {
+    if (error) {
+      // Just resolve the promise to let it fail or handle rejection, but since it's an interceptor, we shouldn't throw inside the loop
+      // It's safer to just clear it if failing
+    } else if (token) {
+      prom(token)
+    }
+  })
+  refreshQueue = []
+}
+
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -42,23 +57,41 @@ api.interceptors.response.use(
       url.includes('/api/user/auth/refresh')
 
     if (status === 401 && !isAuthRoute && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve) => {
+          refreshQueue.push((token) => {
+            originalRequest.headers = originalRequest.headers ?? {}
+            originalRequest.headers.Authorization = `Bearer ${token}`
+            resolve(api(originalRequest))
+          })
+        })
+      }
+
       originalRequest._retry = true
+      isRefreshing = true
 
       const refreshToken = authStore.getRefreshToken()
 
       if (refreshToken) {
         const refreshed = await authStore.refreshSession(refreshToken)
+        isRefreshing = false
 
         if (refreshed) {
           const newToken = localStorage.getItem('JWT')
 
           if (newToken) {
+            processQueue(null, newToken)
+
             originalRequest.headers = originalRequest.headers ?? {}
             originalRequest.headers.Authorization = `Bearer ${newToken}`
           }
 
           return api(originalRequest)
+        } else {
+          processQueue(new Error('Refresh failed'))
         }
+      } else {
+        isRefreshing = false
       }
 
       authStore.logout()
@@ -73,22 +106,29 @@ export function getStoredToken(): string | null {
 }
 
 export function parseJwt(token: string): any {
-  const parts = token.split('.')
+  try {
+    const parts = token.split('.')
 
-  if (parts.length !== 3 || !parts[1]) {
-    throw new Error('Invalid JWT format')
+    if (parts.length !== 3 || !parts[1]) {
+      throw new Error('Invalid JWT format')
+    }
+
+    const base64Url = parts[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((char) => `%${('00' + char.charCodeAt(0).toString(16)).slice(-2)}`)
+        .join(''),
+    )
+
+    return JSON.parse(jsonPayload)
+  } catch (error) {
+    console.error('Failed to parse JWT, clearing tokens', error)
+    localStorage.removeItem('JWT')
+    localStorage.removeItem('REFRESH_TOKEN')
+    return {}
   }
-
-  const base64Url = parts[1]
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-  const jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split('')
-      .map((char) => `%${('00' + char.charCodeAt(0).toString(16)).slice(-2)}`)
-      .join(''),
-  )
-
-  return JSON.parse(jsonPayload)
 }
 
 export function getCurrentUserFromToken() {
