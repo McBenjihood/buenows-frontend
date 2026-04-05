@@ -30,17 +30,20 @@ api.interceptors.request.use((config) => {
 })
 
 let isRefreshing = false
-let refreshQueue: ((token: string) => void)[] = []
+let refreshQueue: Array<{
+  resolve: (token: string) => void
+  reject: (error: any) => void
+}> = []
 
 const processQueue = (error: any, token: string | null = null) => {
-  refreshQueue.forEach((prom) => {
+  refreshQueue.forEach(({ resolve, reject }) => {
     if (error) {
-      // Just resolve the promise to let it fail or handle rejection, but since it's an interceptor, we shouldn't throw inside the loop
-      // It's safer to just clear it if failing
+      reject(error)
     } else if (token) {
-      prom(token)
+      resolve(token)
     }
   })
+
   refreshQueue = []
 }
 
@@ -58,11 +61,16 @@ api.interceptors.response.use(
 
     if (status === 401 && !isAuthRoute && !originalRequest._retry) {
       if (isRefreshing) {
-        return new Promise((resolve) => {
-          refreshQueue.push((token) => {
-            originalRequest.headers = originalRequest.headers ?? {}
-            originalRequest.headers.Authorization = `Bearer ${token}`
-            resolve(api(originalRequest))
+        return new Promise((resolve, reject) => {
+          refreshQueue.push({
+            resolve: (token: string) => {
+              originalRequest.headers = originalRequest.headers ?? {}
+              originalRequest.headers.Authorization = `Bearer ${token}`
+              resolve(api(originalRequest))
+            },
+            reject: (err: any) => {
+              reject(err)
+            },
           })
         })
       }
@@ -70,31 +78,38 @@ api.interceptors.response.use(
       originalRequest._retry = true
       isRefreshing = true
 
-      const refreshToken = authStore.getRefreshToken()
+      try {
+        const refreshToken = authStore.getRefreshToken()
 
-      if (refreshToken) {
-        const refreshed = await authStore.refreshSession(refreshToken)
-        isRefreshing = false
-
-        if (refreshed) {
-          const newToken = localStorage.getItem('JWT')
-
-          if (newToken) {
-            processQueue(null, newToken)
-
-            originalRequest.headers = originalRequest.headers ?? {}
-            originalRequest.headers.Authorization = `Bearer ${newToken}`
-          }
-
-          return api(originalRequest)
-        } else {
-          processQueue(new Error('Refresh failed'))
+        if (!refreshToken) {
+          throw new Error('No refresh token available')
         }
-      } else {
+
+        const refreshed = await authStore.refreshSession(refreshToken)
+
+        if (!refreshed) {
+          throw new Error('Refresh failed')
+        }
+
+        const newToken = localStorage.getItem('JWT')
+
+        if (!newToken) {
+          throw new Error('No new JWT after refresh')
+        }
+
+        processQueue(null, newToken)
+
+        originalRequest.headers = originalRequest.headers ?? {}
+        originalRequest.headers.Authorization = `Bearer ${newToken}`
+
+        return api(originalRequest)
+      } catch (refreshError) {
+        processQueue(refreshError, null)
+        authStore.logout()
+        return Promise.reject(refreshError)
+      } finally {
         isRefreshing = false
       }
-
-      authStore.logout()
     }
 
     return Promise.reject(error)
@@ -105,7 +120,7 @@ export function getStoredToken(): string | null {
   return localStorage.getItem('JWT')
 }
 
-export function parseJwt(token: string): any {
+export function parseJwt(token: string): any | null {
   try {
     const parts = token.split('.')
 
@@ -127,7 +142,7 @@ export function parseJwt(token: string): any {
     console.error('Failed to parse JWT, clearing tokens', error)
     localStorage.removeItem('JWT')
     localStorage.removeItem('REFRESH_TOKEN')
-    return {}
+    return null
   }
 }
 
@@ -139,6 +154,10 @@ export function getCurrentUserFromToken() {
   }
 
   const payload = parseJwt(token)
+
+  if (!payload) {
+    return null
+  }
 
   return {
     email: payload.sub ?? '',
