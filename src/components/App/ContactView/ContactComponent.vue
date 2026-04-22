@@ -11,15 +11,21 @@ const successMsg = ref('')
 const errorMsg = ref('')
 
 async function submitForm() {
-  isLoading.value = true
   successMsg.value = ''
   errorMsg.value = ''
 
+  if (!email.value.trim() || !title.value.trim() || !message.value.trim()) {
+    errorMsg.value = 'Bitte alle Felder ausfüllen.'
+    return
+  }
+
+  isLoading.value = true
+
   try {
     const response = await api.post('/api/inquiry/contact-submissions', {
-      email: email.value,
-      title: title.value,
-      message: message.value,
+      email: email.value.trim(),
+      title: title.value.trim(),
+      message: message.value.trim(),
     })
 
     successMsg.value = response.data?.message || 'Nachricht erfolgreich gesendet.'
