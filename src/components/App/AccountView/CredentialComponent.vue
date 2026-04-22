@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { authStore } from '@/services/auth.ts'
-import api from '@/services/api'
+import api from '@/services/api.ts'
 
 const route = useRoute()
 const router = useRouter()
@@ -75,7 +75,7 @@ async function handleSubmit() {
             <label for="email">Email Address</label>
             <div class="input-wrapper">
               <img
-                src="@/assets/img/icons/account/login/email.svg"
+                src="../../../assets/img/icons/account/login/email.svg"
                 class="input-icon"
                 alt="Email"
               />
@@ -97,7 +97,7 @@ async function handleSubmit() {
             </div>
             <div class="input-wrapper">
               <img
-                src="@/assets/img/icons/account/login/key_vertical.svg"
+                src="../../../assets/img/icons/account/login/key_vertical.svg"
                 class="input-icon"
                 alt="Password"
               />

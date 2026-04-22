@@ -1,10 +1,38 @@
 import { reactive } from 'vue'
 import api, { checkAuth, parseJwt } from '@/services/api.ts'
 
+type AuthUser = {
+  email: string
+  authorities: string[]
+  issuedAt: number | null
+  expiresAt: number | null
+  issuer: string
+}
+
+function buildUserFromToken(token: string | null): AuthUser | null {
+  if (!token) return null
+
+  const payload = parseJwt(token)
+  if (!payload) return null
+
+  return {
+    email: payload.sub ?? '',
+    authorities: payload.roles ?? [],
+    issuedAt: payload.iat ?? null,
+    expiresAt: payload.exp ?? null,
+    issuer: payload.iss ?? '',
+  }
+}
+
 export const authStore = reactive({
   isAuthenticated: false,
   token: null as string | null,
   refreshToken: null as string | null,
+  user: null as AuthUser | null,
+
+  get isAdmin() {
+    return this.user?.authorities?.includes('ROLE_ADMIN') ?? false
+  },
 
   async initialize() {
     const savedToken = localStorage.getItem('JWT')
@@ -12,6 +40,7 @@ export const authStore = reactive({
 
     this.token = savedToken
     this.refreshToken = savedRefreshToken
+    this.user = buildUserFromToken(savedToken)
 
     if (!savedToken || !checkAuth()) {
       if (savedRefreshToken) {
@@ -42,6 +71,7 @@ export const authStore = reactive({
       }
 
       this.isAuthenticated = true
+      this.user = buildUserFromToken(savedToken)
     } catch {
       if (savedRefreshToken) {
         const refreshed = await this.refreshSession(savedRefreshToken)
@@ -85,6 +115,7 @@ export const authStore = reactive({
     this.isAuthenticated = auth
     this.token = jwtToken
     this.refreshToken = refreshToken
+    this.user = buildUserFromToken(jwtToken)
 
     if (jwtToken) {
       localStorage.setItem('JWT', jwtToken)
@@ -103,6 +134,7 @@ export const authStore = reactive({
     this.isAuthenticated = false
     this.token = null
     this.refreshToken = null
+    this.user = null
     localStorage.removeItem('JWT')
     localStorage.removeItem('REFRESH_TOKEN')
   },
