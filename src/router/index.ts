@@ -32,7 +32,7 @@ const router = createRouter({
         {
           path: 'login',
           name: 'Login',
-          component: () => import('@/components/App/AuthView/CredentialComponent.vue'),
+          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
           meta: {
             requiresGuest: true,
             title: 'Welcome back ...',
@@ -45,7 +45,7 @@ const router = createRouter({
         {
           path: 'register',
           name: 'Register',
-          component: () => import('@/components/App/AuthView/CredentialComponent.vue'),
+          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
           meta: {
             requiresGuest: true,
             title: 'Welcome back to BuenoWS',

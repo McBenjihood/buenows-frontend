@@ -1,13 +1,24 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
-import api, { getCurrentUserFromToken } from '@/services/api.ts'
+import api from '@/services/api.ts'
 
 const router = useRouter()
 
 const isLoading = ref(true)
 const errorMsg = ref('')
+const inquiriesLoading = ref(false)
+const inquiriesError = ref('')
+const inquiries = ref<
+  {
+    inquiry_id: number
+    email: string
+    title: string
+    message: string
+    created_at: string | null
+  }[]
+>([])
 
 const userProfile = ref<{
   email: string
@@ -16,6 +27,8 @@ const userProfile = ref<{
   expiresAt: number | null
   issuer: string
 } | null>(null)
+
+const isAdmin = computed(() => authStore.isAdmin)
 
 const openEditor = async () => {
   await router.push('/account/editor')
@@ -44,23 +57,50 @@ async function checkBackendAuth() {
   }
 }
 
+async function loadAdminInquiries() {
+  if (!isAdmin.value) {
+    inquiries.value = []
+    return
+  }
+
+  inquiriesLoading.value = true
+  inquiriesError.value = ''
+
+  try {
+    const response = await api.get('/api/admin/inquiries')
+    inquiries.value = response.data?.data ?? []
+  } catch (error: any) {
+    console.error('Error loading inquiries:', error)
+    inquiriesError.value =
+      error.response?.data?.message || 'Kontaktanfragen konnten nicht geladen werden.'
+  } finally {
+    inquiriesLoading.value = false
+  }
+}
+
 async function loadCurrentUserFromToken() {
   isLoading.value = true
   errorMsg.value = ''
 
   try {
-    const profile = getCurrentUserFromToken()
-
-    if (!profile) {
+    if (!authStore.user) {
       errorMsg.value = 'Kein JWT gefunden.'
       return
     }
 
-    userProfile.value = profile
+    userProfile.value = {
+      email: authStore.user.email,
+      authorities: authStore.user.authorities,
+      issuedAt: authStore.user.issuedAt,
+      expiresAt: authStore.user.expiresAt,
+      issuer: authStore.user.issuer,
+    }
+
     await checkBackendAuth()
+    await loadAdminInquiries()
   } catch (error) {
-    console.error('Error parsing token:', error)
-    errorMsg.value = 'Token konnte nicht gelesen werden.'
+    console.error('Error loading user profile:', error)
+    errorMsg.value = 'Benutzerprofil konnte nicht geladen werden.'
   } finally {
     isLoading.value = false
   }
@@ -126,6 +166,24 @@ onMounted(async () => {
           <p v-if="userProfile?.authorities?.length">
             <strong>Rolle:</strong> {{ userProfile.authorities.join(', ') }}
           </p>
+        </div>
+
+        <div v-if="isAdmin" class="card card-wide">
+          <h2>Kontaktanfragen</h2>
+          <p>Hier sehen Sie eingegangene Nachrichten aus dem Kontaktformular.</p>
+
+          <p v-if="inquiriesLoading">Kontaktanfragen werden geladen ...</p>
+          <p v-else-if="inquiriesError" class="error-text">{{ inquiriesError }}</p>
+          <p v-else-if="!inquiries.length">Noch keine Kontaktanfragen vorhanden.</p>
+
+          <div v-else class="inquiry-list">
+            <div v-for="inquiry in inquiries" :key="inquiry.inquiry_id" class="inquiry-item">
+              <p><strong>E-Mail:</strong> {{ inquiry.email }}</p>
+              <p><strong>Anliegen:</strong> {{ inquiry.title }}</p>
+              <p><strong>Nachricht:</strong> {{ inquiry.message }}</p>
+              <p v-if="inquiry.created_at"><strong>Erstellt:</strong> {{ inquiry.created_at }}</p>
+            </div>
+          </div>
         </div>
 
         <div class="card card-wide">
@@ -249,5 +307,29 @@ onMounted(async () => {
   .card {
     padding: 1.5rem;
   }
+}
+
+.inquiry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.inquiry-item {
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.inquiry-item p {
+  margin: 0.35rem 0;
+  word-break: break-word;
+}
+
+.error-text {
+  color: #ff7b7b;
+  font-weight: 600;
 }
 </style>
