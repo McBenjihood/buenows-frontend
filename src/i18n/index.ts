@@ -267,8 +267,14 @@ const messages = {
 
       enterEmailPassword: 'Please enter email and password.',
       loginFailedNoJwt: 'Login failed: No JWT received from server.',
-      registerSuccess: 'Registration successful! Please login.',
       connectionFailed: 'Connection to server failed.',
+
+      firstNameLabel: 'First name',
+      firstNamePlaceholder: 'John',
+      lastNameLabel: 'Last name',
+      lastNamePlaceholder: 'Smith',
+      enterFullName: 'Please enter first name and last name.',
+      registerFailedNoJwt: 'Registration failed: No JWT received from server.',
     },
     accountPage: {
       title: 'Personal Area',
@@ -332,6 +338,27 @@ const messages = {
 
       usersOpenButton: 'Open users',
       inquiriesOpenButton: 'Open inquiries',
+
+      makeAdmin: 'Make admin',
+      makeUser: 'Make user',
+      deleteUser: 'Delete user',
+      deleteWarning: 'This action can permanently remove the user account.',
+      deleteStepTwo: 'I understand, continue',
+      deleteConfirm: 'Confirm delete',
+      cancel: 'Cancel',
+      roleUpdateError: 'Role could not be updated.',
+      deleteUserError: 'User could not be deleted.',
+      roleUpdatedSuccess: 'Role updated successfully.',
+      userDeletedSuccess: 'User deleted successfully.',
+
+      editUser: 'Edit',
+      saveUser: 'Save',
+      userProfileUpdateError: 'User profile could not be updated.',
+      userProfileUpdatedSuccess: 'User profile updated successfully.',
+      deleteInquiry: 'Delete inquiry',
+      deleteInquiryWarning: 'This action can permanently remove the inquiry.',
+      deleteInquiryError: 'Inquiry could not be deleted.',
+      inquiryDeletedSuccess: 'Inquiry deleted successfully.',
     },
     footer: {
       copyright: '© 2026 Bueno Web Solutions. All rights reserved.',
@@ -614,8 +641,14 @@ const messages = {
 
       enterEmailPassword: 'Bitte E-Mail und Passwort eingeben.',
       loginFailedNoJwt: 'Login fehlgeschlagen: Kein JWT vom Server erhalten.',
-      registerSuccess: 'Registrierung erfolgreich! Bitte einloggen.',
       connectionFailed: 'Verbindung zum Server fehlgeschlagen.',
+
+      firstNameLabel: 'Vorname',
+      firstNamePlaceholder: 'Max',
+      lastNameLabel: 'Nachname',
+      lastNamePlaceholder: 'Muster',
+      enterFullName: 'Bitte Vorname und Nachname eingeben.',
+      registerFailedNoJwt: 'Registrierung fehlgeschlagen: Kein JWT vom Server erhalten.',
     },
     accountPage: {
       title: 'Personal Area',
@@ -679,6 +712,27 @@ const messages = {
 
       usersOpenButton: 'Benutzer öffnen',
       inquiriesOpenButton: 'Anfragen öffnen',
+
+      makeAdmin: 'Zu Admin machen',
+      makeUser: 'Zu User machen',
+      deleteUser: 'Benutzer löschen',
+      deleteWarning: 'Diese Aktion kann das Benutzerkonto dauerhaft löschen.',
+      deleteStepTwo: 'Ich verstehe, weiter',
+      deleteConfirm: 'Löschen bestätigen',
+      cancel: 'Abbrechen',
+      roleUpdateError: 'Rolle konnte nicht geändert werden.',
+      deleteUserError: 'Benutzer konnte nicht gelöscht werden.',
+      roleUpdatedSuccess: 'Rolle erfolgreich geändert.',
+      userDeletedSuccess: 'Benutzer erfolgreich gelöscht.',
+
+      editUser: 'Bearbeiten',
+      saveUser: 'Speichern',
+      userProfileUpdateError: 'Benutzerprofil konnte nicht geändert werden.',
+      userProfileUpdatedSuccess: 'Benutzerprofil erfolgreich geändert.',
+      deleteInquiry: 'Anfrage löschen',
+      deleteInquiryWarning: 'Diese Aktion kann die Anfrage dauerhaft löschen.',
+      deleteInquiryError: 'Anfrage konnte nicht gelöscht werden.',
+      inquiryDeletedSuccess: 'Anfrage erfolgreich gelöscht.',
     },
     footer: {
       copyright: '© 2026 Bueno Web Solutions. Alle Rechte vorbehalten.',
