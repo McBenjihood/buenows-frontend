@@ -320,6 +320,18 @@ const messages = {
       actionsText:
         'Here you can safely log out. Additional account settings can be added here later.',
       logout: 'Logout',
+
+      usersTitle: 'Users',
+      usersText: 'Here you can see all registered users and their roles.',
+      usersLoading: 'Users are being loaded ...',
+      usersEmpty: 'No users found.',
+      usersError: 'Users could not be loaded.',
+      userFirstName: 'First name',
+      userLastName: 'Last name',
+      userCreated: 'Created',
+
+      usersOpenButton: 'Open users',
+      inquiriesOpenButton: 'Open inquiries',
     },
     footer: {
       copyright: '© 2026 Bueno Web Solutions. All rights reserved.',
@@ -655,6 +667,18 @@ const messages = {
       actionsText:
         'Hier können Sie sich sicher abmelden. Weitere Einstellungen für Ihr Konto können später an dieser Stelle ergänzt werden.',
       logout: 'Logout',
+
+      usersTitle: 'Benutzer',
+      usersText: 'Hier sehen Sie alle registrierten Benutzer und ihre Rollen.',
+      usersLoading: 'Benutzer werden geladen ...',
+      usersEmpty: 'Keine Benutzer gefunden.',
+      usersError: 'Benutzer konnten nicht geladen werden.',
+      userFirstName: 'Vorname',
+      userLastName: 'Nachname',
+      userCreated: 'Erstellt',
+
+      usersOpenButton: 'Benutzer öffnen',
+      inquiriesOpenButton: 'Anfragen öffnen',
     },
     footer: {
       copyright: '© 2026 Bueno Web Solutions. Alle Rechte vorbehalten.',
