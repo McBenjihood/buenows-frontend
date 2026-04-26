@@ -1,8 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 
 <template>
   <div class="copyright">
-    <h4>© 2026 Bueno Web Solutions. Alle Rechte vorbehalten.</h4>
+    <h4>{{ t('footer.copyright') }}</h4>
   </div>
 </template>
 

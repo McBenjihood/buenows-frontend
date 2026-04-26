@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import vueIcon from '/src/assets/img/icons/technologies/vuejs_logo.svg'
 import springIcon from '/src/assets/img/icons/technologies/spring_logo.svg'
 import postgresIcon from '/src/assets/img/icons/technologies/postgres_logo.svg'
 import awsIcon from '/src/assets/img/icons/technologies/aws_logo.svg'
+
+const { t, tm } = useI18n()
 
 const technologies = [
   { name: 'Vue.js', icon: vueIcon },
@@ -11,94 +15,86 @@ const technologies = [
   { name: 'AWS Cloud', icon: awsIcon },
 ]
 
-const services = [
+const services = computed(() => [
   {
-    title: 'Websites erstellen',
-    text: 'Wir entwickeln moderne und professionelle Websites, die zu Ihrem Unternehmen passen und Vertrauen aufbauen.',
+    title: t('home.services.createWebsites.title'),
+    text: t('home.services.createWebsites.text'),
   },
   {
-    title: 'Websites erneuern',
-    text: 'Bestehende Auftritte modernisieren wir technisch, optisch und strukturell, damit Ihre Website wieder zeitgemäss wirkt.',
+    title: t('home.services.renewWebsites.title'),
+    text: t('home.services.renewWebsites.text'),
   },
   {
-    title: 'Backend & Logik',
-    text: 'Von Login-Systemen bis zu Datenbank-Anbindungen entwickeln wir die technische Grundlage für leistungsstarke Weblösungen.',
+    title: t('home.services.backend.title'),
+    text: t('home.services.backend.text'),
   },
   {
-    title: 'Automatisierungen',
-    text: 'Wir bauen digitale Abläufe, die Zeit sparen, Prozesse vereinfachen und wiederkehrende Aufgaben automatisieren.',
+    title: t('home.services.automations.title'),
+    text: t('home.services.automations.text'),
   },
   {
-    title: 'AI-Lösungen',
-    text: 'Ob automatische Antworten oder intelligente Unterstützung im Kundenkontakt – wir entwickeln moderne AI-gestützte Funktionen.',
+    title: t('home.services.aiSolutions.title'),
+    text: t('home.services.aiSolutions.text'),
   },
   {
-    title: 'Hosting & Weiterentwicklung',
-    text: 'Wir begleiten Projekte auch nach dem Launch mit Hosting, Wartung und technischer Weiterentwicklung.',
+    title: t('home.services.hosting.title'),
+    text: t('home.services.hosting.text'),
   },
-]
+])
 
-const benefits = [
-  'Individuelle Lösungen statt Baukastensysteme',
-  'Moderne Technologien für stabile und skalierbare Systeme',
-  'Klare Kommunikation und saubere Umsetzung',
-  'Websites und Funktionen mit echtem Nutzen im Alltag',
-]
-
-const targetGroups = [
-  'Kleine und mittlere Unternehmen',
-  'Handwerksbetriebe und lokale Firmen',
-  'Dienstleister mit modernem Online-Auftritt',
-  'Unternehmen mit Bedarf an Automatisierung',
-]
+const benefits = computed(() => tm('home.benefits') as string[])
+const targetGroups = computed(() => tm('home.targetGroups') as string[])
 </script>
 
 <template>
   <section class="home-page">
     <div class="page-wrapper">
       <div class="hero-card">
-        <span class="section-label">Bueno Web Solutions</span>
-        <h1>Moderne Websites, smarte Automatisierungen und digitale Lösungen für Unternehmen.</h1>
+        <span class="section-label">{{ t('home.brand') }}</span>
+        <h1>{{ t('home.heroTitle') }}</h1>
         <p class="hero-text">
-          Wir entwickeln professionelle Webauftritte, starke Backend-Lösungen und digitale
-          Funktionen, die nicht nur gut aussehen, sondern im Alltag echten Mehrwert schaffen.
+          {{ t('home.heroText') }}
         </p>
 
         <div class="hero-actions">
-          <router-link to="/contact" class="primary-button">Projekt anfragen</router-link>
-          <router-link to="/about" class="secondary-button">Mehr über uns</router-link>
+          <router-link to="/contact" class="primary-button">
+            {{ t('home.requestProject') }}
+          </router-link>
+          <router-link to="/about" class="secondary-button">
+            {{ t('home.moreAboutUs') }}
+          </router-link>
         </div>
       </div>
 
       <div class="highlights-grid">
         <div class="highlight-card">
-          <h2>Modern</h2>
+          <h2>{{ t('home.modernTitle') }}</h2>
           <p>
-            Wir setzen auf zeitgemässe Technologien und klare Strukturen für einen starken digitalen
-            Auftritt.
+            {{ t('home.modernText') }}
           </p>
         </div>
 
         <div class="highlight-card">
-          <h2>Individuell</h2>
-          <p>Jede Lösung wird an Ihr Unternehmen, Ihre Ziele und Ihre Anforderungen angepasst.</p>
+          <h2>{{ t('home.customTitle') }}</h2>
+          <p>
+            {{ t('home.customText') }}
+          </p>
         </div>
 
         <div class="highlight-card">
-          <h2>Zuverlässig</h2>
+          <h2>{{ t('home.reliableTitle') }}</h2>
           <p>
-            Von der Idee bis zur Umsetzung begleiten wir Projekte direkt, transparent und sauber.
+            {{ t('home.reliableText') }}
           </p>
         </div>
       </div>
 
       <div class="section-card">
         <div class="section-heading">
-          <span class="section-label">Leistungen</span>
-          <h2>Unsere Dienstleistungen</h2>
+          <span class="section-label">{{ t('home.servicesLabel') }}</span>
+          <h2>{{ t('home.servicesTitle') }}</h2>
           <p>
-            Wir verbinden Design, Technik und praktische Funktionen zu Lösungen, die Unternehmen
-            professionell unterstützen.
+            {{ t('home.servicesText') }}
           </p>
         </div>
 
@@ -113,8 +109,8 @@ const targetGroups = [
       <div class="two-column-grid">
         <div class="section-card">
           <div class="section-heading">
-            <span class="section-label">Vorteile</span>
-            <h2>Warum BuenoWS?</h2>
+            <span class="section-label">{{ t('home.benefitsLabel') }}</span>
+            <h2>{{ t('home.benefitsTitle') }}</h2>
           </div>
 
           <ul class="bullet-list">
@@ -126,8 +122,8 @@ const targetGroups = [
 
         <div class="section-card">
           <div class="section-heading">
-            <span class="section-label">Zielgruppen</span>
-            <h2>Für wen wir arbeiten</h2>
+            <span class="section-label">{{ t('home.targetGroupsLabel') }}</span>
+            <h2>{{ t('home.targetGroupsTitle') }}</h2>
           </div>
 
           <ul class="bullet-list">
@@ -140,11 +136,10 @@ const targetGroups = [
 
       <div class="section-card">
         <div class="section-heading center">
-          <span class="section-label">Technologien</span>
-          <h2>Technische Grundlage für starke Lösungen</h2>
+          <span class="section-label">{{ t('home.technologiesLabel') }}</span>
+          <h2>{{ t('home.technologiesTitle') }}</h2>
           <p>
-            Wir arbeiten mit modernen Technologien, damit Ihre Website zuverlässig, wartbar und
-            zukunftssicher bleibt.
+            {{ t('home.technologiesText') }}
           </p>
         </div>
 
@@ -157,14 +152,15 @@ const targetGroups = [
       </div>
 
       <div class="cta-card">
-        <span class="section-label">Kontakt</span>
-        <h2>Sie planen ein Projekt oder möchten Ihren Webauftritt verbessern?</h2>
+        <span class="section-label">{{ t('home.contactLabel') }}</span>
+        <h2>{{ t('home.ctaTitle') }}</h2>
         <p>
-          Schreiben Sie uns und lassen Sie uns gemeinsam besprechen, wie Ihre Website oder digitale
-          Lösung aussehen kann.
+          {{ t('home.ctaText') }}
         </p>
 
-        <router-link to="/contact" class="primary-button">Jetzt Kontakt aufnehmen</router-link>
+        <router-link to="/contact" class="primary-button">
+          {{ t('home.contactNow') }}
+        </router-link>
       </div>
     </div>
   </section>

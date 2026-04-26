@@ -1,9 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 
 <template>
   <div class="Navigation">
     <div class="socials">
-      <span class="socials-label">Socials</span>
+      <span class="socials-label">{{ t('footer.socials') }}</span>
       <div class="socials-links">
         <a href="https://github.com/McBenjihood" target="_blank">
           <img src="/src/assets/img/icons/socials/github_icon.svg" alt="GitHub" />

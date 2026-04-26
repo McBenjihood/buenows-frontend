@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import api from '@/services/api.ts'
+
+const { t } = useI18n()
 
 const email = ref('')
 const title = ref('')
@@ -15,7 +18,7 @@ async function submitForm() {
   errorMsg.value = ''
 
   if (!email.value.trim() || !title.value.trim() || !message.value.trim()) {
-    errorMsg.value = 'Bitte alle Felder ausfüllen.'
+    errorMsg.value = t('contactPage.fillAllFields')
     return
   }
 
@@ -28,15 +31,14 @@ async function submitForm() {
       message: message.value.trim(),
     })
 
-    successMsg.value = response.data?.message || 'Nachricht erfolgreich gesendet.'
+    successMsg.value = response.data?.message || t('contactPage.successDefault')
 
     email.value = ''
     title.value = ''
     message.value = ''
   } catch (error: any) {
     console.error('Error sending contact form:', error)
-    errorMsg.value =
-      error.response?.data?.message || 'Beim Senden der Nachricht ist ein Fehler aufgetreten.'
+    errorMsg.value = error.response?.data?.message || t('contactPage.errorDefault')
   } finally {
     isLoading.value = false
   }
@@ -47,73 +49,78 @@ async function submitForm() {
   <section class="contact-page">
     <div class="contact-wrapper">
       <div class="hero-card">
-        <span class="section-label">Kontakt</span>
-        <h1>Lassen Sie uns über Ihr Projekt sprechen.</h1>
+        <span class="section-label">{{ t('contactPage.label') }}</span>
+        <h1>{{ t('contactPage.heroTitle') }}</h1>
         <p class="hero-text">
-          Ob neue Website, Modernisierung, Backend-Lösung oder digitale Automatisierung – schreiben
-          Sie uns kurz, worum es geht, und wir melden uns bei Ihnen.
+          {{ t('contactPage.heroText') }}
         </p>
       </div>
 
       <div class="contact-grid">
         <div class="info-card">
-          <h2>Direkter Kontakt</h2>
+          <h2>{{ t('contactPage.directContactTitle') }}</h2>
 
           <div class="contact-item">
-            <h3>Telefon</h3>
+            <h3>{{ t('contactPage.phoneTitle') }}</h3>
             <a href="tel:+410775238836" class="contact-link">+41 077 523 88 36</a>
-            <p>Mo – Fr, 09:00 bis 18:00 Uhr</p>
+            <p>{{ t('contactPage.phoneTime') }}</p>
           </div>
 
           <div class="contact-item">
-            <h3>E-Mail</h3>
+            <h3>{{ t('contactPage.emailTitle') }}</h3>
             <a href="mailto:info.buenows@gmail.com" class="contact-link">info.buenows@gmail.com</a>
-            <p>Wir antworten so schnell wie möglich.</p>
+            <p>{{ t('contactPage.emailText') }}</p>
           </div>
 
           <div class="contact-item">
-            <h3>Was Sie uns schreiben können</h3>
+            <h3>{{ t('contactPage.writeUsTitle') }}</h3>
             <p>
-              Beschreiben Sie kurz Ihr Vorhaben, Ihre aktuelle Situation oder Ihr Ziel. Je klarer
-              Ihre Anfrage ist, desto besser können wir Sie unterstützen.
+              {{ t('contactPage.writeUsText') }}
             </p>
           </div>
         </div>
 
         <div class="form-card">
-          <h2>Nachricht senden</h2>
+          <h2>{{ t('contactPage.formTitle') }}</h2>
 
           <form class="contact-form" @submit.prevent="submitForm">
             <div class="form-group">
-              <label for="email">E-Mail</label>
-              <input v-model="email" type="email" id="email" placeholder="ihre@mail.de" required />
-            </div>
-
-            <div class="form-group">
-              <label for="title">Anliegen</label>
+              <label for="email">{{ t('contactPage.emailLabel') }}</label>
               <input
-                v-model="title"
-                type="text"
-                id="title"
-                placeholder="Neue Website, Support, Automatisierung ..."
+                v-model="email"
+                type="email"
+                id="email"
+                :placeholder="t('contactPage.emailPlaceholder')"
                 required
               />
             </div>
 
             <div class="form-group">
-              <label for="message">Beschreibung</label>
+              <label for="title">{{ t('contactPage.subjectLabel') }}</label>
+              <input
+                v-model="title"
+                type="text"
+                id="title"
+                :placeholder="t('contactPage.subjectPlaceholder')"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="message">{{ t('contactPage.messageLabel') }}</label>
               <textarea
                 id="message"
                 rows="6"
-                placeholder="Beschreiben Sie kurz Ihr Projekt oder Ihre Anfrage ..."
+                :placeholder="t('contactPage.messagePlaceholder')"
                 v-model="message"
                 required
               ></textarea>
             </div>
 
             <button class="submit-btn" type="submit" :disabled="isLoading">
-              {{ isLoading ? 'Wird gesendet ...' : 'Nachricht senden' }}
+              {{ isLoading ? t('contactPage.sending') : t('contactPage.sendButton') }}
             </button>
+
             <p v-if="successMsg" class="success-message">{{ successMsg }}</p>
             <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
           </form>
@@ -250,6 +257,10 @@ async function submitForm() {
   border-color: #42b883;
 }
 
+.form-group textarea {
+  resize: vertical;
+}
+
 .submit-btn {
   background-color: #42b883;
   color: #ffffff;
@@ -267,6 +278,26 @@ async function submitForm() {
 .submit-btn:hover {
   transform: translateY(-1px);
   opacity: 0.95;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.success-message {
+  margin: 0;
+  color: #42b883;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.error-message {
+  margin: 0;
+  color: #ff7b7b;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {
@@ -289,44 +320,5 @@ async function submitForm() {
   .hero-card h1 {
     font-size: 2rem;
   }
-}
-
-.form-group input,
-.form-group textarea {
-  background-color: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 0.95rem 1rem;
-  color: white;
-  font-family: inherit;
-  transition: border-color 0.2s ease;
-}
-
-.form-group textarea {
-  resize: vertical;
-}
-
-.form-group textarea {
-  resize: vertical;
-}
-
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.success-message {
-  margin: 0;
-  color: #42b883;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-.error-message {
-  margin: 0;
-  color: #ff7b7b;
-  font-weight: 600;
-  line-height: 1.5;
 }
 </style>

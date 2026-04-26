@@ -1,64 +1,34 @@
 <script setup lang="ts">
-const coreServices = [
-  {
-    title: 'Websites erstellen',
-    text: 'Wir entwickeln moderne, professionelle Websites für Unternehmen, die online klar, vertrauenswürdig und hochwertig auftreten möchten.',
-  },
-  {
-    title: 'Websites modernisieren',
-    text: 'Bestehende Websites bringen wir technisch, optisch und strukturell auf einen modernen Stand, damit Ihr Auftritt wieder überzeugt.',
-  },
-  {
-    title: 'Backend & Web-Logik',
-    text: 'Wir entwickeln die technische Grundlage hinter Ihrer Website – von Benutzerlogins bis zu Datenbank-Anbindungen und individuellen Funktionen.',
-  },
-  {
-    title: 'Automatische E-Mail-Antworten',
-    text: 'Mit unserem AI Replier automatisieren wir wiederkehrende Antworten und schaffen schnellere, sauberere Kommunikation mit Ihren Kunden.',
-  },
-  {
-    title: 'Hosting & Weiterentwicklung',
-    text: 'Auch nach dem Launch begleiten wir Ihr Projekt mit Hosting, Wartung, Erweiterungen und technischer Weiterentwicklung.',
-  },
-  {
-    title: 'Kundenbereiche & Content-Funktionen',
-    text: 'Wir bauen Websites so, dass Kunden später eigene Inhalte, Beiträge und Posts selbst verwalten können.',
-  },
-]
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const upcomingServices = [
-  'AI Telefonassistent für Unternehmen',
-  'AI Chatbot für Firmenwebsites',
-  'AI Sales Automationen für digitale Kundenprozesse',
-]
+const { t, tm } = useI18n()
 
-const targetGroups = [
-  'Kleine und mittlere Unternehmen',
-  'Handwerksbetriebe und lokale Firmen',
-  'Dienstleister mit modernem Webauftritt',
-  'Unternehmen mit Bedarf an Automatisierung',
-]
+const coreServices = computed(
+  () => tm('servicesPage.coreServices') as Array<{ title: string; text: string }>,
+)
+
+const upcomingServices = computed(() => tm('servicesPage.upcomingServices') as string[])
+const targetGroups = computed(() => tm('servicesPage.targetGroups') as string[])
 </script>
 
 <template>
   <section class="services-page">
     <div class="services-wrapper">
       <div class="hero-card">
-        <span class="section-label">Services</span>
-        <h1>Digitale Lösungen für Websites, Automatisierung und moderne Kundenkommunikation.</h1>
+        <span class="section-label">{{ t('servicesPage.label') }}</span>
+        <h1>{{ t('servicesPage.heroTitle') }}</h1>
         <p class="hero-text">
-          Wir entwickeln professionelle Websites, technische Funktionen und smarte
-          Automatisierungen, die Unternehmen im Alltag entlasten und online stärker machen.
+          {{ t('servicesPage.heroText') }}
         </p>
       </div>
 
       <div class="section-card">
         <div class="section-heading">
-          <span class="section-label">Leistungen</span>
-          <h2>Was wir heute für Unternehmen anbieten</h2>
+          <span class="section-label">{{ t('servicesPage.coreLabel') }}</span>
+          <h2>{{ t('servicesPage.coreTitle') }}</h2>
           <p>
-            Unser Fokus liegt auf modernen Weblösungen, klarer technischer Umsetzung und Funktionen,
-            die nicht nur gut aussehen, sondern im Alltag echten Nutzen bringen.
+            {{ t('servicesPage.coreText') }}
           </p>
         </div>
 
@@ -73,11 +43,10 @@ const targetGroups = [
       <div class="two-column-grid">
         <div class="section-card">
           <div class="section-heading">
-            <span class="section-label">Im Ausbau</span>
-            <h2>Was als Nächstes kommt</h2>
+            <span class="section-label">{{ t('servicesPage.upcomingLabel') }}</span>
+            <h2>{{ t('servicesPage.upcomingTitle') }}</h2>
             <p>
-              Wir erweitern unser Angebot gezielt um weitere AI-gestützte Lösungen für Unternehmen,
-              die Kundenkommunikation, interne Abläufe und digitale Prozesse weiter verbessern.
+              {{ t('servicesPage.upcomingText') }}
             </p>
           </div>
 
@@ -90,8 +59,8 @@ const targetGroups = [
 
         <div class="section-card">
           <div class="section-heading">
-            <span class="section-label">Zielgruppen</span>
-            <h2>Für wen unsere Leistungen besonders interessant sind</h2>
+            <span class="section-label">{{ t('servicesPage.targetGroupsLabel') }}</span>
+            <h2>{{ t('servicesPage.targetGroupsTitle') }}</h2>
           </div>
 
           <ul class="bullet-list">
@@ -104,53 +73,51 @@ const targetGroups = [
 
       <div class="process-card">
         <div class="section-heading center">
-          <span class="section-label">Zusammenarbeit</span>
-          <h2>Wie wir mit Kunden arbeiten</h2>
+          <span class="section-label">{{ t('servicesPage.collaborationLabel') }}</span>
+          <h2>{{ t('servicesPage.collaborationTitle') }}</h2>
         </div>
 
         <div class="process-grid">
           <div class="process-step">
-            <h3>1. Bedarf verstehen</h3>
+            <h3>{{ t('servicesPage.step1Title') }}</h3>
             <p>
-              Wir schauen gemeinsam, was Ihr Unternehmen wirklich braucht und welche Lösung sinnvoll
-              ist.
+              {{ t('servicesPage.step1Text') }}
             </p>
           </div>
 
           <div class="process-step">
-            <h3>2. Lösung planen</h3>
+            <h3>{{ t('servicesPage.step2Title') }}</h3>
             <p>
-              Danach definieren wir Struktur, Funktionen und den technischen Aufbau Ihrer Lösung.
+              {{ t('servicesPage.step2Text') }}
             </p>
           </div>
 
           <div class="process-step">
-            <h3>3. Umsetzen</h3>
+            <h3>{{ t('servicesPage.step3Title') }}</h3>
             <p>
-              Wir entwickeln Website, Backend oder Automatisierung sauber, modern und
-              nachvollziehbar.
+              {{ t('servicesPage.step3Text') }}
             </p>
           </div>
 
           <div class="process-step">
-            <h3>4. Weiterentwickeln</h3>
+            <h3>{{ t('servicesPage.step4Title') }}</h3>
             <p>
-              Nach dem Start kann das Projekt erweitert, gepflegt und an neue Anforderungen
-              angepasst werden.
+              {{ t('servicesPage.step4Text') }}
             </p>
           </div>
         </div>
       </div>
 
       <div class="cta-card">
-        <span class="section-label">Kontakt</span>
-        <h2>Sie möchten eine Website erstellen, modernisieren oder Prozesse automatisieren?</h2>
+        <span class="section-label">{{ t('servicesPage.contactLabel') }}</span>
+        <h2>{{ t('servicesPage.ctaTitle') }}</h2>
         <p>
-          Schreiben Sie uns und wir besprechen gemeinsam, welche Lösung für Ihr Unternehmen sinnvoll
-          ist.
+          {{ t('servicesPage.ctaText') }}
         </p>
 
-        <router-link to="/contact" class="primary-button">Jetzt Projekt anfragen</router-link>
+        <router-link to="/contact" class="primary-button">
+          {{ t('servicesPage.ctaButton') }}
+        </router-link>
       </div>
     </div>
   </section>

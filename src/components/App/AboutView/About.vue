@@ -1,14 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 
 <template>
   <section class="about-page">
     <div class="about-wrapper">
       <div class="hero-card">
-        <span class="section-label">Über uns</span>
-        <h1>Wir entwickeln moderne Websites und digitale Lösungen mit echtem Nutzen.</h1>
+        <span class="section-label">{{ t('about.label') }}</span>
+        <h1>{{ t('about.heroTitle') }}</h1>
         <p class="hero-text">
-          Bueno Web Solutions unterstützt Unternehmen dabei, professionell online aufzutreten,
-          Prozesse zu vereinfachen und digitale Lösungen einzusetzen, die im Alltag wirklich helfen.
+          {{ t('about.heroText') }}
         </p>
       </div>
 
@@ -18,62 +21,54 @@
 
       <div class="content-grid">
         <div class="info-card">
-          <h2>Wer wir sind</h2>
+          <h2>{{ t('about.whoWeAreTitle') }}</h2>
           <p>
-            Wir sind ein modernes Webdevelopment-Team mit Fokus auf klare Designs, saubere
-            technische Lösungen und digitale Werkzeuge, die Unternehmen wirklich weiterbringen.
+            {{ t('about.whoWeAreText1') }}
           </p>
           <p>
-            Unser Ziel ist nicht einfach nur eine schöne Website, sondern eine Lösung, die
-            professionell aussieht, zuverlässig funktioniert und mit Ihrem Unternehmen mitwachsen
-            kann.
+            {{ t('about.whoWeAreText2') }}
           </p>
         </div>
 
         <div class="info-card">
-          <h2>Wie wir arbeiten</h2>
+          <h2>{{ t('about.howWeWorkTitle') }}</h2>
           <p>
-            Wir verbinden modernes Frontend, stabiles Backend und praxisnahe Automatisierungen zu
-            Lösungen, die nicht nur gut aussehen, sondern im Alltag echten Mehrwert schaffen.
+            {{ t('about.howWeWorkText1') }}
           </p>
           <p>
-            Dabei legen wir Wert auf klare Kommunikation, saubere Umsetzung und ein Ergebnis, das
-            verständlich, wartbar und zukunftssicher bleibt.
+            {{ t('about.howWeWorkText2') }}
           </p>
         </div>
       </div>
 
       <div class="values-card">
-        <h2>Wofür wir stehen</h2>
+        <h2>{{ t('about.valuesTitle') }}</h2>
         <div class="values-grid">
           <div class="value-box">
-            <h3>Qualität</h3>
+            <h3>{{ t('about.qualityTitle') }}</h3>
             <p>
-              Wir setzen auf saubere Umsetzung, klare Strukturen und Lösungen, die langfristig
-              funktionieren.
+              {{ t('about.qualityText') }}
             </p>
           </div>
 
           <div class="value-box">
-            <h3>Praxisnähe</h3>
+            <h3>{{ t('about.practicalTitle') }}</h3>
             <p>
-              Unsere Websites und Systeme sollen nicht nur modern aussehen, sondern im echten
-              Arbeitsalltag helfen.
+              {{ t('about.practicalText') }}
             </p>
           </div>
 
           <div class="value-box">
-            <h3>Zuverlässigkeit</h3>
+            <h3>{{ t('about.reliabilityTitle') }}</h3>
             <p>
-              Von der Planung bis zur Umsetzung arbeiten wir transparent, direkt und verbindlich.
+              {{ t('about.reliabilityText') }}
             </p>
           </div>
 
           <div class="value-box">
-            <h3>Weiterentwicklung</h3>
+            <h3>{{ t('about.growthTitle') }}</h3>
             <p>
-              Wir denken nicht nur an heute, sondern an Lösungen, die mit zukünftigen Anforderungen
-              mithalten können.
+              {{ t('about.growthText') }}
             </p>
           </div>
         </div>
