@@ -11,18 +11,6 @@ const router = useRouter()
 const isLoading = ref(true)
 const errorMsg = ref('')
 
-const inquiriesLoading = ref(false)
-const inquiriesError = ref('')
-const inquiries = ref<
-  {
-    inquiry_id: number
-    email: string
-    title: string
-    message: string
-    created_at: string | null
-  }[]
->([])
-
 const userProfile = ref<{
   email: string
   authorities: string[]
@@ -35,6 +23,14 @@ const isAdmin = computed(() => authStore.isAdmin)
 
 const openEditor = async () => {
   await router.push('/account/editor')
+}
+
+const openUsers = async () => {
+  await router.push('/account/admin/users')
+}
+
+const openInquiries = async () => {
+  await router.push('/account/admin/inquiries')
 }
 
 async function handleLogout() {
@@ -60,26 +56,6 @@ async function checkBackendAuth() {
   }
 }
 
-async function loadAdminInquiries() {
-  if (!isAdmin.value) {
-    inquiries.value = []
-    return
-  }
-
-  inquiriesLoading.value = true
-  inquiriesError.value = ''
-
-  try {
-    const response = await api.get('/api/admin/inquiries')
-    inquiries.value = response.data?.data ?? []
-  } catch (error: any) {
-    console.error('Error loading inquiries:', error)
-    inquiriesError.value = error.response?.data?.message || t('accountPage.inquiriesError')
-  } finally {
-    inquiriesLoading.value = false
-  }
-}
-
 async function loadCurrentUserFromToken() {
   isLoading.value = true
   errorMsg.value = ''
@@ -99,7 +75,6 @@ async function loadCurrentUserFromToken() {
     }
 
     await checkBackendAuth()
-    await loadAdminInquiries()
   } catch (error) {
     console.error('Error loading user profile:', error)
     errorMsg.value = t('accountPage.profileError')
@@ -145,6 +120,22 @@ onMounted(async () => {
         </div>
 
         <div v-if="isAdmin" class="card">
+          <h2>{{ t('accountPage.usersTitle') }}</h2>
+          <p>{{ t('accountPage.usersText') }}</p>
+          <button class="primary-button" @click="openUsers">
+            {{ t('accountPage.usersOpenButton') }}
+          </button>
+        </div>
+
+        <div v-if="isAdmin" class="card">
+          <h2>{{ t('accountPage.inquiriesTitle') }}</h2>
+          <p>{{ t('accountPage.inquiriesText') }}</p>
+          <button class="primary-button" @click="openInquiries">
+            {{ t('accountPage.inquiriesOpenButton') }}
+          </button>
+        </div>
+
+        <div v-if="isAdmin" class="card">
           <h2>{{ t('accountPage.postsTitle') }}</h2>
           <p>
             {{ t('accountPage.postsText') }}
@@ -179,32 +170,6 @@ onMounted(async () => {
           <p>
             {{ t('accountPage.customerAreaText') }}
           </p>
-        </div>
-
-        <div v-if="isAdmin" class="card card-wide">
-          <h2>{{ t('accountPage.inquiriesTitle') }}</h2>
-          <p>{{ t('accountPage.inquiriesText') }}</p>
-
-          <p v-if="inquiriesLoading">{{ t('accountPage.inquiriesLoading') }}</p>
-          <p v-else-if="inquiriesError" class="error-text">{{ inquiriesError }}</p>
-          <p v-else-if="!inquiries.length">{{ t('accountPage.inquiriesEmpty') }}</p>
-
-          <div v-else class="inquiry-list">
-            <div v-for="inquiry in inquiries" :key="inquiry.inquiry_id" class="inquiry-item">
-              <p>
-                <strong>{{ t('accountPage.inquiryEmail') }}:</strong> {{ inquiry.email }}
-              </p>
-              <p>
-                <strong>{{ t('accountPage.inquirySubject') }}:</strong> {{ inquiry.title }}
-              </p>
-              <p>
-                <strong>{{ t('accountPage.inquiryMessage') }}:</strong> {{ inquiry.message }}
-              </p>
-              <p v-if="inquiry.created_at">
-                <strong>{{ t('accountPage.inquiryCreated') }}:</strong> {{ inquiry.created_at }}
-              </p>
-            </div>
-          </div>
         </div>
 
         <div class="card card-wide">
@@ -310,30 +275,6 @@ onMounted(async () => {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: not-allowed;
-}
-
-.inquiry-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.inquiry-item {
-  background-color: #1f1f1f;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 1rem;
-}
-
-.inquiry-item p {
-  margin: 0.35rem 0;
-  word-break: break-word;
-}
-
-.error-text {
-  color: #ff7b7b;
-  font-weight: 600;
 }
 
 @media (max-width: 768px) {

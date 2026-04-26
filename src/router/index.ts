@@ -65,6 +65,24 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: '/account/admin/users',
+      name: 'AdminUsers',
+      component: () => import('@/views/AdminUsersView.vue'),
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true,
+      },
+    },
+    {
+      path: '/account/admin/inquiries',
+      name: 'AdminInquiries',
+      component: () => import('@/views/AdminInquiriesView.vue'),
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true,
+      },
+    },
   ],
 })
 
@@ -74,6 +92,10 @@ router.beforeEach((to) => {
   }
 
   if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    return { name: 'Account' }
+  }
+
+  if (to.meta.requiresAdmin && !authStore.isAdmin) {
     return { name: 'Account' }
   }
 })
