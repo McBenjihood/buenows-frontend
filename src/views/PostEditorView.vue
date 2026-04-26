@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
+const { t } = useI18n()
 
 async function goBack() {
   await router.push('/account')
@@ -12,21 +14,20 @@ async function goBack() {
   <section class="editor-page">
     <div class="editor-wrapper">
       <div class="editor-header">
-        <button class="back-button" @click="goBack">← Zurück</button>
+        <button class="back-button" @click="goBack">← {{ t('editorPage.back') }}</button>
 
         <div>
-          <h1>Personal Area</h1>
-          <p class="subtitle">Post Editor</p>
+          <h1>{{ t('editorPage.title') }}</h1>
+          <p class="subtitle">{{ t('editorPage.subtitle') }}</p>
         </div>
       </div>
 
       <div class="editor-shell">
         <div class="editor-topbar">
-          <h2>Editorbereich</h2>
+          <h2>{{ t('editorPage.areaTitle') }}</h2>
         </div>
 
-        <div class="editor-placeholder">
-        </div>
+        <div class="editor-placeholder"></div>
       </div>
     </div>
   </section>

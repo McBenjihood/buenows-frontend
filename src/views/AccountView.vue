@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
 import api from '@/services/api.ts'
 
+const { t } = useI18n()
 const router = useRouter()
 
 const isLoading = ref(true)
 const errorMsg = ref('')
+
 const inquiriesLoading = ref(false)
 const inquiriesError = ref('')
 const inquiries = ref<
@@ -53,7 +56,7 @@ async function checkBackendAuth() {
     await api.get('/api/user/auth')
   } catch (error) {
     console.error('Backend auth check failed:', error)
-    errorMsg.value = 'Sitzung konnte nicht bestätigt werden.'
+    errorMsg.value = t('accountPage.sessionError')
   }
 }
 
@@ -71,8 +74,7 @@ async function loadAdminInquiries() {
     inquiries.value = response.data?.data ?? []
   } catch (error: any) {
     console.error('Error loading inquiries:', error)
-    inquiriesError.value =
-      error.response?.data?.message || 'Kontaktanfragen konnten nicht geladen werden.'
+    inquiriesError.value = error.response?.data?.message || t('accountPage.inquiriesError')
   } finally {
     inquiriesLoading.value = false
   }
@@ -84,7 +86,7 @@ async function loadCurrentUserFromToken() {
 
   try {
     if (!authStore.user) {
-      errorMsg.value = 'Kein JWT gefunden.'
+      errorMsg.value = t('accountPage.noJwt')
       return
     }
 
@@ -100,7 +102,7 @@ async function loadCurrentUserFromToken() {
     await loadAdminInquiries()
   } catch (error) {
     console.error('Error loading user profile:', error)
-    errorMsg.value = 'Benutzerprofil konnte nicht geladen werden.'
+    errorMsg.value = t('accountPage.profileError')
   } finally {
     isLoading.value = false
   }
@@ -115,84 +117,104 @@ onMounted(async () => {
   <section class="account-page">
     <div class="account-wrapper">
       <div class="hero-card">
-        <h1>Personal Area</h1>
+        <h1>{{ t('accountPage.title') }}</h1>
         <p class="subtitle">
-          Verwalten Sie hier Inhalte, Beiträge und Einstellungen Ihrer Website.
+          {{ t('accountPage.subtitle') }}
         </p>
       </div>
 
       <div v-if="isLoading" class="card">
-        <h2>Laden</h2>
-        <p>Benutzerdaten werden geladen ...</p>
+        <h2>{{ t('accountPage.loadingTitle') }}</h2>
+        <p>{{ t('accountPage.loadingText') }}</p>
       </div>
 
       <div v-else-if="errorMsg" class="card">
-        <h2>Fehler</h2>
+        <h2>{{ t('accountPage.errorTitle') }}</h2>
         <p>{{ errorMsg }}</p>
       </div>
 
       <div v-else class="grid">
         <div class="card">
-          <h2>Website bearbeiten</h2>
+          <h2>{{ t('accountPage.editorTitle') }}</h2>
           <p>
-            Bearbeiten Sie später Texte, Abschnitte, Dienstleistungen und Inhalte Ihrer Website
-            direkt in diesem Bereich.
+            {{ t('accountPage.editorText') }}
           </p>
-          <button class="primary-button" @click="openEditor">Editor öffnen</button>
+          <button class="primary-button" @click="openEditor">
+            {{ t('accountPage.editorButton') }}
+          </button>
+        </div>
+
+        <div v-if="isAdmin" class="card">
+          <h2>{{ t('accountPage.postsTitle') }}</h2>
+          <p>
+            {{ t('accountPage.postsText') }}
+          </p>
+          <button class="secondary-button" disabled>{{ t('accountPage.soon') }}</button>
+        </div>
+
+        <div v-if="isAdmin" class="card">
+          <h2>{{ t('accountPage.designTitle') }}</h2>
+          <p>
+            {{ t('accountPage.designText') }}
+          </p>
+          <button class="secondary-button" disabled>{{ t('accountPage.soon') }}</button>
         </div>
 
         <div class="card">
-          <h2>Beiträge verwalten</h2>
+          <h2>{{ t('accountPage.accountTitle') }}</h2>
           <p>
-            Erstellen, speichern und veröffentlichen Sie hier künftig eigene Posts und Inhalte für
-            Ihre Website.
+            <strong>{{ t('accountPage.emailLabel') }}:</strong> {{ userProfile?.email }}
           </p>
-          <button class="secondary-button" disabled>Bald verfügbar</button>
-        </div>
-
-        <div class="card">
-          <h2>Design anpassen</h2>
           <p>
-            Farben, Bilder, Layouts und einzelne Bereiche Ihrer Website können hier später
-            individuell angepasst werden.
+            <strong>{{ t('accountPage.statusLabel') }}:</strong> {{ t('accountPage.statusActive') }}
           </p>
-          <button class="secondary-button" disabled>Bald verfügbar</button>
-        </div>
-
-        <div class="card">
-          <h2>Konto</h2>
-          <p><strong>E-Mail:</strong> {{ userProfile?.email }}</p>
-          <p><strong>Status:</strong> Aktiv eingeloggt</p>
           <p v-if="userProfile?.authorities?.length">
-            <strong>Rolle:</strong> {{ userProfile.authorities.join(', ') }}
+            <strong>{{ t('accountPage.roleLabel') }}:</strong>
+            {{ userProfile.authorities.join(', ') }}
+          </p>
+        </div>
+
+        <div v-if="!isAdmin" class="card card-wide">
+          <h2>{{ t('accountPage.customerAreaTitle') }}</h2>
+          <p>
+            {{ t('accountPage.customerAreaText') }}
           </p>
         </div>
 
         <div v-if="isAdmin" class="card card-wide">
-          <h2>Kontaktanfragen</h2>
-          <p>Hier sehen Sie eingegangene Nachrichten aus dem Kontaktformular.</p>
+          <h2>{{ t('accountPage.inquiriesTitle') }}</h2>
+          <p>{{ t('accountPage.inquiriesText') }}</p>
 
-          <p v-if="inquiriesLoading">Kontaktanfragen werden geladen ...</p>
+          <p v-if="inquiriesLoading">{{ t('accountPage.inquiriesLoading') }}</p>
           <p v-else-if="inquiriesError" class="error-text">{{ inquiriesError }}</p>
-          <p v-else-if="!inquiries.length">Noch keine Kontaktanfragen vorhanden.</p>
+          <p v-else-if="!inquiries.length">{{ t('accountPage.inquiriesEmpty') }}</p>
 
           <div v-else class="inquiry-list">
             <div v-for="inquiry in inquiries" :key="inquiry.inquiry_id" class="inquiry-item">
-              <p><strong>E-Mail:</strong> {{ inquiry.email }}</p>
-              <p><strong>Anliegen:</strong> {{ inquiry.title }}</p>
-              <p><strong>Nachricht:</strong> {{ inquiry.message }}</p>
-              <p v-if="inquiry.created_at"><strong>Erstellt:</strong> {{ inquiry.created_at }}</p>
+              <p>
+                <strong>{{ t('accountPage.inquiryEmail') }}:</strong> {{ inquiry.email }}
+              </p>
+              <p>
+                <strong>{{ t('accountPage.inquirySubject') }}:</strong> {{ inquiry.title }}
+              </p>
+              <p>
+                <strong>{{ t('accountPage.inquiryMessage') }}:</strong> {{ inquiry.message }}
+              </p>
+              <p v-if="inquiry.created_at">
+                <strong>{{ t('accountPage.inquiryCreated') }}:</strong> {{ inquiry.created_at }}
+              </p>
             </div>
           </div>
         </div>
 
         <div class="card card-wide">
-          <h2>Konto-Aktionen</h2>
+          <h2>{{ t('accountPage.actionsTitle') }}</h2>
           <p>
-            Hier können Sie sich sicher abmelden. Weitere Einstellungen für Ihr Konto können später
-            an dieser Stelle ergänzt werden.
+            {{ t('accountPage.actionsText') }}
           </p>
-          <button class="primary-button" @click="handleLogout">Logout</button>
+          <button class="primary-button" @click="handleLogout">
+            {{ t('accountPage.logout') }}
+          </button>
         </div>
       </div>
     </div>
@@ -290,25 +312,6 @@ onMounted(async () => {
   cursor: not-allowed;
 }
 
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .card-wide {
-    grid-column: auto;
-  }
-
-  .account-page {
-    padding: 2rem 1rem;
-  }
-
-  .hero-card,
-  .card {
-    padding: 1.5rem;
-  }
-}
-
 .inquiry-list {
   display: flex;
   flex-direction: column;
@@ -331,5 +334,24 @@ onMounted(async () => {
 .error-text {
   color: #ff7b7b;
   font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-wide {
+    grid-column: auto;
+  }
+
+  .account-page {
+    padding: 2rem 1rem;
+  }
+
+  .hero-card,
+  .card {
+    padding: 1.5rem;
+  }
 }
 </style>

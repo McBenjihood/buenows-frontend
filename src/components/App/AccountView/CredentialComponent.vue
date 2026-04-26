@@ -1,30 +1,52 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { authStore } from '@/services/auth.ts'
 import api from '@/services/api.ts'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 
 const email = ref('')
 const password = ref('')
 const errorMsg = ref<string | null>(null)
 const isLoading = ref(false)
 
+const isLogin = computed(() => route.path.includes('login'))
 const switchRoute = computed(() => `/auth/${String(route.meta.action_string)}`)
+
+const pageTitle = computed(() =>
+  isLogin.value ? t('authPage.loginTitle') : t('authPage.registerTitle'),
+)
+
+const submitButtonText = computed(() =>
+  isLoading.value
+    ? t('authPage.loading')
+    : isLogin.value
+      ? t('authPage.signIn')
+      : t('authPage.register'),
+)
+
+const footerInfoText = computed(() =>
+  isLogin.value ? t('authPage.noAccount') : t('authPage.haveAccount'),
+)
+
+const footerActionText = computed(() =>
+  isLogin.value ? t('authPage.createOne') : t('authPage.signInLink'),
+)
 
 async function handleSubmit() {
   if (!email.value || !password.value) {
-    errorMsg.value = 'Please enter email and password.'
+    errorMsg.value = t('authPage.enterEmailPassword')
     return
   }
 
   isLoading.value = true
   errorMsg.value = null
 
-  const isLogin = route.path.includes('login')
-  const endpoint = isLogin ? '/api/user/auth/login' : '/api/user/auth/register'
+  const endpoint = isLogin.value ? '/api/user/auth/login' : '/api/user/auth/register'
 
   try {
     const response = await api.post(endpoint, {
@@ -35,25 +57,24 @@ async function handleSubmit() {
     const apiResponse = response.data
     const loginData = apiResponse.data
 
-    if (isLogin) {
+    if (isLogin.value) {
       if (loginData && loginData.JWT) {
         authStore.setAuthenticated(true, loginData.JWT, loginData.RefreshToken ?? null)
-        console.log('Login success:', apiResponse.message)
         await router.push('/account')
       } else {
-        errorMsg.value = 'Login failed: No JWT received from server.'
+        errorMsg.value = t('authPage.loginFailedNoJwt')
       }
     } else {
       if (loginData && loginData.JWT) {
         authStore.setAuthenticated(true, loginData.JWT, loginData.RefreshToken ?? null)
       }
 
-      alert('Registration successful! Please login.')
+      alert(t('authPage.registerSuccess'))
       await router.push('/auth/login')
     }
   } catch (error: any) {
     console.error('API Error:', error)
-    errorMsg.value = error.response?.data?.message || 'Connection to server failed.'
+    errorMsg.value = error.response?.data?.message || t('authPage.connectionFailed')
   } finally {
     isLoading.value = false
   }
@@ -64,7 +85,7 @@ async function handleSubmit() {
   <div class="container">
     <div class="login-wrapper">
       <div class="solutions-block">
-        <h1>{{ $route.meta.title }}</h1>
+        <h1>{{ pageTitle }}</h1>
 
         <p v-if="errorMsg" style="color: #ff6b6b; margin-bottom: 1rem; text-align: center">
           {{ errorMsg }}
@@ -72,7 +93,7 @@ async function handleSubmit() {
 
         <form class="contact-form" @submit.prevent="handleSubmit">
           <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="email">{{ t('authPage.emailLabel') }}</label>
             <div class="input-wrapper">
               <img
                 src="../../../assets/img/icons/account/login/email.svg"
@@ -83,7 +104,7 @@ async function handleSubmit() {
                 v-model.trim="email"
                 type="email"
                 id="email"
-                placeholder="name@company.com"
+                :placeholder="t('authPage.emailPlaceholder')"
                 autocomplete="email"
                 required
               />
@@ -92,8 +113,8 @@ async function handleSubmit() {
 
           <div class="form-group">
             <div class="label-row">
-              <label for="password">Password</label>
-              <a href="#" class="sub-text contact-link-small">Forgot password?</a>
+              <label for="password">{{ t('authPage.passwordLabel') }}</label>
+              <a href="#" class="sub-text contact-link-small">{{ t('authPage.forgotPassword') }}</a>
             </div>
             <div class="input-wrapper">
               <img
@@ -105,7 +126,7 @@ async function handleSubmit() {
                 v-model="password"
                 type="password"
                 id="password"
-                placeholder="••••••••"
+                :placeholder="t('authPage.passwordPlaceholder')"
                 autocomplete="current-password"
                 required
               />
@@ -113,15 +134,15 @@ async function handleSubmit() {
           </div>
 
           <button type="submit" class="submit-btn" :disabled="isLoading">
-            {{ isLoading ? 'Loading...' : $route.meta.button_text }}
+            {{ submitButtonText }}
           </button>
         </form>
 
         <div class="auth-footer">
           <p class="sub-text">
-            {{ $route.meta.info_text }}
+            {{ footerInfoText }}
             <router-link :to="switchRoute" class="contact-link">
-              {{ $route.meta.action_button }}
+              {{ footerActionText }}
             </router-link>
           </p>
         </div>
@@ -129,6 +150,7 @@ async function handleSubmit() {
     </div>
   </div>
 </template>
+
 <style scoped>
 .input-wrapper {
   position: relative;

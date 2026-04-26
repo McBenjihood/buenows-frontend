@@ -35,11 +35,7 @@ const router = createRouter({
           component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
           meta: {
             requiresGuest: true,
-            title: 'Welcome back ...',
-            button_text: 'Sign In',
-            info_text: "Don't have an Account?",
             action_string: 'register',
-            action_button: 'Create one',
           },
         },
         {
@@ -48,11 +44,7 @@ const router = createRouter({
           component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
           meta: {
             requiresGuest: true,
-            title: 'Welcome back to BuenoWS',
-            button_text: 'Register',
-            info_text: 'Already have an Account?',
             action_string: 'login',
-            action_button: 'Sign In',
           },
         },
       ],
