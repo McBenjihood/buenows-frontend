@@ -9,6 +9,8 @@ const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
 
+const firstName = ref('')
+const lastName = ref('')
 const email = ref('')
 const password = ref('')
 const errorMsg = ref<string | null>(null)
@@ -43,34 +45,41 @@ async function handleSubmit() {
     return
   }
 
+  if (!isLogin.value && (!firstName.value.trim() || !lastName.value.trim())) {
+    errorMsg.value = t('authPage.enterFullName')
+    return
+  }
+
   isLoading.value = true
   errorMsg.value = null
 
   const endpoint = isLogin.value ? '/api/user/auth/login' : '/api/user/auth/register'
 
   try {
-    const response = await api.post(endpoint, {
-      email: email.value,
-      password: password.value,
-    })
+    const payload = isLogin.value
+      ? {
+          email: email.value,
+          password: password.value,
+        }
+      : {
+          email: email.value,
+          first_name: firstName.value.trim(),
+          last_name: lastName.value.trim(),
+          password: password.value,
+        }
+
+    const response = await api.post(endpoint, payload)
 
     const apiResponse = response.data
-    const loginData = apiResponse.data
+    const authData = apiResponse.data
 
-    if (isLogin.value) {
-      if (loginData && loginData.JWT) {
-        authStore.setAuthenticated(true, loginData.JWT, loginData.RefreshToken ?? null)
-        await router.push('/account')
-      } else {
-        errorMsg.value = t('authPage.loginFailedNoJwt')
-      }
+    if (authData && authData.JWT) {
+      authStore.setAuthenticated(true, authData.JWT, authData.RefreshToken ?? null)
+      await router.push('/account')
     } else {
-      if (loginData && loginData.JWT) {
-        authStore.setAuthenticated(true, loginData.JWT, loginData.RefreshToken ?? null)
-      }
-
-      alert(t('authPage.registerSuccess'))
-      await router.push('/auth/login')
+      errorMsg.value = isLogin.value
+        ? t('authPage.loginFailedNoJwt')
+        : t('authPage.registerFailedNoJwt')
     }
   } catch (error: any) {
     console.error('API Error:', error)
@@ -87,11 +96,39 @@ async function handleSubmit() {
       <div class="solutions-block">
         <h1>{{ pageTitle }}</h1>
 
-        <p v-if="errorMsg" style="color: #ff6b6b; margin-bottom: 1rem; text-align: center">
+        <p v-if="errorMsg" class="error-message">
           {{ errorMsg }}
         </p>
 
         <form class="contact-form" @submit.prevent="handleSubmit">
+          <template v-if="!isLogin">
+            <div class="name-row">
+              <div class="form-group">
+                <label for="firstName">{{ t('authPage.firstNameLabel') }}</label>
+                <input
+                  v-model.trim="firstName"
+                  type="text"
+                  id="firstName"
+                  :placeholder="t('authPage.firstNamePlaceholder')"
+                  autocomplete="given-name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">{{ t('authPage.lastNameLabel') }}</label>
+                <input
+                  v-model.trim="lastName"
+                  type="text"
+                  id="lastName"
+                  :placeholder="t('authPage.lastNamePlaceholder')"
+                  autocomplete="family-name"
+                  required
+                />
+              </div>
+            </div>
+          </template>
+
           <div class="form-group">
             <label for="email">{{ t('authPage.emailLabel') }}</label>
             <div class="input-wrapper">
@@ -191,7 +228,7 @@ async function handleSubmit() {
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 450px;
+  max-width: 520px;
 }
 
 h1 {
@@ -203,10 +240,22 @@ h1 {
   color: #ffffff;
 }
 
+.error-message {
+  color: #ff6b6b;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 .form-group {
@@ -257,7 +306,8 @@ h1 {
   cursor: pointer;
   transition:
     transform 0.2s,
-    background-color 0.2s;
+    background-color 0.2s,
+    opacity 0.2s;
   margin-top: 0.5rem;
   width: 100%;
 }
@@ -265,6 +315,12 @@ h1 {
 .submit-btn:hover {
   background-color: #33a06f;
   transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .auth-footer {
@@ -299,10 +355,18 @@ h1 {
   color: #888;
 }
 
+.name-row .form-group input {
+  padding: 0.8rem 1rem;
+}
+
 @media (max-width: 768px) {
   .solutions-block {
     padding: 2rem;
     max-width: 100%;
+  }
+
+  .name-row {
+    grid-template-columns: 1fr;
   }
 }
 </style>
