@@ -16,208 +16,215 @@ const messages = {
     },
     home: {
       brand: 'Bueno Web Solutions',
-      heroTitle: 'Modern websites, smart automations and digital solutions for businesses.',
+      heroTitle: 'We build websites and AI systems that help small businesses get more customers and save time.',
       heroText:
-        'We build professional websites, strong backend solutions and digital features that not only look good, but also create real value in daily business.',
+        'We help small and medium-sized businesses build a professional online presence, automate customer communication and turn their website into a real business tool.',
       requestProject: 'Request a project',
       moreAboutUs: 'More about us',
 
-      modernTitle: 'Modern',
-      modernText: 'We use modern technologies and clear structures for a strong digital presence.',
+      modernTitle: 'Professional online presence',
+      modernText:
+        'We build clean, modern websites that make your business look trustworthy and serious.',
 
-      customTitle: 'Custom',
-      customText: 'Every solution is tailored to your business, your goals and your requirements.',
+      customTitle: 'Built for your business',
+      customText:
+        'Every website and automation is adapted to your services, customers and daily workflow.',
 
-      reliableTitle: 'Reliable',
+      reliableTitle: 'Practical and reliable',
       reliableText:
-        'From idea to implementation, we support projects directly, transparently and cleanly.',
+        'We focus on solutions that work in real business life — not just designs that look good.',
 
       servicesLabel: 'Services',
-      servicesTitle: 'Our services',
+      servicesTitle: 'What we can build for you',
       servicesText:
-        'We combine design, technology and practical functions into solutions that support companies professionally.',
+        'From new websites to backend systems and AI-powered replies, we create digital solutions that save time and help your business grow.',
 
       benefitsLabel: 'Benefits',
-      benefitsTitle: 'Why BuenoWS?',
+      benefitsTitle: 'Why work with BuenoWS?',
 
       targetGroupsLabel: 'Target groups',
-      targetGroupsTitle: 'Who we work for',
+      targetGroupsTitle: 'Who we help',
 
       technologiesLabel: 'Technologies',
-      technologiesTitle: 'Technical foundation for strong solutions',
+      technologiesTitle: 'Built on a strong technical foundation',
       technologiesText:
-        'We work with modern technologies so your website remains reliable, maintainable and future-proof.',
+        'We use modern technologies to build websites and systems that are stable, expandable and easy to maintain.',
 
       contactLabel: 'Contact',
-      ctaTitle: 'Are you planning a project or want to improve your web presence?',
+      ctaTitle: 'Ready to improve your website or automate your customer communication?',
       ctaText:
-        'Write to us and let us discuss together what your website or digital solution could look like.',
-      contactNow: 'Get in touch now',
+        'Tell us what you need. We will look at your situation and suggest a solution that makes sense for your business.',
+      contactNow: 'Get in touch',
 
       services: {
         createWebsites: {
-          title: 'Build websites',
-          text: 'We develop modern and professional websites that fit your business and build trust.',
+          title: 'New websites',
+          text: 'We create modern websites that present your services clearly, build trust and help customers contact you.',
         },
         renewWebsites: {
-          title: 'Modernize websites',
-          text: 'We modernize existing websites technically, visually and structurally so your presence feels up to date again.',
+          title: 'Website redesign',
+          text: 'We modernize outdated websites so they look better, work faster and represent your business professionally.',
         },
         backend: {
-          title: 'Backend & logic',
-          text: 'From login systems to database integrations, we develop the technical foundation for powerful web solutions.',
+          title: 'Backend systems',
+          text: 'We build the technical logic behind your website, including logins, databases, admin areas and custom features.',
         },
         automations: {
-          title: 'Automations',
-          text: 'We build digital workflows that save time, simplify processes and automate recurring tasks.',
+          title: 'Business automation',
+          text: 'We automate repetitive tasks so you save time and can focus more on your customers and your work.',
         },
         aiSolutions: {
-          title: 'AI solutions',
-          text: 'From automatic replies to intelligent customer support, we create modern AI-powered features.',
+          title: 'AI email replier',
+          text: 'We create AI-powered reply systems that help businesses answer customer inquiries faster and more consistently.',
         },
         hosting: {
-          title: 'Hosting & further development',
-          text: 'We also support projects after launch with hosting, maintenance and technical improvements.',
+          title: 'Hosting & support',
+          text: 'After launch, we can support your project with hosting, updates, maintenance and future improvements.',
         },
       },
 
       benefits: [
-        'Individual solutions instead of website builders',
-        'Modern technologies for stable and scalable systems',
-        'Clear communication and clean execution',
-        'Websites and features with real practical value',
+        'Professional websites instead of generic templates',
+        'Digital solutions adapted to your real business needs',
+        'AI automation that can save time in customer communication',
+        'Modern backend systems for serious and expandable projects',
       ],
 
       targetGroups: [
-        'Small and medium-sized businesses',
-        'Craft businesses and local companies',
-        'Service providers with a modern online presence',
-        'Companies with automation needs',
+        'Craft businesses such as roofers, painters and electricians',
+        'Small and medium-sized local companies',
+        'Service providers that need a stronger online presence',
+        'Businesses that want to automate customer communication',
       ],
     },
     about: {
       label: 'About us',
-      heroTitle: 'We build modern websites and digital solutions with real practical value.',
+      heroTitle: 'We are building digital solutions that actually help small businesses grow.',
       heroText:
-        'Bueno Web Solutions helps companies build a professional online presence, simplify processes and use digital solutions that truly help in day-to-day work.',
+        'We are two developers from Lucerne focused on building websites, backend systems and automations that solve real problems in everyday business.',
 
       whoWeAreTitle: 'Who we are',
       whoWeAreText1:
-        'We are a modern web development team focused on clear design, clean technical solutions and digital tools that genuinely move businesses forward.',
+        'We are Liam Bruno and Benjamin Gerresheim, both 18 years old and currently studying computer science at the IMS (Informatik Mittelschule) in Lucerne.',
       whoWeAreText2:
-        'Our goal is not just a nice-looking website, but a solution that looks professional, works reliably and can grow together with your business.',
+        'Alongside school, we are building Bueno Web Solutions to gain real experience, work with real businesses and create digital solutions that go beyond simple websites.',
+
+      whyTitle: 'Why we started',
+      whyText1:
+        'We started this project because we saw that many small businesses still have outdated websites or no real digital systems behind them.',
+      whyText2:
+        'At the same time, we wanted to build something real ourselves — not just learn theory, but create systems, work with clients and grow a business from the ground up.',
+
+      targetTitle: 'Who we work with',
+      targetText:
+        'We mainly work with small and medium-sized businesses such as craft companies, local services and startups that want a more professional online presence and smarter processes.',
+
+      differenceTitle: 'What makes us different',
+      differenceText1:
+        'We work directly, personally and without unnecessary complexity. You communicate with us directly — no middlemen, no agency layers.',
+      differenceText2:
+        'Our focus is not just design, but practical solutions that actually help your business: getting more inquiries, saving time and simplifying processes.',
 
       howWeWorkTitle: 'How we work',
       howWeWorkText1:
-        'We combine modern frontend, stable backend and practical automations into solutions that not only look good, but also create real value in daily work.',
+        'We keep everything simple and transparent. We communicate directly, often via chat or call, and keep you updated during the whole process.',
       howWeWorkText2:
-        'We focus on clear communication, clean execution and a result that stays understandable, maintainable and future-proof.',
+        'Our goal is to understand your business first and then build something that truly fits your needs — not just a standard solution.',
 
-      valuesTitle: 'What we stand for',
-
-      qualityTitle: 'Quality',
-      qualityText:
-        'We focus on clean execution, clear structures and solutions that work reliably in the long term.',
-
-      practicalTitle: 'Practical value',
-      practicalText:
-        'Our websites and systems should not only look modern, but also help in real everyday work.',
-
-      reliabilityTitle: 'Reliability',
-      reliabilityText:
-        'From planning to implementation, we work transparently, directly and dependably.',
-
-      growthTitle: 'Further development',
-      growthText:
-        'We do not only think about today, but about solutions that can keep up with future requirements.',
+      futureTitle: 'What we are building',
+      futureText1:
+        'We are currently expanding our services with AI-powered solutions such as automatic email replies, AI-based customer communication and process automation.',
+      futureText2:
+        'Our long-term goal is to build systems that help businesses save time, reduce manual work and handle customer communication more efficiently.',
     },
     servicesPage: {
       label: 'Services',
-      heroTitle: 'Digital solutions for websites, automation and modern customer communication.',
+      heroTitle: 'Websites, automation and AI solutions that actually help your business.',
       heroText:
-        'We build professional websites, technical features and smart automations that reduce workload and strengthen companies online.',
+        'We build websites and systems that do more than just look good — they help you get customers, save time and improve your daily workflow.',
 
       coreLabel: 'Services',
-      coreTitle: 'What we currently offer for businesses',
+      coreTitle: 'What we build for businesses',
       coreText:
-        'Our focus is on modern web solutions, clear technical implementation and features that not only look good, but also bring real practical value.',
+        'Our focus is on practical solutions: websites that convert, backend systems that work and automations that reduce manual work.',
 
       upcomingLabel: 'In development',
       upcomingTitle: 'What is coming next',
       upcomingText:
-        'We are expanding our offer with additional AI-powered solutions for companies that improve customer communication, internal workflows and digital processes.',
+        'We are currently building new AI-based tools that will further improve customer communication and automate repetitive business tasks.',
 
       targetGroupsLabel: 'Target groups',
-      targetGroupsTitle: 'Who our services are especially relevant for',
+      targetGroupsTitle: 'Who this is for',
 
-      collaborationLabel: 'Collaboration',
-      collaborationTitle: 'How we work with clients',
+      collaborationLabel: 'How it works',
+      collaborationTitle: 'Simple and clear process',
 
-      step1Title: '1. Understand needs',
+      step1Title: '1. Understand your business',
       step1Text:
-        'We first look together at what your business really needs and which solution makes sense.',
+        'We first look at your current situation, your services and where you lose time or potential customers.',
 
       step2Title: '2. Plan the solution',
-      step2Text: 'Then we define the structure, features and technical setup of your solution.',
+      step2Text:
+        'We define exactly what your website or system should do and how it helps your business.',
 
-      step3Title: '3. Implement',
-      step3Text: 'We build the website, backend or automation cleanly, modernly and transparently.',
+      step3Title: '3. Build and implement',
+      step3Text:
+        'We develop your website or automation cleanly and keep you updated during the process.',
 
-      step4Title: '4. Improve further',
+      step4Title: '4. Improve and scale',
       step4Text:
-        'After launch, the project can be expanded, maintained and adapted to new requirements.',
+        'After launch, we can expand and improve your system step by step as your business grows.',
 
       contactLabel: 'Contact',
-      ctaTitle: 'Do you want to build a website, modernize it or automate processes?',
-      ctaText:
-        'Write to us and we will discuss together which solution makes sense for your business.',
-      ctaButton: 'Request a project now',
+      ctaTitle: 'Want a website or system that actually helps your business?',
+      ctaText: 'Send us a short message and we will tell you what makes sense for your situation.',
+      ctaButton: 'Request a project',
 
       coreServices: [
         {
-          title: 'Build websites',
-          text: 'We develop modern, professional websites for businesses that want to appear clear, trustworthy and high-quality online.',
+          title: 'Websites that convert',
+          text: 'We build websites that clearly present your services and turn visitors into real customer inquiries.',
         },
         {
-          title: 'Modernize websites',
-          text: 'We bring existing websites up to date technically, visually and structurally so your online presence becomes convincing again.',
+          title: 'Website redesign',
+          text: 'Outdated website? We rebuild it so it looks modern, loads fast and builds trust instantly.',
         },
         {
-          title: 'Backend & web logic',
-          text: 'We build the technical foundation behind your website – from user logins to database connections and custom features.',
+          title: 'Backend & systems',
+          text: 'We create admin areas, login systems and database solutions so your website becomes a real tool.',
         },
         {
-          title: 'Automatic email replies',
-          text: 'With our AI Replier, we automate recurring replies and create faster, cleaner communication with your customers.',
+          title: 'AI email automation',
+          text: 'We build AI systems that automatically reply to customer inquiries — perfect for repetitive questions.',
         },
         {
-          title: 'Hosting & further development',
-          text: 'Even after launch, we support your project with hosting, maintenance, extensions and technical improvements.',
+          title: 'Process automation',
+          text: 'We automate tasks like requests, emails or workflows so you save time every day.',
         },
         {
-          title: 'Client areas & content features',
-          text: 'We build websites so clients can later manage their own content, posts and updates themselves.',
+          title: 'Hosting & support',
+          text: 'We take care of your website after launch so everything stays online, fast and secure.',
         },
       ],
 
       upcomingServices: [
         'AI phone assistant for businesses',
-        'AI chatbot for company websites',
-        'AI sales automations for digital customer processes',
+        'AI chatbot for websites',
+        'Automated sales and lead systems',
       ],
 
       targetGroups: [
-        'Small and medium-sized businesses',
-        'Craft businesses and local companies',
-        'Service providers with a modern web presence',
-        'Companies with automation needs',
+        'Craft businesses (roofers, electricians, etc.)',
+        'Local companies',
+        'Service providers',
+        'Businesses with repetitive customer requests',
       ],
     },
     contactPage: {
       label: 'Contact',
-      heroTitle: 'Let’s talk about your project.',
+      heroTitle: 'Tell us what you need — we will show you what actually makes sense for your business.',
       heroText:
-        'Whether it is a new website, modernization, backend solution or digital automation — send us a short message about your needs and we will get back to you.',
+        'Whether you need a new website, a redesign, backend features or AI automation — send us a short message and we will look at what makes sense for your business.',
 
       directContactTitle: 'Direct contact',
 
@@ -225,29 +232,30 @@ const messages = {
       phoneTime: 'Mon – Fri, 09:00 to 18:00',
 
       emailTitle: 'Email',
-      emailText: 'We reply as quickly as possible.',
+      emailText: 'Send us your idea, problem or current situation.',
 
-      writeUsTitle: 'What you can write to us',
+      writeUsTitle: 'What to include',
       writeUsText:
-        'Briefly describe your project, your current situation or your goal. The clearer your request is, the better we can support you.',
+        'Tell us what your business does, what you need and what your current website or process looks like. A short description is enough to start.',
 
-      formTitle: 'Send message',
-      emailLabel: 'Email',
-      emailPlaceholder: 'your@mail.com',
-      subjectLabel: 'Subject',
-      subjectPlaceholder: 'New website, support, automation ...',
-      messageLabel: 'Description',
-      messagePlaceholder: 'Briefly describe your project or your request ...',
+      formTitle: 'Request a project',
+      emailLabel: 'Your email',
+      emailPlaceholder: 'name@company.com',
+      subjectLabel: 'What do you need?',
+      subjectPlaceholder: 'New website, redesign, AI email replier ...',
+      messageLabel: 'Your message',
+      messagePlaceholder:
+        'Briefly describe your business, your goal and what you would like us to build or improve ...',
 
       fillAllFields: 'Please fill in all fields.',
       sending: 'Sending ...',
-      sendButton: 'Send message',
-      successDefault: 'Message sent successfully.',
-      errorDefault: 'An error occurred while sending the message.',
+      sendButton: 'Send request',
+      successDefault: 'Thank you. Your request has been sent successfully.',
+      errorDefault: 'Something went wrong while sending your message.',
     },
     authPage: {
-      loginTitle: 'Welcome back',
-      registerTitle: 'Welcome to BuenoWS',
+      loginTitle: 'Login to your account',
+      registerTitle: 'Create your account and get access to your project dashboard',
 
       emailLabel: 'Email address',
       emailPlaceholder: 'name@company.com',
@@ -256,65 +264,65 @@ const messages = {
       passwordPlaceholder: '••••••••',
       forgotPassword: 'Forgot password?',
 
-      signIn: 'Sign In',
-      register: 'Register',
-      loading: 'Loading...',
+      signIn: 'Login',
+      register: 'Create account',
+      loading: 'Please wait...',
 
-      noAccount: "Don't have an account?",
+      noAccount: "Don't have an account yet?",
       haveAccount: 'Already have an account?',
       createOne: 'Create one',
-      signInLink: 'Sign In',
+      signInLink: 'Login',
 
-      enterEmailPassword: 'Please enter email and password.',
-      loginFailedNoJwt: 'Login failed: No JWT received from server.',
-      connectionFailed: 'Connection to server failed.',
+      enterEmailPassword: 'Please enter your email and password.',
+      loginFailedNoJwt: 'Login failed. No access token received.',
+      connectionFailed: 'Could not connect to the server.',
 
       firstNameLabel: 'First name',
       firstNamePlaceholder: 'John',
       lastNameLabel: 'Last name',
       lastNamePlaceholder: 'Smith',
-      enterFullName: 'Please enter first name and last name.',
-      registerFailedNoJwt: 'Registration failed: No JWT received from server.',
+      enterFullName: 'Please enter your first and last name.',
+      registerFailedNoJwt: 'Registration failed. No access token received.',
     },
     accountPage: {
-      title: 'Personal Area',
-      subtitle: 'Manage content, posts and settings for your website here.',
+      title: 'Dashboard',
+      subtitle: 'Manage your website, account and project tools in one place.',
 
       loadingTitle: 'Loading',
-      loadingText: 'User data is being loaded ...',
+      loadingText: 'Your account data is being loaded ...',
 
       errorTitle: 'Error',
-      sessionError: 'Session could not be confirmed.',
-      noJwt: 'No JWT found.',
-      profileError: 'User profile could not be loaded.',
+      sessionError: 'Your session could not be confirmed.',
+      noJwt: 'No login token found.',
+      profileError: 'Your profile could not be loaded.',
       inquiriesError: 'Contact inquiries could not be loaded.',
 
-      editorTitle: 'Edit website',
+      editorTitle: 'Website editor',
       editorText:
-        'Later you will be able to edit texts, sections, services and website content directly in this area.',
+        'Open the editor area to manage website content, pages and updates when editing features are available.',
       editorButton: 'Open editor',
 
-      postsTitle: 'Manage posts',
+      postsTitle: 'Posts & content',
       postsText:
-        'Here you will later be able to create, save and publish your own posts and content for your website.',
+        'Create and manage news, posts or content updates for your website. This feature is currently in development.',
       soon: 'Coming soon',
 
-      designTitle: 'Adjust design',
+      designTitle: 'Design settings',
       designText:
-        'Colors, images, layouts and individual website sections can later be customized here.',
+        'Adjust colors, images and selected design elements of your website. This feature is currently in development.',
 
-      accountTitle: 'Account',
+      accountTitle: 'Account overview',
       emailLabel: 'Email',
       statusLabel: 'Status',
-      statusActive: 'Logged in',
-      roleLabel: 'Role',
+      statusActive: 'Active',
+      roleLabel: 'Access level',
 
       customerAreaTitle: 'Client area',
       customerAreaText:
-        'Welcome to your client area. Here you will later see your inquiries, project progress, files and further information about your collaboration with Bueno Web Solutions.',
+        'Here you will later find project updates, files, requests and information about your collaboration with Bueno Web Solutions.',
 
       inquiriesTitle: 'Contact inquiries',
-      inquiriesText: 'Here you can see incoming messages from the contact form.',
+      inquiriesText: 'View and manage messages submitted through the website contact form.',
       inquiriesLoading: 'Contact inquiries are being loaded ...',
       inquiriesEmpty: 'No contact inquiries yet.',
       inquiryEmail: 'Email',
@@ -323,12 +331,11 @@ const messages = {
       inquiryCreated: 'Created',
 
       actionsTitle: 'Account actions',
-      actionsText:
-        'Here you can safely log out. Additional account settings can be added here later.',
+      actionsText: 'Log out safely from your account.',
       logout: 'Logout',
 
-      usersTitle: 'Users',
-      usersText: 'Here you can see all registered users and their roles.',
+      usersTitle: 'User management',
+      usersText: 'View registered users, manage roles and keep admin access under control.',
       usersLoading: 'Users are being loaded ...',
       usersEmpty: 'No users found.',
       usersError: 'Users could not be loaded.',
@@ -336,7 +343,7 @@ const messages = {
       userLastName: 'Last name',
       userCreated: 'Created',
 
-      usersOpenButton: 'Open users',
+      usersOpenButton: 'Open user management',
       inquiriesOpenButton: 'Open inquiries',
 
       makeAdmin: 'Make admin',
@@ -385,213 +392,214 @@ const messages = {
     },
     home: {
       brand: 'Bueno Web Solutions',
-      heroTitle:
-        'Moderne Websites, smarte Automatisierungen und digitale Lösungen für Unternehmen.',
+      heroTitle: 'Websites, Backend-Systeme und AI-Automatisierung für wachsende Unternehmen.',
       heroText:
-        'Wir entwickeln professionelle Webauftritte, starke Backend-Lösungen und digitale Funktionen, die nicht nur gut aussehen, sondern im Alltag echten Mehrwert schaffen.',
+        'Wir helfen kleinen und mittelgrossen Unternehmen dabei, professionell online aufzutreten, Kundenkommunikation zu automatisieren und ihre Website zu einem echten Werkzeug fürs Geschäft zu machen.',
       requestProject: 'Projekt anfragen',
       moreAboutUs: 'Mehr über uns',
 
-      modernTitle: 'Modern',
+      modernTitle: 'Professioneller Auftritt',
       modernText:
-        'Wir setzen auf zeitgemässe Technologien und klare Strukturen für einen starken digitalen Auftritt.',
+        'Wir entwickeln moderne Websites, die Ihr Unternehmen vertrauenswürdig, klar und hochwertig präsentieren.',
 
-      customTitle: 'Individuell',
+      customTitle: 'Passend zu Ihrem Betrieb',
       customText:
-        'Jede Lösung wird an Ihr Unternehmen, Ihre Ziele und Ihre Anforderungen angepasst.',
+        'Jede Website und jede Automatisierung wird an Ihre Dienstleistungen, Kunden und Arbeitsabläufe angepasst.',
 
-      reliableTitle: 'Zuverlässig',
+      reliableTitle: 'Praktisch und zuverlässig',
       reliableText:
-        'Von der Idee bis zur Umsetzung begleiten wir Projekte direkt, transparent und sauber.',
+        'Wir bauen Lösungen, die im echten Geschäftsalltag funktionieren — nicht nur Designs, die gut aussehen.',
 
       servicesLabel: 'Leistungen',
-      servicesTitle: 'Unsere Dienstleistungen',
+      servicesTitle: 'Was wir für Sie bauen können',
       servicesText:
-        'Wir verbinden Design, Technik und praktische Funktionen zu Lösungen, die Unternehmen professionell unterstützen.',
+        'Von neuen Websites über Backend-Systeme bis zu AI-gestützten Antworten entwickeln wir digitale Lösungen, die Zeit sparen und Ihr Unternehmen stärken.',
 
       benefitsLabel: 'Vorteile',
       benefitsTitle: 'Warum BuenoWS?',
 
       targetGroupsLabel: 'Zielgruppen',
-      targetGroupsTitle: 'Für wen wir arbeiten',
+      targetGroupsTitle: 'Wem wir helfen',
 
       technologiesLabel: 'Technologien',
-      technologiesTitle: 'Technische Grundlage für starke Lösungen',
+      technologiesTitle: 'Gebaut auf einer starken technischen Grundlage',
       technologiesText:
-        'Wir arbeiten mit modernen Technologien, damit Ihre Website zuverlässig, wartbar und zukunftssicher bleibt.',
+        'Wir nutzen moderne Technologien, damit Websites und Systeme stabil, erweiterbar und gut wartbar bleiben.',
 
       contactLabel: 'Kontakt',
-      ctaTitle: 'Sie planen ein Projekt oder möchten Ihren Webauftritt verbessern?',
+      ctaTitle: 'Bereit, Ihre Website zu verbessern oder Kundenkommunikation zu automatisieren?',
       ctaText:
-        'Schreiben Sie uns und lassen Sie uns gemeinsam besprechen, wie Ihre Website oder digitale Lösung aussehen kann.',
-      contactNow: 'Jetzt Kontakt aufnehmen',
+        'Schreiben Sie uns, was Sie brauchen. Wir schauen Ihre Situation an und schlagen eine passende Lösung für Ihr Unternehmen vor.',
+      contactNow: 'Kontakt aufnehmen',
 
       services: {
         createWebsites: {
-          title: 'Websites erstellen',
-          text: 'Wir entwickeln moderne und professionelle Websites, die zu Ihrem Unternehmen passen und Vertrauen aufbauen.',
+          title: 'Neue Websites',
+          text: 'Wir erstellen moderne Websites, die Ihre Leistungen klar zeigen, Vertrauen aufbauen und Kunden zur Kontaktaufnahme bringen.',
         },
         renewWebsites: {
-          title: 'Websites erneuern',
-          text: 'Bestehende Auftritte modernisieren wir technisch, optisch und strukturell, damit Ihre Website wieder zeitgemäss wirkt.',
+          title: 'Website erneuern',
+          text: 'Wir modernisieren veraltete Websites, damit sie besser aussehen, schneller funktionieren und Ihr Unternehmen professionell vertreten.',
         },
         backend: {
-          title: 'Backend & Logik',
-          text: 'Von Login-Systemen bis zu Datenbank-Anbindungen entwickeln wir die technische Grundlage für leistungsstarke Weblösungen.',
+          title: 'Backend-Systeme',
+          text: 'Wir entwickeln die technische Logik hinter Ihrer Website, zum Beispiel Logins, Datenbanken, Admin-Bereiche und individuelle Funktionen.',
         },
         automations: {
-          title: 'Automatisierungen',
-          text: 'Wir bauen digitale Abläufe, die Zeit sparen, Prozesse vereinfachen und wiederkehrende Aufgaben automatisieren.',
+          title: 'Automatisierung',
+          text: 'Wir automatisieren wiederkehrende Aufgaben, damit Sie Zeit sparen und sich stärker auf Ihre Kunden und Arbeit konzentrieren können.',
         },
         aiSolutions: {
-          title: 'AI-Lösungen',
-          text: 'Ob automatische Antworten oder intelligente Unterstützung im Kundenkontakt – wir entwickeln moderne AI-gestützte Funktionen.',
+          title: 'AI E-Mail-Replier',
+          text: 'Wir entwickeln AI-gestützte Antwortsysteme, mit denen Unternehmen Kundenanfragen schneller und einheitlicher beantworten können.',
         },
         hosting: {
-          title: 'Hosting & Weiterentwicklung',
-          text: 'Wir begleiten Projekte auch nach dem Launch mit Hosting, Wartung und technischer Weiterentwicklung.',
+          title: 'Hosting & Support',
+          text: 'Nach dem Start unterstützen wir Ihr Projekt mit Hosting, Updates, Wartung und weiteren Verbesserungen.',
         },
       },
 
       benefits: [
-        'Individuelle Lösungen statt Baukastensysteme',
-        'Moderne Technologien für stabile und skalierbare Systeme',
-        'Klare Kommunikation und saubere Umsetzung',
-        'Websites und Funktionen mit echtem Nutzen im Alltag',
+        'Professionelle Websites statt generische Baukasten-Lösungen',
+        'Digitale Lösungen passend zu echten Geschäftsprozessen',
+        'AI-Automatisierung, die Zeit in der Kundenkommunikation sparen kann',
+        'Moderne Backend-Systeme für seriöse und erweiterbare Projekte',
       ],
 
       targetGroups: [
-        'Kleine und mittlere Unternehmen',
-        'Handwerksbetriebe und lokale Firmen',
-        'Dienstleister mit modernem Online-Auftritt',
-        'Unternehmen mit Bedarf an Automatisierung',
+        'Handwerksbetriebe wie Dachdecker, Maler und Elektriker',
+        'Kleine und mittelgrosse lokale Unternehmen',
+        'Dienstleister, die online professioneller auftreten möchten',
+        'Unternehmen, die Kundenkommunikation automatisieren wollen',
       ],
     },
     about: {
       label: 'Über uns',
-      heroTitle: 'Wir entwickeln moderne Websites und digitale Lösungen mit echtem Nutzen.',
+      heroTitle: 'Wir entwickeln digitale Lösungen, die kleinen Unternehmen wirklich helfen.',
       heroText:
-        'Bueno Web Solutions unterstützt Unternehmen dabei, professionell online aufzutreten, Prozesse zu vereinfachen und digitale Lösungen einzusetzen, die im Alltag wirklich helfen.',
+        'Wir sind zwei Entwickler aus Luzern und bauen Websites, Backend-Systeme und Automatisierungen, die echte Probleme im Geschäftsalltag lösen.',
 
       whoWeAreTitle: 'Wer wir sind',
       whoWeAreText1:
-        'Wir sind ein modernes Webdevelopment-Team mit Fokus auf klare Designs, saubere technische Lösungen und digitale Werkzeuge, die Unternehmen wirklich weiterbringen.',
+        'Wir sind Liam Bruno und Benjamin Gerresheim, beide 18 Jahre alt und besuchen aktuell die Informatik Mittelschule (IMS) in Luzern.',
       whoWeAreText2:
-        'Unser Ziel ist nicht einfach nur eine schöne Website, sondern eine Lösung, die professionell aussieht, zuverlässig funktioniert und mit Ihrem Unternehmen mitwachsen kann.',
+        'Neben der Schule bauen wir Bueno Web Solutions auf, um echte Projekte umzusetzen, mit Unternehmen zu arbeiten und praktische Erfahrung zu sammeln.',
+
+      whyTitle: 'Warum wir gestartet haben',
+      whyText1:
+        'Wir haben gesehen, dass viele kleinere Unternehmen veraltete Websites haben oder keine funktionierenden digitalen Systeme nutzen.',
+      whyText2:
+        'Gleichzeitig wollten wir selbst etwas aufbauen – nicht nur Theorie lernen, sondern echte Lösungen entwickeln und ein eigenes Business starten.',
+
+      targetTitle: 'Für wen wir arbeiten',
+      targetText:
+        'Wir arbeiten vor allem mit kleinen und mittleren Unternehmen, Handwerksbetrieben, lokalen Firmen und Startups, die online professioneller auftreten und ihre Abläufe verbessern möchten.',
+
+      differenceTitle: 'Was uns unterscheidet',
+      differenceText1:
+        'Wir arbeiten direkt, persönlich und ohne unnötige Umwege. Sie sprechen direkt mit uns – ohne Agentur-Strukturen oder komplizierte Prozesse.',
+      differenceText2:
+        'Unser Fokus liegt nicht nur auf Design, sondern auf Lösungen, die im Alltag wirklich helfen: mehr Anfragen, weniger Aufwand und klarere Prozesse.',
 
       howWeWorkTitle: 'Wie wir arbeiten',
       howWeWorkText1:
-        'Wir verbinden modernes Frontend, stabiles Backend und praxisnahe Automatisierungen zu Lösungen, die nicht nur gut aussehen, sondern im Alltag echten Mehrwert schaffen.',
+        'Wir halten alles einfach und transparent. Die Kommunikation läuft direkt, oft per Chat oder Call, und Sie bleiben immer auf dem aktuellen Stand.',
       howWeWorkText2:
-        'Dabei legen wir Wert auf klare Kommunikation, saubere Umsetzung und ein Ergebnis, das verständlich, wartbar und zukunftssicher bleibt.',
+        'Unser Ziel ist es, Ihr Unternehmen zuerst zu verstehen und dann eine Lösung zu bauen, die wirklich passt.',
 
-      valuesTitle: 'Wofür wir stehen',
-
-      qualityTitle: 'Qualität',
-      qualityText:
-        'Wir setzen auf saubere Umsetzung, klare Strukturen und Lösungen, die langfristig funktionieren.',
-
-      practicalTitle: 'Praxisnähe',
-      practicalText:
-        'Unsere Websites und Systeme sollen nicht nur modern aussehen, sondern im echten Arbeitsalltag helfen.',
-
-      reliabilityTitle: 'Zuverlässigkeit',
-      reliabilityText:
-        'Von der Planung bis zur Umsetzung arbeiten wir transparent, direkt und verbindlich.',
-
-      growthTitle: 'Weiterentwicklung',
-      growthText:
-        'Wir denken nicht nur an heute, sondern an Lösungen, die mit zukünftigen Anforderungen mithalten können.',
+      futureTitle: 'Woran wir arbeiten',
+      futureText1:
+        'Aktuell bauen wir unser Angebot mit AI-gestützten Lösungen aus, wie automatische E-Mail-Antworten, intelligente Kundenkommunikation und Automatisierungen.',
+      futureText2:
+        'Langfristig wollen wir Systeme entwickeln, die Unternehmen Zeit sparen, manuelle Arbeit reduzieren und Abläufe effizienter machen.',
     },
     servicesPage: {
       label: 'Services',
-      heroTitle: 'Digitale Lösungen für Websites, Automatisierung und moderne Kundenkommunikation.',
+      heroTitle:
+        'Websites, Automatisierung und AI-Lösungen, die Ihrem Unternehmen wirklich helfen.',
       heroText:
-        'Wir entwickeln professionelle Websites, technische Funktionen und smarte Automatisierungen, die Unternehmen im Alltag entlasten und online stärker machen.',
+        'Wir entwickeln Websites und Systeme, die mehr machen als gut aussehen — sie bringen Kunden, sparen Zeit und verbessern Ihren Arbeitsalltag.',
 
       coreLabel: 'Leistungen',
-      coreTitle: 'Was wir heute für Unternehmen anbieten',
+      coreTitle: 'Was wir für Unternehmen bauen',
       coreText:
-        'Unser Fokus liegt auf modernen Weblösungen, klarer technischer Umsetzung und Funktionen, die nicht nur gut aussehen, sondern im Alltag echten Nutzen bringen.',
+        'Unser Fokus liegt auf praktischen Lösungen: Websites, die Kunden bringen, Systeme, die funktionieren und Automatisierungen, die Arbeit abnehmen.',
 
-      upcomingLabel: 'Im Ausbau',
+      upcomingLabel: 'In Entwicklung',
       upcomingTitle: 'Was als Nächstes kommt',
       upcomingText:
-        'Wir erweitern unser Angebot gezielt um weitere AI-gestützte Lösungen für Unternehmen, die Kundenkommunikation, interne Abläufe und digitale Prozesse weiter verbessern.',
+        'Wir entwickeln aktuell weitere AI-Lösungen, die Kundenkommunikation verbessern und repetitive Aufgaben automatisieren.',
 
       targetGroupsLabel: 'Zielgruppen',
-      targetGroupsTitle: 'Für wen unsere Leistungen besonders interessant sind',
+      targetGroupsTitle: 'Für wen das gedacht ist',
 
-      collaborationLabel: 'Zusammenarbeit',
-      collaborationTitle: 'Wie wir mit Kunden arbeiten',
+      collaborationLabel: 'Ablauf',
+      collaborationTitle: 'Einfacher und klarer Prozess',
 
-      step1Title: '1. Bedarf verstehen',
+      step1Title: '1. Betrieb verstehen',
       step1Text:
-        'Wir schauen gemeinsam, was Ihr Unternehmen wirklich braucht und welche Lösung sinnvoll ist.',
+        'Wir schauen uns an, wie Ihr Unternehmen aktuell arbeitet und wo Zeit oder Kunden verloren gehen.',
 
       step2Title: '2. Lösung planen',
-      step2Text:
-        'Danach definieren wir Struktur, Funktionen und den technischen Aufbau Ihrer Lösung.',
+      step2Text: 'Wir definieren genau, was Ihre Website oder Ihr System leisten soll.',
 
       step3Title: '3. Umsetzen',
       step3Text:
-        'Wir entwickeln Website, Backend oder Automatisierung sauber, modern und nachvollziehbar.',
+        'Wir entwickeln Ihre Website oder Automatisierung sauber und halten Sie auf dem Laufenden.',
 
       step4Title: '4. Weiterentwickeln',
-      step4Text:
-        'Nach dem Start kann das Projekt erweitert, gepflegt und an neue Anforderungen angepasst werden.',
+      step4Text: 'Nach dem Start kann alles Schritt für Schritt erweitert werden.',
 
       contactLabel: 'Kontakt',
-      ctaTitle: 'Sie möchten eine Website erstellen, modernisieren oder Prozesse automatisieren?',
-      ctaText:
-        'Schreiben Sie uns und wir besprechen gemeinsam, welche Lösung für Ihr Unternehmen sinnvoll ist.',
-      ctaButton: 'Jetzt Projekt anfragen',
+      ctaTitle: 'Möchten Sie eine Website oder ein System, das wirklich hilft?',
+      ctaText: 'Schreiben Sie uns kurz und wir sagen Ihnen, was für Ihre Situation sinnvoll ist.',
+      ctaButton: 'Projekt anfragen',
 
       coreServices: [
         {
-          title: 'Websites erstellen',
-          text: 'Wir entwickeln moderne, professionelle Websites für Unternehmen, die online klar, vertrauenswürdig und hochwertig auftreten möchten.',
+          title: 'Websites die Kunden bringen',
+          text: 'Wir erstellen Websites, die Ihre Leistungen klar zeigen und Besucher zu echten Anfragen machen.',
         },
         {
-          title: 'Websites modernisieren',
-          text: 'Bestehende Websites bringen wir technisch, optisch und strukturell auf einen modernen Stand, damit Ihr Auftritt wieder überzeugt.',
+          title: 'Website erneuern',
+          text: 'Veraltete Website? Wir modernisieren sie, damit sie schnell lädt und sofort Vertrauen schafft.',
         },
         {
-          title: 'Backend & Web-Logik',
-          text: 'Wir entwickeln die technische Grundlage hinter Ihrer Website – von Benutzerlogins bis zu Datenbank-Anbindungen und individuellen Funktionen.',
+          title: 'Backend & Systeme',
+          text: 'Wir bauen Adminbereiche, Login-Systeme und Datenbanken, damit Ihre Website ein echtes Werkzeug wird.',
         },
         {
-          title: 'Automatische E-Mail-Antworten',
-          text: 'Mit unserem AI Replier automatisieren wir wiederkehrende Antworten und schaffen schnellere, sauberere Kommunikation mit Ihren Kunden.',
+          title: 'AI E-Mail-Automation',
+          text: 'Wir entwickeln AI-Systeme, die automatisch auf Kundenanfragen antworten.',
         },
         {
-          title: 'Hosting & Weiterentwicklung',
-          text: 'Auch nach dem Launch begleiten wir Ihr Projekt mit Hosting, Wartung, Erweiterungen und technischer Weiterentwicklung.',
+          title: 'Prozess-Automatisierung',
+          text: 'Wir automatisieren Abläufe wie Anfragen oder E-Mails, damit Sie täglich Zeit sparen.',
         },
         {
-          title: 'Kundenbereiche & Content-Funktionen',
-          text: 'Wir bauen Websites so, dass Kunden später eigene Inhalte, Beiträge und Posts selbst verwalten können.',
+          title: 'Hosting & Support',
+          text: 'Wir kümmern uns nach dem Launch um Ihre Website, damit alles stabil und sicher läuft.',
         },
       ],
 
       upcomingServices: [
         'AI Telefonassistent für Unternehmen',
-        'AI Chatbot für Firmenwebsites',
-        'AI Sales Automationen für digitale Kundenprozesse',
+        'AI Chatbot für Websites',
+        'Automatisierte Verkaufs- und Leadsysteme',
       ],
 
       targetGroups: [
-        'Kleine und mittlere Unternehmen',
-        'Handwerksbetriebe und lokale Firmen',
-        'Dienstleister mit modernem Webauftritt',
-        'Unternehmen mit Bedarf an Automatisierung',
+        'Handwerksbetriebe (Dachdecker, Elektriker etc.)',
+        'Lokale Unternehmen',
+        'Dienstleister',
+        'Unternehmen mit vielen Kundenanfragen',
       ],
     },
     contactPage: {
       label: 'Kontakt',
-      heroTitle: 'Lassen Sie uns über Ihr Projekt sprechen.',
+      heroTitle: 'Erzählen Sie uns, was Sie bauen oder verbessern möchten.',
       heroText:
-        'Ob neue Website, Modernisierung, Backend-Lösung oder digitale Automatisierung – schreiben Sie uns kurz, worum es geht, und wir melden uns bei Ihnen.',
+        'Ob neue Website, Redesign, Backend-Funktionen oder AI-Automatisierung — schreiben Sie uns kurz und wir schauen, welche Lösung für Ihr Unternehmen sinnvoll ist.',
 
       directContactTitle: 'Direkter Kontakt',
 
@@ -599,48 +607,49 @@ const messages = {
       phoneTime: 'Mo – Fr, 09:00 bis 18:00 Uhr',
 
       emailTitle: 'E-Mail',
-      emailText: 'Wir antworten so schnell wie möglich.',
+      emailText: 'Schreiben Sie uns Ihre Idee, Ihr Problem oder Ihre aktuelle Situation.',
 
-      writeUsTitle: 'Was Sie uns schreiben können',
+      writeUsTitle: 'Was Sie schreiben können',
       writeUsText:
-        'Beschreiben Sie kurz Ihr Vorhaben, Ihre aktuelle Situation oder Ihr Ziel. Je klarer Ihre Anfrage ist, desto besser können wir Sie unterstützen.',
+        'Sagen Sie uns kurz, was Ihr Unternehmen macht, was Sie brauchen und wie Ihre aktuelle Website oder Ihr aktueller Ablauf aussieht. Eine kurze Beschreibung reicht für den Start.',
 
-      formTitle: 'Nachricht senden',
-      emailLabel: 'E-Mail',
-      emailPlaceholder: 'ihre@mail.de',
-      subjectLabel: 'Anliegen',
-      subjectPlaceholder: 'Neue Website, Support, Automatisierung ...',
-      messageLabel: 'Beschreibung',
-      messagePlaceholder: 'Beschreiben Sie kurz Ihr Projekt oder Ihre Anfrage ...',
+      formTitle: 'Projekt anfragen',
+      emailLabel: 'Ihre E-Mail',
+      emailPlaceholder: 'name@firma.ch',
+      subjectLabel: 'Was brauchen Sie?',
+      subjectPlaceholder: 'Neue Website, Redesign, AI E-Mail-Replier ...',
+      messageLabel: 'Ihre Nachricht',
+      messagePlaceholder:
+        'Beschreiben Sie kurz Ihr Unternehmen, Ihr Ziel und was wir für Sie bauen oder verbessern sollen ...',
 
       fillAllFields: 'Bitte alle Felder ausfüllen.',
       sending: 'Wird gesendet ...',
-      sendButton: 'Nachricht senden',
-      successDefault: 'Nachricht erfolgreich gesendet.',
-      errorDefault: 'Beim Senden der Nachricht ist ein Fehler aufgetreten.',
+      sendButton: 'Anfrage senden',
+      successDefault: 'Vielen Dank. Ihre Anfrage wurde erfolgreich gesendet.',
+      errorDefault: 'Beim Senden Ihrer Nachricht ist etwas schiefgelaufen.',
     },
     authPage: {
-      loginTitle: 'Willkommen zurück',
-      registerTitle: 'Willkommen bei BuenoWS',
+      loginTitle: 'In Ihr Konto einloggen',
+      registerTitle: 'BuenoWS-Konto erstellen',
 
       emailLabel: 'E-Mail-Adresse',
-      emailPlaceholder: 'name@firma.com',
+      emailPlaceholder: 'name@firma.ch',
 
       passwordLabel: 'Passwort',
       passwordPlaceholder: '••••••••',
       forgotPassword: 'Passwort vergessen?',
 
       signIn: 'Einloggen',
-      register: 'Registrieren',
-      loading: 'Lädt...',
+      register: 'Konto erstellen',
+      loading: 'Bitte warten...',
 
       noAccount: 'Noch kein Konto?',
       haveAccount: 'Bereits ein Konto?',
-      createOne: 'Eines erstellen',
+      createOne: 'Konto erstellen',
       signInLink: 'Einloggen',
 
       enterEmailPassword: 'Bitte E-Mail und Passwort eingeben.',
-      loginFailedNoJwt: 'Login fehlgeschlagen: Kein JWT vom Server erhalten.',
+      loginFailedNoJwt: 'Login fehlgeschlagen. Kein Zugriffstoken erhalten.',
       connectionFailed: 'Verbindung zum Server fehlgeschlagen.',
 
       firstNameLabel: 'Vorname',
@@ -648,47 +657,47 @@ const messages = {
       lastNameLabel: 'Nachname',
       lastNamePlaceholder: 'Muster',
       enterFullName: 'Bitte Vorname und Nachname eingeben.',
-      registerFailedNoJwt: 'Registrierung fehlgeschlagen: Kein JWT vom Server erhalten.',
+      registerFailedNoJwt: 'Registrierung fehlgeschlagen. Kein Zugriffstoken erhalten.',
     },
     accountPage: {
-      title: 'Personal Area',
-      subtitle: 'Verwalten Sie hier Inhalte, Beiträge und Einstellungen Ihrer Website.',
+      title: 'Dashboard',
+      subtitle: 'Verwalten Sie Website, Konto und Projektfunktionen an einem Ort.',
 
       loadingTitle: 'Laden',
-      loadingText: 'Benutzerdaten werden geladen ...',
+      loadingText: 'Ihre Kontodaten werden geladen ...',
 
       errorTitle: 'Fehler',
-      sessionError: 'Sitzung konnte nicht bestätigt werden.',
-      noJwt: 'Kein JWT gefunden.',
-      profileError: 'Benutzerprofil konnte nicht geladen werden.',
+      sessionError: 'Ihre Sitzung konnte nicht bestätigt werden.',
+      noJwt: 'Kein Login-Token gefunden.',
+      profileError: 'Ihr Profil konnte nicht geladen werden.',
       inquiriesError: 'Kontaktanfragen konnten nicht geladen werden.',
 
-      editorTitle: 'Website bearbeiten',
+      editorTitle: 'Website-Editor',
       editorText:
-        'Bearbeiten Sie später Texte, Abschnitte, Dienstleistungen und Inhalte Ihrer Website direkt in diesem Bereich.',
+        'Öffnen Sie den Editorbereich, um Inhalte, Seiten und Aktualisierungen Ihrer Website zu verwalten, sobald die Bearbeitungsfunktionen verfügbar sind.',
       editorButton: 'Editor öffnen',
 
-      postsTitle: 'Beiträge verwalten',
+      postsTitle: 'Beiträge & Inhalte',
       postsText:
-        'Erstellen, speichern und veröffentlichen Sie hier künftig eigene Posts und Inhalte für Ihre Website.',
+        'Erstellen und verwalten Sie später News, Beiträge oder Inhaltsupdates für Ihre Website. Diese Funktion ist aktuell in Entwicklung.',
       soon: 'Bald verfügbar',
 
-      designTitle: 'Design anpassen',
+      designTitle: 'Design-Einstellungen',
       designText:
-        'Farben, Bilder, Layouts und einzelne Bereiche Ihrer Website können hier später individuell angepasst werden.',
+        'Passen Sie später Farben, Bilder und ausgewählte Designbereiche Ihrer Website an. Diese Funktion ist aktuell in Entwicklung.',
 
-      accountTitle: 'Konto',
+      accountTitle: 'Kontoübersicht',
       emailLabel: 'E-Mail',
       statusLabel: 'Status',
-      statusActive: 'Aktiv eingeloggt',
-      roleLabel: 'Rolle',
+      statusActive: 'Aktiv',
+      roleLabel: 'Zugriffsstufe',
 
       customerAreaTitle: 'Kundenbereich',
       customerAreaText:
-        'Willkommen in Ihrem Kundenbereich. Hier sehen Sie später Ihre Anfragen, Projektstände, Dateien und weitere Informationen zu Ihrer Zusammenarbeit mit Bueno Web Solutions.',
+        'Hier finden Sie später Projektstände, Dateien, Anfragen und Informationen zur Zusammenarbeit mit Bueno Web Solutions.',
 
       inquiriesTitle: 'Kontaktanfragen',
-      inquiriesText: 'Hier sehen Sie eingegangene Nachrichten aus dem Kontaktformular.',
+      inquiriesText: 'Nachrichten aus dem Kontaktformular ansehen und verwalten.',
       inquiriesLoading: 'Kontaktanfragen werden geladen ...',
       inquiriesEmpty: 'Noch keine Kontaktanfragen vorhanden.',
       inquiryEmail: 'E-Mail',
@@ -697,12 +706,11 @@ const messages = {
       inquiryCreated: 'Erstellt',
 
       actionsTitle: 'Konto-Aktionen',
-      actionsText:
-        'Hier können Sie sich sicher abmelden. Weitere Einstellungen für Ihr Konto können später an dieser Stelle ergänzt werden.',
+      actionsText: 'Melden Sie sich sicher von Ihrem Konto ab.',
       logout: 'Logout',
 
-      usersTitle: 'Benutzer',
-      usersText: 'Hier sehen Sie alle registrierten Benutzer und ihre Rollen.',
+      usersTitle: 'Benutzerverwaltung',
+      usersText: 'Registrierte Benutzer ansehen, Rollen verwalten und Admin-Zugriff kontrollieren.',
       usersLoading: 'Benutzer werden geladen ...',
       usersEmpty: 'Keine Benutzer gefunden.',
       usersError: 'Benutzer konnten nicht geladen werden.',
@@ -710,7 +718,7 @@ const messages = {
       userLastName: 'Nachname',
       userCreated: 'Erstellt',
 
-      usersOpenButton: 'Benutzer öffnen',
+      usersOpenButton: 'Benutzerverwaltung öffnen',
       inquiriesOpenButton: 'Anfragen öffnen',
 
       makeAdmin: 'Zu Admin machen',
