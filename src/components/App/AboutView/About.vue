@@ -41,36 +41,32 @@ const { t } = useI18n()
         </div>
       </div>
 
-      <div class="values-card">
-        <h2>{{ t('about.valuesTitle') }}</h2>
-        <div class="values-grid">
-          <div class="value-box">
-            <h3>{{ t('about.qualityTitle') }}</h3>
-            <p>
-              {{ t('about.qualityText') }}
-            </p>
-          </div>
 
-          <div class="value-box">
-            <h3>{{ t('about.practicalTitle') }}</h3>
-            <p>
-              {{ t('about.practicalText') }}
-            </p>
-          </div>
 
-          <div class="value-box">
-            <h3>{{ t('about.reliabilityTitle') }}</h3>
-            <p>
-              {{ t('about.reliabilityText') }}
-            </p>
-          </div>
+      <div class="content-grid">
+        <div class="info-card">
+          <h2>{{ t('about.whyTitle') }}</h2>
+          <p>{{ t('about.whyText1') }}</p>
+          <p>{{ t('about.whyText2') }}</p>
+        </div>
 
-          <div class="value-box">
-            <h3>{{ t('about.growthTitle') }}</h3>
-            <p>
-              {{ t('about.growthText') }}
-            </p>
-          </div>
+        <div class="info-card">
+          <h2>{{ t('about.targetTitle') }}</h2>
+          <p>{{ t('about.targetText') }}</p>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="info-card">
+          <h2>{{ t('about.differenceTitle') }}</h2>
+          <p>{{ t('about.differenceText1') }}</p>
+          <p>{{ t('about.differenceText2') }}</p>
+        </div>
+
+        <div class="info-card">
+          <h2>{{ t('about.futureTitle') }}</h2>
+          <p>{{ t('about.futureText1') }}</p>
+          <p>{{ t('about.futureText2') }}</p>
         </div>
       </div>
     </div>
