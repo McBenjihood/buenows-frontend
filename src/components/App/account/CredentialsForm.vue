@@ -58,29 +58,27 @@ async function handleSubmit() {
   try {
     const payload = isLogin.value
       ? {
-          email: email.value,
-          password: password.value,
-        }
+        email: email.value,
+        password: password.value,
+      }
       : {
-          email: email.value,
-          first_name: firstName.value.trim(),
-          last_name: lastName.value.trim(),
-          password: password.value,
-        }
+        email: email.value,
+        first_name: firstName.value.trim(),
+        last_name: lastName.value.trim(),
+        password: password.value,
+      }
 
-    const response = await api.post(endpoint, payload)
+    await api.post(endpoint, payload)
+    await authStore.initialize()
 
-    const apiResponse = response.data
-    const authData = apiResponse.data
-
-    if (authData && authData.JWT) {
-      authStore.setAuthenticated(true, authData.JWT, authData.RefreshToken ?? null)
-      await router.push('/account')
-    } else {
+    if (!authStore.isAuthenticated) {
       errorMsg.value = isLogin.value
         ? t('authPage.loginFailedNoJwt')
         : t('authPage.registerFailedNoJwt')
+      return
     }
+
+    await router.push('/account')
   } catch (error: any) {
     console.error('API Error:', error)
     errorMsg.value = error.response?.data?.message || t('authPage.connectionFailed')

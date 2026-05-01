@@ -1,9 +1,4 @@
 import axios from 'axios'
-import { authStore } from '@/services/auth.ts'
-
-export function checkAuth(): boolean {
-  return !!localStorage.getItem('JWT')
-}
 
 const api = axios.create({
   baseURL: 'http://localhost:8080',
@@ -13,34 +8,19 @@ const api = axios.create({
   },
 })
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('JWT')
-  const url = config.url ?? ''
-
-  const isAuthRoute =
-    url.includes('/api/user/auth/login') ||
-    url.includes('/api/user/auth/register') ||
-    url.includes('/api/user/auth/refresh')
-
-  if (token && !isAuthRoute) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-
-  return config
-})
-
 let isRefreshing = false
+
 let refreshQueue: Array<{
-  resolve: (token: string) => void
+  resolve: () => void
   reject: (error: any) => void
 }> = []
 
-const processQueue = (error: any, token: string | null = null) => {
+const processQueue = (error: any = null) => {
   refreshQueue.forEach(({ resolve, reject }) => {
     if (error) {
       reject(error)
-    } else if (token) {
-      resolve(token)
+    } else {
+      resolve()
     }
   })
 
@@ -57,20 +37,19 @@ api.interceptors.response.use(
     const isAuthRoute =
       url.includes('/api/user/auth/login') ||
       url.includes('/api/user/auth/register') ||
-      url.includes('/api/user/auth/refresh')
+      url.includes('/api/user/auth/refresh') ||
+      url.includes('/api/user/auth/logout')
 
-    if (status === 401 && !isAuthRoute && !originalRequest._retry) {
+    const isUnauthorized = status === 401 || status === 403
+
+    if (isUnauthorized && !isAuthRoute && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           refreshQueue.push({
-            resolve: (token: string) => {
-              originalRequest.headers = originalRequest.headers ?? {}
-              originalRequest.headers.Authorization = `Bearer ${token}`
+            resolve: () => {
               resolve(api(originalRequest))
             },
-            reject: (err: any) => {
-              reject(err)
-            },
+            reject,
           })
         })
       }
@@ -79,33 +58,13 @@ api.interceptors.response.use(
       isRefreshing = true
 
       try {
-        const refreshToken = authStore.getRefreshToken()
+        await api.post('/api/user/auth/refresh')
 
-        if (!refreshToken) {
-          throw new Error('No refresh token available')
-        }
-
-        const refreshed = await authStore.refreshSession(refreshToken)
-
-        if (!refreshed) {
-          throw new Error('Refresh failed')
-        }
-
-        const newToken = localStorage.getItem('JWT')
-
-        if (!newToken) {
-          throw new Error('No new JWT after refresh')
-        }
-
-        processQueue(null, newToken)
-
-        originalRequest.headers = originalRequest.headers ?? {}
-        originalRequest.headers.Authorization = `Bearer ${newToken}`
+        processQueue()
 
         return api(originalRequest)
       } catch (refreshError) {
-        processQueue(refreshError, null)
-        authStore.logout()
+        processQueue(refreshError)
         return Promise.reject(refreshError)
       } finally {
         isRefreshing = false
@@ -116,56 +75,9 @@ api.interceptors.response.use(
   },
 )
 
-export function getStoredToken(): string | null {
-  return localStorage.getItem('JWT')
-}
-
-export function parseJwt(token: string): any | null {
-  try {
-    const parts = token.split('.')
-
-    if (parts.length !== 3 || !parts[1]) {
-      throw new Error('Invalid JWT format')
-    }
-
-    const base64Url = parts[1]
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((char) => `%${('00' + char.charCodeAt(0).toString(16)).slice(-2)}`)
-        .join(''),
-    )
-
-    return JSON.parse(jsonPayload)
-  } catch (error) {
-    console.error('Failed to parse JWT, clearing tokens', error)
-    localStorage.removeItem('JWT')
-    localStorage.removeItem('REFRESH_TOKEN')
-    return null
-  }
-}
-
-export function getCurrentUserFromToken() {
-  const token = getStoredToken()
-
-  if (!token) {
-    return null
-  }
-
-  const payload = parseJwt(token)
-
-  if (!payload) {
-    return null
-  }
-
-  return {
-    email: payload.sub ?? '',
-    authorities: payload.roles ?? [],
-    issuedAt: payload.iat ?? null,
-    expiresAt: payload.exp ?? null,
-    issuer: payload.iss ?? '',
-  }
+export async function getCurrentUserFromBackend() {
+  const response = await api.get('/api/user/auth')
+  return response.data?.data ?? null
 }
 
 export default api

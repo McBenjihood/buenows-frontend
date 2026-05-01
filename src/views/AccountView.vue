@@ -3,7 +3,6 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
-import api from '@/services/api.ts'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -14,9 +13,6 @@ const errorMsg = ref('')
 const userProfile = ref<{
   email: string
   authorities: string[]
-  issuedAt: number | null
-  expiresAt: number | null
-  issuer: string
 } | null>(null)
 
 const isAdmin = computed(() => authStore.isAdmin)
@@ -34,33 +30,26 @@ const openInquiries = async () => {
 }
 
 async function handleLogout() {
-  authStore.logout()
+  await authStore.logout()
   await router.push('/auth/login')
 }
 
 watch(
   () => authStore.isAuthenticated,
-  (isAuth) => {
+  async (isAuth) => {
     if (!isAuth) {
-      router.push('/auth/login')
+      await router.push('/auth/login')
     }
   },
 )
 
-async function checkBackendAuth() {
-  try {
-    await api.get('/api/user/auth')
-  } catch (error) {
-    console.error('Backend auth check failed:', error)
-    errorMsg.value = t('accountPage.sessionError')
-  }
-}
-
-async function loadCurrentUserFromToken() {
+async function loadCurrentUser() {
   isLoading.value = true
   errorMsg.value = ''
 
   try {
+    await authStore.initialize()
+
     if (!authStore.user) {
       errorMsg.value = t('accountPage.noJwt')
       return
@@ -69,12 +58,7 @@ async function loadCurrentUserFromToken() {
     userProfile.value = {
       email: authStore.user.email,
       authorities: authStore.user.authorities,
-      issuedAt: authStore.user.issuedAt,
-      expiresAt: authStore.user.expiresAt,
-      issuer: authStore.user.issuer,
     }
-
-    await checkBackendAuth()
   } catch (error) {
     console.error('Error loading user profile:', error)
     errorMsg.value = t('accountPage.profileError')
@@ -84,7 +68,7 @@ async function loadCurrentUserFromToken() {
 }
 
 onMounted(async () => {
-  await loadCurrentUserFromToken()
+  await loadCurrentUser()
 })
 </script>
 
