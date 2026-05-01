@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
-import OverviewComponent from '@/components/App/HomeView/OverviewComponent.vue'
+import OverviewSection from '@/components/App/home/OverviewSection.vue'
 </script>
 
 <template>
-  <OverviewComponent/>
+  <OverviewSection/>
 </template>
 
 <style scoped></style>

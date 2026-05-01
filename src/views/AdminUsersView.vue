@@ -186,6 +186,10 @@ async function saveProfile(userId: string) {
   try {
     const fields = editFields[userId]
 
+    if (!fields) {
+      return
+    }
+
     const response = await api.put(`/api/admin/users/${userId}/profile`, {
       first_name: fields.first_name,
       last_name: fields.last_name,
@@ -292,7 +296,8 @@ onMounted(async () => {
 
                 <template v-if="editMode[user.user_id]">
                   <input
-                    v-model="editFields[user.user_id].first_name"
+                    v-if="editFields[user.user_id]"
+                    v-model="editFields[user.user_id]!.first_name"
                     class="edit-input"
                     type="text"
                   />
@@ -307,7 +312,8 @@ onMounted(async () => {
 
                 <template v-if="editMode[user.user_id]">
                   <input
-                    v-model="editFields[user.user_id].last_name"
+                    v-if="editFields[user.user_id]"
+                    v-model="editFields[user.user_id]!.last_name"
                     class="edit-input"
                     type="text"
                   />

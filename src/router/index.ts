@@ -32,7 +32,7 @@ const router = createRouter({
         {
           path: 'login',
           name: 'Login',
-          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
+          component: () => import('@/components/App/account/CredentialsForm.vue'),
           meta: {
             requiresGuest: true,
             action_string: 'register',
@@ -41,7 +41,7 @@ const router = createRouter({
         {
           path: 'register',
           name: 'Register',
-          component: () => import('@/components/App/AccountView/CredentialComponent.vue'),
+          component: () => import('@/components/App/account/CredentialsForm.vue'),
           meta: {
             requiresGuest: true,
             action_string: 'login',

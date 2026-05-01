@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import About from '@/components/App/AboutView/About.vue'
+import About from '@/components/App/about/About.vue'
 </script>
 
 <template>

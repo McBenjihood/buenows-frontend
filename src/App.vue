@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import HeaderComponent from '@/components/App/Header/HeaderComponent.vue'
-import FooterComponent from '@/components/App/Footer/FooterComponent.vue'
+import Header from '@/components/App/header/Header.vue'
+import Footer from '@/components/App/footer/Footer.vue'
 
 import { authStore } from '@/services/auth.ts'
 
@@ -10,13 +10,13 @@ authStore.initialize()
 
 <template>
   <div class="app-wrapper">
-    <HeaderComponent />
+    <Header />
 
     <main class="content">
       <router-view />
     </main>
 
-    <FooterComponent />
+    <Footer />
   </div>
 </template>
 
