@@ -240,7 +240,7 @@ const messages = {
 
       formTitle: 'Request a project',
       emailLabel: 'Your email',
-      emailPlaceholder: 'name@company.com',
+      emailPlaceholder: 'name{\'@\'}company.com',
       subjectLabel: 'What do you need?',
       subjectPlaceholder: 'New website, redesign, AI email replier ...',
       messageLabel: 'Your message',
@@ -258,7 +258,7 @@ const messages = {
       registerTitle: 'Create your account and get access to your project dashboard',
 
       emailLabel: 'Email address',
-      emailPlaceholder: 'name@company.com',
+      emailPlaceholder: 'name{\'@\'}company.com',
 
       passwordLabel: 'Password',
       passwordPlaceholder: '••••••••',
@@ -615,7 +615,7 @@ const messages = {
 
       formTitle: 'Projekt anfragen',
       emailLabel: 'Ihre E-Mail',
-      emailPlaceholder: 'name@firma.ch',
+      emailPlaceholder: 'name{\'@\'}firma.ch',
       subjectLabel: 'Was brauchen Sie?',
       subjectPlaceholder: 'Neue Website, Redesign, AI E-Mail-Replier ...',
       messageLabel: 'Ihre Nachricht',
@@ -633,7 +633,7 @@ const messages = {
       registerTitle: 'BuenoWS-Konto erstellen',
 
       emailLabel: 'E-Mail-Adresse',
-      emailPlaceholder: 'name@firma.ch',
+      emailPlaceholder: 'name{\'@\'}firma.ch',
 
       passwordLabel: 'Passwort',
       passwordPlaceholder: '••••••••',
