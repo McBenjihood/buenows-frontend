@@ -31,6 +31,10 @@ const pageSubtitle = computed(() => {
   return ''
 })
 
+const showMailHint = computed(() => {
+  return step.value === 1 || step.value === 2
+})
+
 const submitButtonText = computed(() => {
   if (isLoading.value) return t('authPage.loading')
   if (step.value === 1) return t('authPage.requestOtpButton')
@@ -75,7 +79,7 @@ async function handleVerifyOtp() {
 
 async function handleChangePassword() {
   if (!password.value || !confirmPassword.value) return
-  
+
   if (password.value !== confirmPassword.value) {
     errorMsg.value = t('authPage.passwordsDoNotMatch')
     return
@@ -113,7 +117,14 @@ async function handleSubmit() {
     <div class="login-wrapper">
       <div class="solutions-block">
         <h1>{{ pageTitle }}</h1>
-        <p class="subtitle" v-if="step !== 4">{{ pageSubtitle }}</p>
+
+        <p class="subtitle" v-if="step !== 4">
+          {{ pageSubtitle }}
+        </p>
+
+        <p v-if="showMailHint" class="mail-hint">
+          {{ t('authPage.checkSpamHint') }}
+        </p>
 
         <p v-if="errorMsg" class="error-message">
           {{ errorMsg }}
@@ -271,7 +282,19 @@ h1 {
   text-align: center;
   color: #888;
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.mail-hint {
+  color: #b8b8b8;
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin: 0 0 2rem 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .error-message {

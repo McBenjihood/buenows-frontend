@@ -287,7 +287,7 @@ const messages = {
       lastNamePlaceholder: 'Smith',
       enterFullName: 'Please enter your first and last name.',
       registerFailedNoJwt: 'Registration failed. No access token received.',
-      
+
       resetPasswordTitle: 'Reset your password',
       resetPasswordSubtitle: 'Enter your email to receive a verification code.',
       requestOtpButton: 'Send Verification Code',
@@ -304,6 +304,8 @@ const messages = {
       changePasswordButton: 'Change Password',
       resetSuccessMessage: 'Your password has been changed successfully. You can now login.',
       backToLogin: 'Back to login',
+      checkSpamHint:
+        'If you do not receive an email within a few minutes, please also check your spam folder.',
     },
     accountPage: {
       title: 'Dashboard',
@@ -681,7 +683,7 @@ const messages = {
       lastNamePlaceholder: 'Muster',
       enterFullName: 'Bitte Vorname und Nachname eingeben.',
       registerFailedNoJwt: 'Registrierung fehlgeschlagen. Kein Zugriffstoken erhalten.',
-      
+
       resetPasswordTitle: 'Passwort zurücksetzen',
       resetPasswordSubtitle: 'Geben Sie Ihre E-Mail ein, um einen Bestätigungscode zu erhalten.',
       requestOtpButton: 'Code senden',
@@ -696,8 +698,11 @@ const messages = {
       confirmPasswordLabel: 'Passwort bestätigen',
       passwordsDoNotMatch: 'Die Passwörter stimmen nicht überein.',
       changePasswordButton: 'Passwort ändern',
-      resetSuccessMessage: 'Ihr Passwort wurde erfolgreich geändert. Sie können sich nun einloggen.',
+      resetSuccessMessage:
+        'Ihr Passwort wurde erfolgreich geändert. Sie können sich nun einloggen.',
       backToLogin: 'Zurück zum Login',
+      checkSpamHint:
+        'Falls Sie innerhalb weniger Minuten keine E-Mail erhalten, prüfen Sie bitte auch Ihren Spam-Ordner.',
     },
     accountPage: {
       title: 'Dashboard',
