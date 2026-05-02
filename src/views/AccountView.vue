@@ -137,16 +137,18 @@ onMounted(async () => {
 
         <div class="card">
           <h2>{{ t('accountPage.accountTitle') }}</h2>
-          <p>
-            <strong>{{ t('accountPage.emailLabel') }}:</strong> {{ userProfile?.email }}
-          </p>
-          <p>
-            <strong>{{ t('accountPage.statusLabel') }}:</strong> {{ t('accountPage.statusActive') }}
-          </p>
-          <p v-if="userProfile?.authorities?.length">
-            <strong>{{ t('accountPage.roleLabel') }}:</strong>
-            {{ userProfile.authorities.join(', ') }}
-          </p>
+          <div class="info-row">
+            <img src="../assets/img/icons/account/login/email.svg" class="info-icon" alt="Email" />
+            <p>
+              <strong>{{ t('accountPage.emailLabel') }}:</strong> {{ userProfile?.email }}
+            </p>
+          </div>
+          <div class="info-row">
+            <img src="../assets/img/icons/account/login/check.svg" class="info-icon" alt="Status" />
+            <p>
+              <strong>{{ t('accountPage.statusLabel') }}:</strong> {{ t('accountPage.statusActive') }}
+            </p>
+          </div>
         </div>
 
         <div v-if="!isAdmin" class="card card-wide">
@@ -259,6 +261,23 @@ onMounted(async () => {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: not-allowed;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-row p {
+  margin: 0;
+}
+
+.info-icon {
+  height: 1.2rem;
+  width: auto;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
