@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import benjiImage from '@/assets/img/team/Benji_BuenoWS.png'
+import liamImage from '@/assets/img/team/Liam_BuenoWS.jpeg'
 
 const { t } = useI18n()
 </script>
@@ -15,8 +17,20 @@ const { t } = useI18n()
         </p>
       </div>
 
-      <div class="image-wrapper">
-        <img src="/src/assets/img/team/img.png" alt="Bueno Web Solutions Team" class="team-image" />
+      <div class="team-grid">
+        <div class="team-card">
+          <img :src="benjiImage" alt="Benji von Bueno Web Solutions" class="member-image" />
+          <div class="member-content">
+            <h2>Benji</h2>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img :src="liamImage" alt="Liam von Bueno Web Solutions" class="member-image" />
+          <div class="member-content">
+            <h2>Liam</h2>
+          </div>
+        </div>
       </div>
 
       <div class="content-grid">
@@ -27,6 +41,9 @@ const { t } = useI18n()
           </p>
           <p>
             {{ t('about.whoWeAreText2') }}
+          </p>
+          <p>
+            {{ t('about.whoWeAreText3') }}
           </p>
         </div>
 
@@ -40,8 +57,6 @@ const { t } = useI18n()
           </p>
         </div>
       </div>
-
-
 
       <div class="content-grid">
         <div class="info-card">
@@ -118,17 +133,47 @@ const { t } = useI18n()
   font-size: 1.1rem;
 }
 
-.image-wrapper {
-  margin-bottom: 3rem;
+.team-grid {
+  max-width: 1000px;
+  margin: 0 auto 5rem auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
-.team-image {
-  width: 100%;
-  max-width: 1200px;
-  height: auto;
+.team-card {
+  background-color: #252525;
   border-radius: 18px;
-  display: block;
+  overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.member-image {
+  width: 100%;
+  height: 420px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background-color: #1f1f1f;
+}
+
+.member-content {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.member-content h2 {
+  margin: 0;
+  font-size: 1.7rem;
+  color: #42b883;
 }
 
 .content-grid {
@@ -196,6 +241,15 @@ const { t } = useI18n()
   .content-grid,
   .values-grid {
     grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 3rem;
+  }
+
+  .member-image {
+    height: 360px;
   }
 }
 </style>

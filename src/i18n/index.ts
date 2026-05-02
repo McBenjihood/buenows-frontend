@@ -16,7 +16,8 @@ const messages = {
     },
     home: {
       brand: 'Bueno Web Solutions',
-      heroTitle: 'We build websites and AI systems that help small businesses get more customers and save time.',
+      heroTitle:
+        'We build websites and AI systems that help small businesses get more customers and save time.',
       heroText:
         'We help small and medium-sized businesses build a professional online presence, automate customer communication and turn their website into a real business tool.',
       requestProject: 'Request a project',
@@ -108,6 +109,8 @@ const messages = {
         'We are Liam Bruno and Benjamin Gerresheim, both 18 years old and currently studying computer science at the IMS (Informatik Mittelschule) in Lucerne.',
       whoWeAreText2:
         'Alongside school, we are building Bueno Web Solutions to gain real experience, work with real businesses and create digital solutions that go beyond simple websites.',
+      whoWeAreText3:
+        'We both work across web design, frontend, backend, automation and AI solutions. That means every project benefits from both of our ideas, our technical skills and our shared focus on building something useful for the client.',
 
       whyTitle: 'Why we started',
       whyText1:
@@ -222,7 +225,8 @@ const messages = {
     },
     contactPage: {
       label: 'Contact',
-      heroTitle: 'Tell us what you need — we will show you what actually makes sense for your business.',
+      heroTitle:
+        'Tell us what you need — we will show you what actually makes sense for your business.',
       heroText:
         'Whether you need a new website, a redesign, backend features or AI automation — send us a short message and we will look at what makes sense for your business.',
 
@@ -240,7 +244,7 @@ const messages = {
 
       formTitle: 'Request a project',
       emailLabel: 'Your email',
-      emailPlaceholder: 'name{\'@\'}company.com',
+      emailPlaceholder: "name{'@'}company.com",
       subjectLabel: 'What do you need?',
       subjectPlaceholder: 'New website, redesign, AI email replier ...',
       messageLabel: 'Your message',
@@ -258,7 +262,7 @@ const messages = {
       registerTitle: 'Create your account and get access to your project dashboard',
 
       emailLabel: 'Email address',
-      emailPlaceholder: 'name{\'@\'}company.com',
+      emailPlaceholder: "name{'@'}company.com",
 
       passwordLabel: 'Password',
       passwordPlaceholder: '••••••••',
@@ -484,6 +488,8 @@ const messages = {
         'Wir sind Liam Bruno und Benjamin Gerresheim, beide 18 Jahre alt und besuchen aktuell die Informatik Mittelschule (IMS) in Luzern.',
       whoWeAreText2:
         'Neben der Schule bauen wir Bueno Web Solutions auf, um echte Projekte umzusetzen, mit Unternehmen zu arbeiten und praktische Erfahrung zu sammeln.',
+      whoWeAreText3:
+        'Wir arbeiten beide an Webdesign, Frontend, Backend, Automatisierung und AI-Lösungen. Dadurch profitiert jedes Projekt von unseren gemeinsamen Ideen, unseren technischen Fähigkeiten und unserem Ziel, für Kunden wirklich nützliche Lösungen zu bauen.',
 
       whyTitle: 'Warum wir gestartet haben',
       whyText1:
@@ -615,7 +621,7 @@ const messages = {
 
       formTitle: 'Projekt anfragen',
       emailLabel: 'Ihre E-Mail',
-      emailPlaceholder: 'name{\'@\'}firma.ch',
+      emailPlaceholder: "name{'@'}firma.ch",
       subjectLabel: 'Was brauchen Sie?',
       subjectPlaceholder: 'Neue Website, Redesign, AI E-Mail-Replier ...',
       messageLabel: 'Ihre Nachricht',
@@ -633,7 +639,7 @@ const messages = {
       registerTitle: 'BuenoWS-Konto erstellen',
 
       emailLabel: 'E-Mail-Adresse',
-      emailPlaceholder: 'name{\'@\'}firma.ch',
+      emailPlaceholder: "name{'@'}firma.ch",
 
       passwordLabel: 'Passwort',
       passwordPlaceholder: '••••••••',
