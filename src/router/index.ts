@@ -47,6 +47,14 @@ const router = createRouter({
             action_string: 'login',
           },
         },
+        {
+          path: 'reset-password',
+          name: 'ResetPassword',
+          component: () => import('@/components/App/account/ResetPasswordForm.vue'),
+          meta: {
+            requiresGuest: true,
+          },
+        },
       ],
     },
     {

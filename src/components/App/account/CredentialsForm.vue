@@ -149,7 +149,7 @@ async function handleSubmit() {
           <div class="form-group">
             <div class="label-row">
               <label for="password">{{ t('authPage.passwordLabel') }}</label>
-              <a href="#" class="sub-text contact-link-small">{{ t('authPage.forgotPassword') }}</a>
+              <router-link to="/auth/reset-password" class="sub-text contact-link-small">{{ t('authPage.forgotPassword') }}</router-link>
             </div>
             <div class="input-wrapper">
               <img
