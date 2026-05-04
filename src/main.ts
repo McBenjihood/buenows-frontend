@@ -7,6 +7,13 @@ import { authStore } from './services/auth.ts'
 async function bootstrap() {
   await authStore.initialize()
 
+  window.addEventListener('auth:logout', () => {
+    authStore.clearAuthState()
+
+    router.push('/auth/login').catch(() => {
+    })
+  })
+
   const app = createApp(App)
   app.use(router)
   app.use(i18n)

@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { authStore } from '@/services/auth.ts'
 import { useRouter } from 'vue-router'
+import { authStore } from '@/services/auth.ts'
+
+import emailIcon from '@/assets/img/icons/account/login/email.svg'
+import checkIcon from '@/assets/img/icons/account/login/check.svg'
 
 const { t } = useI18n()
 const router = useRouter()
 
 const isLoading = ref(true)
+const isLogoutLoading = ref(false)
 const errorMsg = ref('')
 
 const userProfile = ref<{
+  user_id?: string
   email: string
   authorities: string[]
 } | null>(null)
@@ -30,32 +35,41 @@ const openInquiries = async () => {
 }
 
 async function handleLogout() {
-  await authStore.logout()
-  await router.push('/auth/login')
-}
+  if (isLogoutLoading.value) {
+    return
+  }
 
-watch(
-  () => authStore.isAuthenticated,
-  async (isAuth) => {
-    if (!isAuth) {
-      await router.push('/auth/login')
-    }
-  },
-)
+  isLogoutLoading.value = true
+  errorMsg.value = ''
+
+  try {
+    await authStore.logout()
+    await router.push('/auth/login')
+  } catch (error) {
+    console.error('Logout failed:', error)
+    errorMsg.value = t('accountPage.profileError')
+  } finally {
+    isLogoutLoading.value = false
+  }
+}
 
 async function loadCurrentUser() {
   isLoading.value = true
   errorMsg.value = ''
 
   try {
-    await authStore.initialize()
+    if (!authStore.isInitialized) {
+      await authStore.initialize()
+    }
 
     if (!authStore.user) {
-      errorMsg.value = t('accountPage.noJwt')
+      await router.push('/auth/login').catch(() => {
+      })
       return
     }
 
     userProfile.value = {
+      user_id: authStore.user.user_id,
       email: authStore.user.email,
       authorities: authStore.user.authorities,
     }
@@ -138,15 +152,16 @@ onMounted(async () => {
         <div class="card">
           <h2>{{ t('accountPage.accountTitle') }}</h2>
           <div class="info-row">
-            <img src="../assets/img/icons/account/login/email.svg" class="info-icon" alt="Email" />
+            <img :src="emailIcon" class="info-icon" alt="Email" />
             <p>
               <strong>{{ t('accountPage.emailLabel') }}:</strong> {{ userProfile?.email }}
             </p>
           </div>
           <div class="info-row">
-            <img src="../assets/img/icons/account/login/check.svg" class="info-icon" alt="Status" />
+            <img :src="checkIcon" class="info-icon" alt="Status" />
             <p>
-              <strong>{{ t('accountPage.statusLabel') }}:</strong> {{ t('accountPage.statusActive') }}
+              <strong>{{ t('accountPage.statusLabel') }}:</strong>
+              {{ t('accountPage.statusActive') }}
             </p>
           </div>
         </div>
@@ -163,8 +178,8 @@ onMounted(async () => {
           <p>
             {{ t('accountPage.actionsText') }}
           </p>
-          <button class="primary-button" @click="handleLogout">
-            {{ t('accountPage.logout') }}
+          <button class="primary-button" :disabled="isLogoutLoading" @click="handleLogout">
+            {{ isLogoutLoading ? t('authPage.loading') : t('accountPage.logout') }}
           </button>
         </div>
       </div>
@@ -249,6 +264,12 @@ onMounted(async () => {
 .primary-button:hover {
   opacity: 0.9;
   transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .secondary-button {

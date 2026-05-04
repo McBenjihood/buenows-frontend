@@ -1,21 +1,27 @@
-import axios from 'axios'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
+
+const API_BASE_URL = 'http://localhost:8080'
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
+type RetryRequestConfig = InternalAxiosRequestConfig & {
+  _retry?: boolean
+}
+
 let isRefreshing = false
 
 let refreshQueue: Array<{
   resolve: () => void
-  reject: (error: any) => void
+  reject: (error: unknown) => void
 }> = []
 
-const processQueue = (error: any = null) => {
+const processQueue = (error: unknown = null) => {
   refreshQueue.forEach(({ resolve, reject }) => {
     if (error) {
       reject(error)
@@ -30,9 +36,14 @@ const processQueue = (error: any = null) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config
+    const originalRequest = error.config as RetryRequestConfig | undefined
+
+    if (!originalRequest) {
+      return Promise.reject(error)
+    }
+
     const status = error.response?.status
-    const url = originalRequest?.url ?? ''
+    const url = originalRequest.url ?? ''
 
     const isAuthRoute =
       url.includes('/api/user/auth/login') ||
@@ -40,7 +51,7 @@ api.interceptors.response.use(
       url.includes('/api/user/auth/refresh') ||
       url.includes('/api/user/auth/logout')
 
-    const isUnauthorized = status === 401 || status === 403
+    const isUnauthorized = status === 401
 
     if (isUnauthorized && !isAuthRoute && !originalRequest._retry) {
       if (isRefreshing) {
@@ -65,6 +76,9 @@ api.interceptors.response.use(
         return api(originalRequest)
       } catch (refreshError) {
         processQueue(refreshError)
+
+        window.dispatchEvent(new Event('auth:logout'))
+
         return Promise.reject(refreshError)
       } finally {
         isRefreshing = false
@@ -76,8 +90,18 @@ api.interceptors.response.use(
 )
 
 export async function getCurrentUserFromBackend() {
-  const response = await api.get('/api/user/auth')
-  return response.data?.data ?? null
+  try {
+    const response = await api.get('/api/user/auth')
+    return response.data?.data ?? null
+  } catch (error: any) {
+    const status = error.response?.status
+
+    if (status === 401 || status === 403) {
+      return null
+    }
+
+    throw error
+  }
 }
 
 export default api

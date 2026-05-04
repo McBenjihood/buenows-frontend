@@ -94,7 +94,11 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
+  if (!authStore.isInitialized) {
+    await authStore.initialize()
+  }
+
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     return { name: 'Login' }
   }
