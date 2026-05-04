@@ -40,12 +40,24 @@ function getDeleteStage(inquiryId: number) {
 }
 
 function startDelete(inquiryId: number) {
-  deleteStage.value[inquiryId] = 1
   successMsg.value = ''
   errorMsg.value = ''
+
+  if (!Number.isInteger(inquiryId) || inquiryId <= 0) {
+    errorMsg.value = 'Ungültige Anfrage-ID.'
+    return
+  }
+
+  deleteStage.value[inquiryId] = 1
 }
 
 function continueDelete(inquiryId: number) {
+  if (!Number.isInteger(inquiryId) || inquiryId <= 0) {
+    errorMsg.value = 'Ungültige Anfrage-ID.'
+    deleteStage.value[inquiryId] = 0
+    return
+  }
+
   deleteStage.value[inquiryId] = 2
 }
 
@@ -94,12 +106,25 @@ async function reloadInquiries() {
 }
 
 async function confirmDelete(inquiryId: number) {
-  deleteLoadingInquiryId.value = inquiryId
   successMsg.value = ''
   errorMsg.value = ''
 
+  if (!Number.isInteger(inquiryId) || inquiryId <= 0) {
+    errorMsg.value = 'Ungültige Anfrage-ID.'
+    deleteStage.value[inquiryId] = 0
+    return
+  }
+
+  if (deleteLoadingInquiryId.value === inquiryId) {
+    return
+  }
+
+  deleteLoadingInquiryId.value = inquiryId
+
   try {
-    const response = await api.delete(`/api/admin/inquiries/${inquiryId}`)
+    const response = await api.delete(
+      `/api/admin/inquiries/${encodeURIComponent(String(inquiryId))}`,
+    )
 
     deleteStage.value[inquiryId] = 0
 
@@ -147,12 +172,12 @@ onMounted(async () => {
         {{ successMsg }}
       </div>
 
-      <div v-if="isLoading" class="state-card">
-        <p>{{ t('accountPage.inquiriesLoading') }}</p>
+      <div v-if="errorMsg" class="status-bar error-bar">
+        {{ errorMsg }}
       </div>
 
-      <div v-else-if="errorMsg" class="state-card">
-        <p class="error-text">{{ errorMsg }}</p>
+      <div v-if="isLoading" class="state-card">
+        <p>{{ t('accountPage.inquiriesLoading') }}</p>
       </div>
 
       <div v-else-if="!inquiries.length" class="state-card">
@@ -328,6 +353,12 @@ onMounted(async () => {
   color: #42b883;
 }
 
+.error-bar {
+  background-color: rgba(255, 123, 123, 0.12);
+  border: 1px solid rgba(255, 123, 123, 0.25);
+  color: #ff7b7b;
+}
+
 .state-card {
   margin-bottom: 1rem;
 }
@@ -491,6 +522,13 @@ onMounted(async () => {
 .danger-button {
   background-color: #9b3535;
   color: white;
+}
+
+.secondary-button:disabled,
+.danger-button:disabled {
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.6;
 }
 
 .delete-warning-box {

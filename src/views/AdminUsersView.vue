@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import api from '@/services/api.ts'
+import { authStore } from '@/services/auth.ts'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -20,6 +21,8 @@ const deleteStage = ref<Record<string, number>>({})
 const editMode = ref<Record<string, boolean>>({})
 const editFields = reactive<Record<string, { first_name: string; last_name: string }>>({})
 
+const currentUserId = computed(() => authStore.user?.user_id ?? null)
+
 const adminUsers = ref<
   {
     user_id: string
@@ -33,6 +36,10 @@ const adminUsers = ref<
 
 async function goBack() {
   await router.push('/account')
+}
+
+function isCurrentUser(userId: string) {
+  return currentUserId.value === userId
 }
 
 function toggleUser(id: string) {
@@ -54,12 +61,24 @@ function getDeleteStage(userId: string) {
 }
 
 function startDelete(userId: string) {
-  deleteStage.value[userId] = 1
   successMsg.value = ''
   errorMsg.value = ''
+
+  if (isCurrentUser(userId)) {
+    errorMsg.value = 'Du kannst deinen eigenen Admin-Account nicht löschen.'
+    return
+  }
+
+  deleteStage.value[userId] = 1
 }
 
 function continueDelete(userId: string) {
+  if (isCurrentUser(userId)) {
+    errorMsg.value = 'Du kannst deinen eigenen Admin-Account nicht löschen.'
+    deleteStage.value[userId] = 0
+    return
+  }
+
   deleteStage.value[userId] = 2
 }
 
@@ -157,12 +176,18 @@ async function reloadUsers() {
 }
 
 async function updateRole(userId: string, nextRole: 'ROLE_USER' | 'ROLE_ADMIN') {
-  roleLoadingUserId.value = userId
   successMsg.value = ''
   errorMsg.value = ''
 
+  if (isCurrentUser(userId) && nextRole === 'ROLE_USER') {
+    errorMsg.value = 'Du kannst dich nicht selbst zum normalen User machen.'
+    return
+  }
+
+  roleLoadingUserId.value = userId
+
   try {
-    const response = await api.put(`/api/admin/users/${userId}/role`, {
+    const response = await api.put(`/api/admin/users/${encodeURIComponent(userId)}/role`, {
       role: nextRole,
     })
 
@@ -190,9 +215,27 @@ async function saveProfile(userId: string) {
       return
     }
 
-    const response = await api.put(`/api/admin/users/${userId}/profile`, {
-      first_name: fields.first_name,
-      last_name: fields.last_name,
+    const trimmedFirstName = fields.first_name.trim()
+    const trimmedLastName = fields.last_name.trim()
+
+    if (!trimmedFirstName || !trimmedLastName) {
+      errorMsg.value = 'Vorname und Nachname dürfen nicht leer sein.'
+      return
+    }
+
+    if (trimmedFirstName.length > 50) {
+      errorMsg.value = 'Der Vorname ist zu lang.'
+      return
+    }
+
+    if (trimmedLastName.length > 50) {
+      errorMsg.value = 'Der Nachname ist zu lang.'
+      return
+    }
+
+    const response = await api.put(`/api/admin/users/${encodeURIComponent(userId)}/profile`, {
+      first_name: trimmedFirstName,
+      last_name: trimmedLastName,
     })
 
     successMsg.value = response.data?.message || t('accountPage.userProfileUpdatedSuccess')
@@ -207,12 +250,19 @@ async function saveProfile(userId: string) {
 }
 
 async function confirmDelete(userId: string) {
-  deleteLoadingUserId.value = userId
   successMsg.value = ''
   errorMsg.value = ''
 
+  if (isCurrentUser(userId)) {
+    errorMsg.value = 'Du kannst deinen eigenen Admin-Account nicht löschen.'
+    deleteStage.value[userId] = 0
+    return
+  }
+
+  deleteLoadingUserId.value = userId
+
   try {
-    const response = await api.delete(`/api/admin/users/${userId}`)
+    const response = await api.delete(`/api/admin/users/${encodeURIComponent(userId)}`)
 
     deleteStage.value[userId] = 0
 
@@ -260,12 +310,12 @@ onMounted(async () => {
         {{ successMsg }}
       </div>
 
-      <div v-if="isLoading" class="state-card">
-        <p>{{ t('accountPage.usersLoading') }}</p>
+      <div v-if="errorMsg" class="status-bar error-bar">
+        {{ errorMsg }}
       </div>
 
-      <div v-else-if="errorMsg" class="state-card">
-        <p class="error-text">{{ errorMsg }}</p>
+      <div v-if="isLoading" class="state-card">
+        <p>{{ t('accountPage.usersLoading') }}</p>
       </div>
 
       <div v-else-if="!adminUsers.length" class="state-card">
@@ -277,7 +327,11 @@ onMounted(async () => {
           <button class="accordion-header" @click="toggleUser(user.user_id)">
             <div class="accordion-main">
               <div class="user-main">
-                <span class="primary-text">{{ user.email }}</span>
+                <span class="primary-text">
+                  {{ user.email }}
+                  <span v-if="isCurrentUser(user.user_id)" class="self-label">(du)</span>
+                </span>
+
                 <span :class="getRoleClass(user.authorities)">
                   {{ user.authorities?.join(', ') || '-' }}
                 </span>
@@ -297,9 +351,10 @@ onMounted(async () => {
                 <template v-if="editMode[user.user_id]">
                   <input
                     v-if="editFields[user.user_id]"
-                    v-model="editFields[user.user_id]!.first_name"
+                    v-model.trim="editFields[user.user_id]!.first_name"
                     class="edit-input"
                     type="text"
+                    maxlength="50"
                   />
                 </template>
                 <template v-else>
@@ -313,9 +368,10 @@ onMounted(async () => {
                 <template v-if="editMode[user.user_id]">
                   <input
                     v-if="editFields[user.user_id]"
-                    v-model="editFields[user.user_id]!.last_name"
+                    v-model.trim="editFields[user.user_id]!.last_name"
                     class="edit-input"
                     type="text"
+                    maxlength="50"
                   />
                 </template>
                 <template v-else>
@@ -334,6 +390,10 @@ onMounted(async () => {
               </div>
             </div>
 
+            <div v-if="isCurrentUser(user.user_id)" class="info-box">
+              Du kannst deinen eigenen Account hier nicht löschen oder zum normalen User machen.
+            </div>
+
             <div class="action-row">
               <button
                 v-if="!user.authorities?.includes('ROLE_ADMIN')"
@@ -347,7 +407,7 @@ onMounted(async () => {
               <button
                 v-else
                 class="secondary-button"
-                :disabled="roleLoadingUserId === user.user_id"
+                :disabled="roleLoadingUserId === user.user_id || isCurrentUser(user.user_id)"
                 @click.stop="updateRole(user.user_id, 'ROLE_USER')"
               >
                 {{ t('accountPage.makeUser') }}
@@ -376,7 +436,7 @@ onMounted(async () => {
 
               <button
                 class="danger-button"
-                :disabled="deleteLoadingUserId === user.user_id"
+                :disabled="deleteLoadingUserId === user.user_id || isCurrentUser(user.user_id)"
                 @click.stop="startDelete(user.user_id)"
               >
                 {{ t('accountPage.deleteUser') }}
@@ -502,6 +562,12 @@ onMounted(async () => {
   color: #42b883;
 }
 
+.error-bar {
+  background-color: rgba(255, 123, 123, 0.12);
+  border: 1px solid rgba(255, 123, 123, 0.25);
+  color: #ff7b7b;
+}
+
 .state-card {
   margin-bottom: 1rem;
 }
@@ -509,6 +575,22 @@ onMounted(async () => {
 .error-text {
   color: #ff7b7b;
   font-weight: 600;
+}
+
+.self-label {
+  color: #42b883;
+  font-size: 0.85rem;
+  margin-left: 0.35rem;
+}
+
+.info-box {
+  margin-top: 1rem;
+  border: 1px solid rgba(66, 184, 131, 0.25);
+  background-color: rgba(66, 184, 131, 0.08);
+  color: #cdeedd;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  line-height: 1.5;
 }
 
 .list {
@@ -703,9 +785,16 @@ onMounted(async () => {
   color: white;
 }
 
+.primary-button:disabled,
+.secondary-button:disabled,
+.danger-button:disabled,
 .save-button:disabled {
   cursor: not-allowed;
   transform: none;
+  opacity: 0.6;
+}
+
+.save-button:disabled {
   opacity: 1;
 }
 
