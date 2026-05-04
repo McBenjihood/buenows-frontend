@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 
+import githubIcon from '@/assets/img/icons/socials/github_icon.svg'
+import linkedinLogo from '@/assets/img/icons/socials/linkedin_logo.svg'
+
 const { t } = useI18n()
 </script>
 
@@ -8,12 +11,24 @@ const { t } = useI18n()
   <div class="Navigation">
     <div class="socials">
       <span class="socials-label">{{ t('footer.socials') }}</span>
+
       <div class="socials-links">
-        <a href="https://github.com/McBenjihood" target="_blank">
-          <img src="/src/assets/img/icons/socials/github_icon.svg" alt="GitHub" />
+        <a
+          href="https://github.com/McBenjihood"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+        >
+          <img :src="githubIcon" alt="GitHub" />
         </a>
-        <a href="https://www.linkedin.com/in/benjamin-gerresheim-9b4b68225/" target="_blank">
-          <img src="/src/assets/img/icons/socials/linkedin_logo.svg" alt="LinkedIn" />
+
+        <a
+          href="https://www.linkedin.com/in/benjamin-gerresheim-9b4b68225/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+        >
+          <img :src="linkedinLogo" alt="LinkedIn" />
         </a>
       </div>
     </div>

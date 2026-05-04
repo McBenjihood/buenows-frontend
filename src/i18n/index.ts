@@ -1,6 +1,23 @@
 import { createI18n } from 'vue-i18n'
 
-const savedLocale = localStorage.getItem('locale') || 'en'
+type SupportedLocale = 'en' | 'de'
+
+function getSavedLocale(): SupportedLocale {
+  try {
+    const savedLocale = localStorage.getItem('locale')
+
+    if (savedLocale === 'en' || savedLocale === 'de') {
+      return savedLocale
+    }
+
+    return 'en'
+  } catch (error) {
+    console.error('Could not read saved locale:', error)
+    return 'en'
+  }
+}
+
+const savedLocale = getSavedLocale()
 
 const messages = {
   en: {

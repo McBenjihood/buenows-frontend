@@ -26,8 +26,9 @@ async function goBack() {
         <div class="editor-topbar">
           <h2>{{ t('editorPage.areaTitle') }}</h2>
         </div>
-
-        <div class="editor-placeholder"></div>
+        <div class="editor-placeholder">
+          <p>Diese Editor-Funktion ist aktuell noch nicht aktiv und wird später implementiert.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -115,11 +116,17 @@ async function goBack() {
   margin: 0;
   color: #bdbdbd;
   font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
   .editor-page {
     padding: 2rem 1rem 3rem;
+  }
+
+  .editor-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .editor-shell {
