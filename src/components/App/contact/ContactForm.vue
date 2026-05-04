@@ -9,6 +9,11 @@ const email = ref('')
 const title = ref('')
 const message = ref('')
 
+// Honeypot-Feld gegen einfache Bots.
+// Normale Nutzer sehen dieses Feld nicht.
+// Wenn es ausgefüllt ist, brechen wir den Submit ab.
+const website = ref('')
+
 const isLoading = ref(false)
 const successMsg = ref('')
 const errorMsg = ref('')
@@ -17,8 +22,42 @@ async function submitForm() {
   successMsg.value = ''
   errorMsg.value = ''
 
-  if (!email.value.trim() || !title.value.trim() || !message.value.trim()) {
+  if (website.value.trim()) {
+    return
+  }
+
+  if (isLoading.value) {
+    return
+  }
+
+  const trimmedEmail = email.value.trim()
+  const trimmedTitle = title.value.trim()
+  const trimmedMessage = message.value.trim()
+
+  if (!trimmedEmail || !trimmedTitle || !trimmedMessage) {
     errorMsg.value = t('contactPage.fillAllFields')
+    return
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!emailPattern.test(trimmedEmail)) {
+    errorMsg.value = 'Bitte gib eine gültige E-Mail-Adresse ein.'
+    return
+  }
+
+  if (trimmedEmail.length > 254) {
+    errorMsg.value = 'Die E-Mail-Adresse ist zu lang.'
+    return
+  }
+
+  if (trimmedTitle.length > 120) {
+    errorMsg.value = 'Der Betreff ist zu lang.'
+    return
+  }
+
+  if (trimmedMessage.length > 2000) {
+    errorMsg.value = 'Die Nachricht ist zu lang.'
     return
   }
 
@@ -26,9 +65,9 @@ async function submitForm() {
 
   try {
     const response = await api.post('/api/inquiry/contact-submissions', {
-      email: email.value.trim(),
-      title: title.value.trim(),
-      message: message.value.trim(),
+      email: trimmedEmail,
+      title: trimmedTitle,
+      message: trimmedMessage,
     })
 
     successMsg.value = response.data?.message || t('contactPage.successDefault')
@@ -36,6 +75,7 @@ async function submitForm() {
     email.value = ''
     title.value = ''
     message.value = ''
+    website.value = ''
   } catch (error: any) {
     console.error('Error sending contact form:', error)
     errorMsg.value = error.response?.data?.message || t('contactPage.errorDefault')
@@ -84,13 +124,23 @@ async function submitForm() {
           <h2>{{ t('contactPage.formTitle') }}</h2>
 
           <form class="contact-form" @submit.prevent="submitForm">
+            <input
+              v-model="website"
+              type="text"
+              name="website"
+              autocomplete="off"
+              tabindex="-1"
+              class="honeypot"
+            />
             <div class="form-group">
               <label for="email">{{ t('contactPage.emailLabel') }}</label>
               <input
-                v-model="email"
+                v-model.trim="email"
                 type="email"
                 id="email"
                 :placeholder="t('contactPage.emailPlaceholder')"
+                maxlength="254"
+                autocomplete="email"
                 required
               />
             </div>
@@ -98,10 +148,11 @@ async function submitForm() {
             <div class="form-group">
               <label for="title">{{ t('contactPage.subjectLabel') }}</label>
               <input
-                v-model="title"
+                v-model.trim="title"
                 type="text"
                 id="title"
                 :placeholder="t('contactPage.subjectPlaceholder')"
+                maxlength="120"
                 required
               />
             </div>
@@ -112,7 +163,8 @@ async function submitForm() {
                 id="message"
                 rows="6"
                 :placeholder="t('contactPage.messagePlaceholder')"
-                v-model="message"
+                v-model.trim="message"
+                maxlength="2000"
                 required
               ></textarea>
             </div>
@@ -298,6 +350,13 @@ async function submitForm() {
   color: #ff7b7b;
   font-weight: 600;
   line-height: 1.5;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 900px) {

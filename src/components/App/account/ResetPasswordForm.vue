@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import api from '@/services/api.ts'
 
-const router = useRouter()
 const { t } = useI18n()
 
 const email = ref('')
@@ -43,12 +41,39 @@ const submitButtonText = computed(() => {
   return ''
 })
 
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+}
+
 async function handleRequestOtp() {
-  if (!email.value) return
-  isLoading.value = true
   errorMsg.value = null
+
+  if (isLoading.value) {
+    return
+  }
+
+  const trimmedEmail = email.value.trim()
+
+  if (!trimmedEmail) {
+    errorMsg.value = t('authPage.enterEmailPassword')
+    return
+  }
+
+  if (!isValidEmail(trimmedEmail)) {
+    errorMsg.value = 'Bitte gib eine gültige E-Mail-Adresse ein.'
+    return
+  }
+
+  if (trimmedEmail.length > 254) {
+    errorMsg.value = 'Die E-Mail-Adresse ist zu lang.'
+    return
+  }
+
+  isLoading.value = true
+
   try {
-    await api.post('/api/user/request-otp', { email: email.value })
+    await api.post('/api/user/request-otp', { email: trimmedEmail })
+    email.value = trimmedEmail
     step.value = 2
   } catch (error: any) {
     console.error('API Error:', error)
@@ -59,15 +84,47 @@ async function handleRequestOtp() {
 }
 
 async function handleVerifyOtp() {
-  if (!otp.value) return
-  isLoading.value = true
   errorMsg.value = null
+
+  if (isLoading.value) {
+    return
+  }
+
+  const trimmedOtp = otp.value.trim()
+  const trimmedEmail = email.value.trim()
+
+  if (!trimmedOtp) {
+    errorMsg.value = 'Bitte gib den Code ein.'
+    return
+  }
+
+  if (!/^\d{6}$/.test(trimmedOtp)) {
+    errorMsg.value = 'Der Code muss aus 6 Zahlen bestehen.'
+    return
+  }
+
+  if (!trimmedEmail || !isValidEmail(trimmedEmail)) {
+    errorMsg.value = 'Die E-Mail-Adresse ist ungültig. Bitte starte den Vorgang neu.'
+    step.value = 1
+    return
+  }
+
+  isLoading.value = true
+
   try {
     const response = await api.post('/api/user/verify-otp', {
-      email: email.value,
-      otp: otp.value,
+      email: trimmedEmail,
+      otp: trimmedOtp,
     })
-    verifiedToken.value = response.data.data?.verified_token || response.data?.verified_token
+
+    const token = response.data.data?.verified_token || response.data?.verified_token
+
+    if (!token) {
+      errorMsg.value = 'Der Bestätigungstoken fehlt. Bitte versuche es erneut.'
+      return
+    }
+
+    verifiedToken.value = token
     step.value = 3
   } catch (error: any) {
     console.error('API Error:', error)
@@ -78,7 +135,32 @@ async function handleVerifyOtp() {
 }
 
 async function handleChangePassword() {
-  if (!password.value || !confirmPassword.value) return
+  errorMsg.value = null
+
+  if (isLoading.value) {
+    return
+  }
+
+  if (!verifiedToken.value) {
+    errorMsg.value = 'Deine Bestätigung ist abgelaufen oder ungültig. Bitte starte den Vorgang neu.'
+    step.value = 1
+    return
+  }
+
+  if (!password.value || !confirmPassword.value) {
+    errorMsg.value = 'Bitte fülle beide Passwortfelder aus.'
+    return
+  }
+
+  if (password.value.length < 8) {
+    errorMsg.value = 'Das Passwort muss mindestens 8 Zeichen lang sein.'
+    return
+  }
+
+  if (password.value.length > 128) {
+    errorMsg.value = 'Das Passwort ist zu lang.'
+    return
+  }
 
   if (password.value !== confirmPassword.value) {
     errorMsg.value = t('authPage.passwordsDoNotMatch')
@@ -86,12 +168,19 @@ async function handleChangePassword() {
   }
 
   isLoading.value = true
-  errorMsg.value = null
+
   try {
     await api.post('/api/user/change-password', {
       password: password.value,
       verified_token: verifiedToken.value,
     })
+
+    email.value = ''
+    otp.value = ''
+    password.value = ''
+    confirmPassword.value = ''
+    verifiedToken.value = ''
+
     step.value = 4
   } catch (error: any) {
     console.error('API Error:', error)
@@ -152,6 +241,7 @@ async function handleSubmit() {
                 id="email"
                 :placeholder="t('authPage.emailPlaceholder')"
                 autocomplete="email"
+                maxlength="254"
                 required
               />
             </div>
@@ -165,7 +255,10 @@ async function handleSubmit() {
                 type="text"
                 id="otp"
                 :placeholder="t('authPage.otpPlaceholder')"
-                autocomplete="off"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                maxlength="6"
+                pattern="[0-9]{6}"
                 required
               />
             </div>
@@ -185,6 +278,8 @@ async function handleSubmit() {
                 id="password"
                 :placeholder="t('authPage.passwordPlaceholder')"
                 autocomplete="new-password"
+                minlength="8"
+                maxlength="128"
                 required
               />
             </div>
@@ -204,6 +299,8 @@ async function handleSubmit() {
                 id="confirmPassword"
                 :placeholder="t('authPage.passwordPlaceholder')"
                 autocomplete="new-password"
+                minlength="8"
+                maxlength="128"
                 required
               />
             </div>

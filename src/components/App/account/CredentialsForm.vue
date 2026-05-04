@@ -19,6 +19,8 @@ const isLoading = ref(false)
 const isLogin = computed(() => route.path.includes('login'))
 const switchRoute = computed(() => `/auth/${String(route.meta.action_string)}`)
 
+const passwordAutocomplete = computed(() => (isLogin.value ? 'current-password' : 'new-password'))
+
 const pageTitle = computed(() =>
   isLogin.value ? t('authPage.loginTitle') : t('authPage.registerTitle'),
 )
@@ -40,33 +42,74 @@ const footerActionText = computed(() =>
 )
 
 async function handleSubmit() {
-  if (!email.value || !password.value) {
+  errorMsg.value = null
+
+  if (isLoading.value) {
+    return
+  }
+
+  const trimmedEmail = email.value.trim()
+  const trimmedFirstName = firstName.value.trim()
+  const trimmedLastName = lastName.value.trim()
+
+  if (!trimmedEmail || !password.value) {
     errorMsg.value = t('authPage.enterEmailPassword')
     return
   }
 
-  if (!isLogin.value && (!firstName.value.trim() || !lastName.value.trim())) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!emailPattern.test(trimmedEmail)) {
+    errorMsg.value = 'Bitte gib eine gültige E-Mail-Adresse ein.'
+    return
+  }
+
+  if (trimmedEmail.length > 254) {
+    errorMsg.value = 'Die E-Mail-Adresse ist zu lang.'
+    return
+  }
+
+  if (!isLogin.value && (!trimmedFirstName || !trimmedLastName)) {
     errorMsg.value = t('authPage.enterFullName')
     return
   }
 
+  if (!isLogin.value && trimmedFirstName.length > 50) {
+    errorMsg.value = 'Der Vorname ist zu lang.'
+    return
+  }
+
+  if (!isLogin.value && trimmedLastName.length > 50) {
+    errorMsg.value = 'Der Nachname ist zu lang.'
+    return
+  }
+
+  if (!isLogin.value && password.value.length < 8) {
+    errorMsg.value = 'Das Passwort muss mindestens 8 Zeichen lang sein.'
+    return
+  }
+
+  if (password.value.length > 128) {
+    errorMsg.value = 'Das Passwort ist zu lang.'
+    return
+  }
+
   isLoading.value = true
-  errorMsg.value = null
 
   const endpoint = isLogin.value ? '/api/user/auth/login' : '/api/user/auth/register'
 
   try {
     const payload = isLogin.value
       ? {
-        email: email.value,
-        password: password.value,
-      }
+          email: trimmedEmail,
+          password: password.value,
+        }
       : {
-        email: email.value,
-        first_name: firstName.value.trim(),
-        last_name: lastName.value.trim(),
-        password: password.value,
-      }
+          email: trimmedEmail,
+          first_name: trimmedFirstName,
+          last_name: trimmedLastName,
+          password: password.value,
+        }
 
     await api.post(endpoint, payload)
     await authStore.initialize()
@@ -109,6 +152,7 @@ async function handleSubmit() {
                   id="firstName"
                   :placeholder="t('authPage.firstNamePlaceholder')"
                   autocomplete="given-name"
+                  maxlength="50"
                   required
                 />
               </div>
@@ -121,6 +165,7 @@ async function handleSubmit() {
                   id="lastName"
                   :placeholder="t('authPage.lastNamePlaceholder')"
                   autocomplete="family-name"
+                  maxlength="50"
                   required
                 />
               </div>
@@ -141,6 +186,7 @@ async function handleSubmit() {
                 id="email"
                 :placeholder="t('authPage.emailPlaceholder')"
                 autocomplete="email"
+                maxlength="254"
                 required
               />
             </div>
@@ -149,7 +195,9 @@ async function handleSubmit() {
           <div class="form-group">
             <div class="label-row">
               <label for="password">{{ t('authPage.passwordLabel') }}</label>
-              <router-link to="/auth/reset-password" class="sub-text contact-link-small">{{ t('authPage.forgotPassword') }}</router-link>
+              <router-link to="/auth/reset-password" class="sub-text contact-link-small">{{
+                t('authPage.forgotPassword')
+              }}</router-link>
             </div>
             <div class="input-wrapper">
               <img
@@ -162,7 +210,9 @@ async function handleSubmit() {
                 type="password"
                 id="password"
                 :placeholder="t('authPage.passwordPlaceholder')"
-                autocomplete="current-password"
+                :autocomplete="passwordAutocomplete"
+                minlength="8"
+                maxlength="128"
                 required
               />
             </div>
