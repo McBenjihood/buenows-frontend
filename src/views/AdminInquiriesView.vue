@@ -152,7 +152,7 @@ onMounted(async () => {
     <div class="admin-wrapper">
       <div class="hero-card">
         <div class="top-row">
-          <button class="nav-icon-button" @click="goBack" :title="t('editorPage.back')">←</button>
+          <button class="nav-icon-button" @click="goBack" :title="t('accountPage.back')">←</button>
 
           <button
             class="nav-icon-button"

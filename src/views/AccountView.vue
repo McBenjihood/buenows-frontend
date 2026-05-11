@@ -22,10 +22,6 @@ const userProfile = ref<{
 
 const isAdmin = computed(() => authStore.isAdmin)
 
-const openEditor = async () => {
-  await router.push('/account/editor')
-}
-
 const openUsers = async () => {
   await router.push('/account/admin/users')
 }
@@ -107,16 +103,6 @@ onMounted(async () => {
       </div>
 
       <div v-else class="grid">
-        <div class="card">
-          <h2>{{ t('accountPage.editorTitle') }}</h2>
-          <p>
-            {{ t('accountPage.editorText') }}
-          </p>
-          <button class="primary-button" @click="openEditor">
-            {{ t('accountPage.editorButton') }}
-          </button>
-        </div>
-
         <div v-if="isAdmin" class="card">
           <h2>{{ t('accountPage.usersTitle') }}</h2>
           <p>{{ t('accountPage.usersText') }}</p>
@@ -133,18 +119,10 @@ onMounted(async () => {
           </button>
         </div>
 
-        <div v-if="isAdmin" class="card">
-          <h2>{{ t('accountPage.postsTitle') }}</h2>
+        <div v-if="!isAdmin" class="card">
+          <h2>{{ t('accountPage.editorTitle') }}</h2>
           <p>
-            {{ t('accountPage.postsText') }}
-          </p>
-          <button class="secondary-button" disabled>{{ t('accountPage.soon') }}</button>
-        </div>
-
-        <div v-if="isAdmin" class="card">
-          <h2>{{ t('accountPage.designTitle') }}</h2>
-          <p>
-            {{ t('accountPage.designText') }}
+            {{ t('accountPage.editorText') }}
           </p>
           <button class="secondary-button" disabled>{{ t('accountPage.soon') }}</button>
         </div>

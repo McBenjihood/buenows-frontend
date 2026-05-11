@@ -66,14 +66,6 @@ const router = createRouter({
       },
     },
     {
-      path: '/account/editor',
-      name: 'PostEditor',
-      component: () => import('@/views/PostEditorView.vue'),
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
       path: '/account/admin/users',
       name: 'AdminUsers',
       component: () => import('@/views/AdminUsersView.vue'),

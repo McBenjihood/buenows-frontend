@@ -327,6 +327,7 @@ const messages = {
     accountPage: {
       title: 'Dashboard',
       subtitle: 'Manage your website, account and project tools in one place.',
+      back: 'Back',
 
       loadingTitle: 'Loading',
       loadingText: 'Your account data is being loaded ...',
@@ -340,16 +341,7 @@ const messages = {
       editorTitle: 'Website editor',
       editorText:
         'Open the editor area to manage website content, pages and updates when editing features are available.',
-      editorButton: 'Open editor',
-
-      postsTitle: 'Posts & content',
-      postsText:
-        'Create and manage news, posts or content updates for your website. This feature is currently in development.',
       soon: 'Coming soon',
-
-      designTitle: 'Design settings',
-      designText:
-        'Adjust colors, images and selected design elements of your website. This feature is currently in development.',
 
       accountTitle: 'Account overview',
       emailLabel: 'Email',
@@ -410,12 +402,6 @@ const messages = {
     footer: {
       copyright: '© 2026 Bueno Web Solutions. All rights reserved.',
       socials: 'Socials',
-    },
-    editorPage: {
-      back: 'Back',
-      title: 'Personal Area',
-      subtitle: 'Post Editor',
-      areaTitle: 'Editor area',
     },
   },
 
@@ -724,6 +710,7 @@ const messages = {
     accountPage: {
       title: 'Dashboard',
       subtitle: 'Verwalten Sie Website, Konto und Projektfunktionen an einem Ort.',
+      back: 'Zurück',
 
       loadingTitle: 'Laden',
       loadingText: 'Ihre Kontodaten werden geladen ...',
@@ -737,16 +724,7 @@ const messages = {
       editorTitle: 'Website-Editor',
       editorText:
         'Öffnen Sie den Editorbereich, um Inhalte, Seiten und Aktualisierungen Ihrer Website zu verwalten, sobald die Bearbeitungsfunktionen verfügbar sind.',
-      editorButton: 'Editor öffnen',
-
-      postsTitle: 'Beiträge & Inhalte',
-      postsText:
-        'Erstellen und verwalten Sie später News, Beiträge oder Inhaltsupdates für Ihre Website. Diese Funktion ist aktuell in Entwicklung.',
       soon: 'Bald verfügbar',
-
-      designTitle: 'Design-Einstellungen',
-      designText:
-        'Passen Sie später Farben, Bilder und ausgewählte Designbereiche Ihrer Website an. Diese Funktion ist aktuell in Entwicklung.',
 
       accountTitle: 'Kontoübersicht',
       emailLabel: 'E-Mail',
@@ -807,12 +785,6 @@ const messages = {
     footer: {
       copyright: '© 2026 Bueno Web Solutions. Alle Rechte vorbehalten.',
       socials: 'Socials',
-    },
-    editorPage: {
-      back: 'Zurück',
-      title: 'Personal Area',
-      subtitle: 'Post Editor',
-      areaTitle: 'Editorbereich',
     },
   },
 }
