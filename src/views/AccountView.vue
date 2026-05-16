@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { authStore } from '@/services/auth.ts'
+import AccountPasswordReset from '@/components/App/account/AccountPasswordReset.vue'
 
 import emailIcon from '@/assets/img/icons/account/login/email.svg'
 import checkIcon from '@/assets/img/icons/account/login/check.svg'
@@ -142,6 +143,11 @@ onMounted(async () => {
               {{ t('accountPage.statusActive') }}
             </p>
           </div>
+        </div>
+
+        <div class="card">
+          <h2>{{ t('authPage.resetPasswordTitle') }}</h2>
+          <AccountPasswordReset />
         </div>
 
         <div v-if="!isAdmin" class="card card-wide">
