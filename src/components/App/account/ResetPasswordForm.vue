@@ -72,7 +72,7 @@ async function handleRequestOtp() {
   isLoading.value = true
 
   try {
-    await api.post('/api/user/request-otp', { email: trimmedEmail })
+    await api.post('/api/user/request-otp', { contact_information: trimmedEmail })
     email.value = trimmedEmail
     step.value = 2
   } catch (error: any) {
@@ -113,7 +113,7 @@ async function handleVerifyOtp() {
 
   try {
     const response = await api.post('/api/user/verify-otp', {
-      email: trimmedEmail,
+      contact_information: trimmedEmail,
       otp: trimmedOtp,
     })
 

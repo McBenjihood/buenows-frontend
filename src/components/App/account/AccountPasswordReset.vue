@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import api from '@/services/api.ts'
 import { authStore } from '@/services/auth.ts'
 
 const { t } = useI18n()
+const router = useRouter()
 
 const email = ref('')
 const otp = ref('')
@@ -45,7 +47,7 @@ async function handleRequestOtp() {
   isLoading.value = true
 
   try {
-    await api.post('/api/user/request-otp', { email: email.value })
+    await api.post('/api/user/request-otp', { contact_information: email.value })
     step.value = 2
   } catch (error: any) {
     console.error('API Error:', error)
@@ -76,7 +78,7 @@ async function handleVerifyOtp() {
 
   try {
     const response = await api.post('/api/user/verify-otp', {
-      email: email.value,
+      contact_information: email.value,
       otp: trimmedOtp,
     })
 
@@ -131,8 +133,9 @@ async function handleChangePassword() {
       verified_token: verifiedToken.value,
     })
 
-    successMsg.value = t('authPage.resetSuccessMessage')
     resetForm()
+    await authStore.logout()
+    await router.push({ path: '/auth/login', query: { resetSuccess: 'true' } })
   } catch (error: any) {
     console.error('API Error:', error)
     errorMsg.value = error.response?.data?.message || t('authPage.connectionFailed')

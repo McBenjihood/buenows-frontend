@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { authStore } from '@/services/auth.ts'
@@ -13,25 +13,54 @@ const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
 const password = ref('')
+const otp = ref('')
+const verifiedToken = ref('')
 const errorMsg = ref<string | null>(null)
+const successMsg = ref<string | null>(null)
 const isLoading = ref(false)
+const step = ref<1 | 2>(1)
 
 const isLogin = computed(() => route.path.includes('login'))
 const switchRoute = computed(() => `/auth/${String(route.meta.action_string)}`)
 
+watch(isLogin, () => {
+  step.value = 1
+  otp.value = ''
+  verifiedToken.value = ''
+  errorMsg.value = null
+  successMsg.value = null
+})
+
+onMounted(() => {
+  if (route.query.resetSuccess === 'true') {
+    successMsg.value = t('authPage.resetSuccessMessage')
+    router.replace({ query: {} })
+  }
+})
+
 const passwordAutocomplete = computed(() => (isLogin.value ? 'current-password' : 'new-password'))
 
-const pageTitle = computed(() =>
-  isLogin.value ? t('authPage.loginTitle') : t('authPage.registerTitle'),
-)
+const pageTitle = computed(() => {
+  if (isLogin.value) return t('authPage.loginTitle')
+  if (step.value === 1) return t('authPage.registerTitle')
+  return t('authPage.verifyOtpTitle')
+})
 
-const submitButtonText = computed(() =>
-  isLoading.value
-    ? t('authPage.loading')
-    : isLogin.value
-      ? t('authPage.signIn')
-      : t('authPage.register'),
-)
+const pageSubtitle = computed(() => {
+  if (!isLogin.value && step.value === 2) return t('authPage.verifyOtpSubtitle')
+  return ''
+})
+
+const showMailHint = computed(() => {
+  return !isLogin.value && step.value === 2
+})
+
+const submitButtonText = computed(() => {
+  if (isLoading.value) return t('authPage.loading')
+  if (isLogin.value) return t('authPage.signIn')
+  if (step.value === 1) return t('authPage.requestOtpButton')
+  return t('authPage.verifyOtpButton')
+})
 
 const footerInfoText = computed(() =>
   isLogin.value ? t('authPage.noAccount') : t('authPage.haveAccount'),
@@ -41,83 +70,116 @@ const footerActionText = computed(() =>
   isLogin.value ? t('authPage.createOne') : t('authPage.signInLink'),
 )
 
-async function handleSubmit() {
-  errorMsg.value = null
+function validateEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+}
 
-  if (isLoading.value) {
-    return
-  }
-
+async function handleRequestOtp() {
   const trimmedEmail = email.value.trim()
   const trimmedFirstName = firstName.value.trim()
   const trimmedLastName = lastName.value.trim()
 
   if (!trimmedEmail || !password.value) {
     errorMsg.value = t('authPage.enterEmailPassword')
-    return
+    return false
   }
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-  if (!emailPattern.test(trimmedEmail)) {
+  if (!validateEmail(trimmedEmail)) {
     errorMsg.value = 'Bitte gib eine gültige E-Mail-Adresse ein.'
-    return
+    return false
   }
 
   if (trimmedEmail.length > 254) {
     errorMsg.value = 'Die E-Mail-Adresse ist zu lang.'
-    return
+    return false
   }
 
-  if (!isLogin.value && (!trimmedFirstName || !trimmedLastName)) {
+  if (!trimmedFirstName || !trimmedLastName) {
     errorMsg.value = t('authPage.enterFullName')
-    return
+    return false
   }
 
-  if (!isLogin.value && trimmedFirstName.length > 50) {
+  if (trimmedFirstName.length > 50) {
     errorMsg.value = 'Der Vorname ist zu lang.'
-    return
+    return false
   }
 
-  if (!isLogin.value && trimmedLastName.length > 50) {
+  if (trimmedLastName.length > 50) {
     errorMsg.value = 'Der Nachname ist zu lang.'
-    return
+    return false
   }
 
-  if (!isLogin.value && password.value.length < 8) {
+  if (password.value.length < 8) {
     errorMsg.value = 'Das Passwort muss mindestens 8 Zeichen lang sein.'
-    return
+    return false
   }
 
   if (password.value.length > 128) {
     errorMsg.value = 'Das Passwort ist zu lang.'
+    return false
+  }
+
+  isLoading.value = true
+
+  try {
+    await api.post('/api/user/request-otp', { contact_information: trimmedEmail })
+    step.value = 2
+    return true
+  } catch (error: any) {
+    console.error('API Error:', error)
+    errorMsg.value = error.response?.data?.message || t('authPage.connectionFailed')
+    return false
+  } finally {
+    isLoading.value = false
+  }
+}
+
+async function handleVerifyOtpAndRegister() {
+  const trimmedOtp = otp.value.trim()
+  const trimmedEmail = email.value.trim()
+
+  if (!trimmedOtp) {
+    errorMsg.value = 'Bitte gib den Code ein.'
+    return
+  }
+
+  if (!/^\d{6}$/.test(trimmedOtp)) {
+    errorMsg.value = 'Der Code muss aus 6 Zahlen bestehen.'
     return
   }
 
   isLoading.value = true
 
-  const endpoint = isLogin.value ? '/api/user/auth/login' : '/api/user/auth/register'
-
   try {
-    const payload = isLogin.value
-      ? {
-          email: trimmedEmail,
-          password: password.value,
-        }
-      : {
-          email: trimmedEmail,
-          first_name: trimmedFirstName,
-          last_name: trimmedLastName,
-          password: password.value,
-        }
+    const verifyResponse = await api.post('/api/user/verify-otp', {
+      contact_information: trimmedEmail,
+      otp: trimmedOtp,
+    })
 
-    await api.post(endpoint, payload)
+    const token = verifyResponse.data.data?.verified_token || verifyResponse.data?.verified_token
+
+    if (!token) {
+      errorMsg.value = 'Der Bestätigungstoken fehlt. Bitte versuche es erneut.'
+      isLoading.value = false
+      return
+    }
+
+    verifiedToken.value = token
+
+    // Proceed with registration
+    await api.post('/api/user/auth/register', {
+      email: trimmedEmail,
+      first_name: firstName.value.trim(),
+      last_name: lastName.value.trim(),
+      password: password.value,
+      verified_token: verifiedToken.value,
+    })
+
     await authStore.initialize()
 
     if (!authStore.isAuthenticated) {
-      errorMsg.value = isLogin.value
-        ? t('authPage.loginFailedNoJwt')
-        : t('authPage.registerFailedNoJwt')
+      errorMsg.value = t('authPage.registerFailedNoJwt')
+      isLoading.value = false
       return
     }
 
@@ -129,6 +191,67 @@ async function handleSubmit() {
     isLoading.value = false
   }
 }
+
+async function handleLogin() {
+  const trimmedEmail = email.value.trim()
+
+  if (!trimmedEmail || !password.value) {
+    errorMsg.value = t('authPage.enterEmailPassword')
+    return
+  }
+
+  if (!validateEmail(trimmedEmail)) {
+    errorMsg.value = 'Bitte gib eine gültige E-Mail-Adresse ein.'
+    return
+  }
+
+  if (trimmedEmail.length > 254) {
+    errorMsg.value = 'Die E-Mail-Adresse ist zu lang.'
+    return
+  }
+
+  isLoading.value = true
+
+  try {
+    await api.post('/api/user/auth/login', {
+      email: trimmedEmail,
+      password: password.value,
+    })
+
+    await authStore.initialize()
+
+    if (!authStore.isAuthenticated) {
+      errorMsg.value = t('authPage.loginFailedNoJwt')
+      isLoading.value = false
+      return
+    }
+
+    await router.push('/account')
+  } catch (error: any) {
+    console.error('API Error:', error)
+    errorMsg.value = error.response?.data?.message || t('authPage.connectionFailed')
+  } finally {
+    isLoading.value = false
+  }
+}
+
+async function handleSubmit() {
+  errorMsg.value = null
+
+  if (isLoading.value) {
+    return
+  }
+
+  if (isLogin.value) {
+    await handleLogin()
+  } else {
+    if (step.value === 1) {
+      await handleRequestOtp()
+    } else if (step.value === 2) {
+      await handleVerifyOtpAndRegister()
+    }
+  }
+}
 </script>
 
 <template>
@@ -137,93 +260,126 @@ async function handleSubmit() {
       <div class="solutions-block">
         <h1>{{ pageTitle }}</h1>
 
+        <p class="subtitle" v-if="pageSubtitle">
+          {{ pageSubtitle }}
+        </p>
+
+        <p v-if="showMailHint" class="mail-hint">
+          {{ t('authPage.checkSpamHint') }}
+        </p>
+
         <p v-if="errorMsg" class="error-message">
           {{ errorMsg }}
         </p>
 
-        <form class="contact-form" @submit.prevent="handleSubmit">
-          <template v-if="!isLogin">
-            <div class="name-row">
-              <div class="form-group">
-                <label for="firstName">{{ t('authPage.firstNameLabel') }}</label>
-                <input
-                  v-model.trim="firstName"
-                  type="text"
-                  id="firstName"
-                  :placeholder="t('authPage.firstNamePlaceholder')"
-                  autocomplete="given-name"
-                  maxlength="50"
-                  required
-                />
-              </div>
+        <p v-if="successMsg" class="success-message">
+          {{ successMsg }}
+        </p>
 
-              <div class="form-group">
-                <label for="lastName">{{ t('authPage.lastNameLabel') }}</label>
+        <form class="contact-form" @submit.prevent="handleSubmit">
+          <template v-if="!isLogin && step === 2">
+            <div class="form-group">
+              <label for="otp">{{ t('authPage.otpLabel') }}</label>
+              <div class="input-wrapper">
                 <input
-                  v-model.trim="lastName"
+                  v-model.trim="otp"
                   type="text"
-                  id="lastName"
-                  :placeholder="t('authPage.lastNamePlaceholder')"
-                  autocomplete="family-name"
-                  maxlength="50"
+                  id="otp"
+                  :placeholder="t('authPage.otpPlaceholder')"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
+                  maxlength="6"
+                  pattern="[0-9]{6}"
                   required
                 />
               </div>
             </div>
           </template>
 
-          <div class="form-group">
-            <label for="email">{{ t('authPage.emailLabel') }}</label>
-            <div class="input-wrapper">
-              <img
-                src="../../../assets/img/icons/account/login/email.svg"
-                class="input-icon"
-                alt="Email"
-              />
-              <input
-                v-model.trim="email"
-                type="email"
-                id="email"
-                :placeholder="t('authPage.emailPlaceholder')"
-                autocomplete="email"
-                maxlength="254"
-                required
-              />
-            </div>
-          </div>
+          <template v-else>
+            <template v-if="!isLogin">
+              <div class="name-row">
+                <div class="form-group">
+                  <label for="firstName">{{ t('authPage.firstNameLabel') }}</label>
+                  <input
+                    v-model.trim="firstName"
+                    type="text"
+                    id="firstName"
+                    :placeholder="t('authPage.firstNamePlaceholder')"
+                    autocomplete="given-name"
+                    maxlength="50"
+                    required
+                  />
+                </div>
 
-          <div class="form-group">
-            <div class="label-row">
-              <label for="password">{{ t('authPage.passwordLabel') }}</label>
-              <router-link to="/auth/reset-password" class="sub-text contact-link-small">{{
-                t('authPage.forgotPassword')
-              }}</router-link>
+                <div class="form-group">
+                  <label for="lastName">{{ t('authPage.lastNameLabel') }}</label>
+                  <input
+                    v-model.trim="lastName"
+                    type="text"
+                    id="lastName"
+                    :placeholder="t('authPage.lastNamePlaceholder')"
+                    autocomplete="family-name"
+                    maxlength="50"
+                    required
+                  />
+                </div>
+              </div>
+            </template>
+
+            <div class="form-group">
+              <label for="email">{{ t('authPage.emailLabel') }}</label>
+              <div class="input-wrapper">
+                <img
+                  src="../../../assets/img/icons/account/login/email.svg"
+                  class="input-icon"
+                  alt="Email"
+                />
+                <input
+                  v-model.trim="email"
+                  type="email"
+                  id="email"
+                  :placeholder="t('authPage.emailPlaceholder')"
+                  autocomplete="email"
+                  maxlength="254"
+                  required
+                />
+              </div>
             </div>
-            <div class="input-wrapper">
-              <img
-                src="../../../assets/img/icons/account/login/key_vertical.svg"
-                class="input-icon"
-                alt="Password"
-              />
-              <input
-                v-model="password"
-                type="password"
-                id="password"
-                :placeholder="t('authPage.passwordPlaceholder')"
-                :autocomplete="passwordAutocomplete"
-                minlength="8"
-                maxlength="128"
-                required
-              />
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="password">{{ t('authPage.passwordLabel') }}</label>
+                <router-link v-if="isLogin" to="/auth/reset-password" class="sub-text contact-link-small">{{
+                  t('authPage.forgotPassword')
+                }}</router-link>
+              </div>
+              <div class="input-wrapper">
+                <img
+                  src="../../../assets/img/icons/account/login/key_vertical.svg"
+                  class="input-icon"
+                  alt="Password"
+                />
+                <input
+                  v-model="password"
+                  type="password"
+                  id="password"
+                  :placeholder="t('authPage.passwordPlaceholder')"
+                  :autocomplete="passwordAutocomplete"
+                  minlength="8"
+                  maxlength="128"
+                  required
+                />
+              </div>
             </div>
-          </div>
+          </template>
 
           <button type="submit" class="submit-btn" :disabled="isLoading">
             {{ submitButtonText }}
           </button>
         </form>
 
-        <div class="auth-footer">
+        <div class="auth-footer" v-if="!(!isLogin && step === 2)">
           <p class="sub-text">
             {{ footerInfoText }}
             <router-link :to="switchRoute" class="contact-link">
@@ -284,12 +440,37 @@ h1 {
   font-size: 2rem;
   text-align: center;
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   color: #ffffff;
+}
+
+.subtitle {
+  text-align: center;
+  color: #888;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.mail-hint {
+  color: #b8b8b8;
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin: 0 0 1.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .error-message {
   color: #ff6b6b;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.success-message {
+  color: #42b883;
   margin-bottom: 1rem;
   text-align: center;
 }
