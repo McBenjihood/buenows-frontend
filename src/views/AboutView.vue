@@ -3,7 +3,7 @@ import About from '@/components/App/about/About.vue'
 </script>
 
 <template>
-<About />
+  <About />
 </template>
 
 <style scoped></style>

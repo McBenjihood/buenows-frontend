@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import api, { getCurrentUserFromBackend } from '@/services/api.ts'
+import api, { getCurrentUserFromBackend, clearLocalAccessToken } from '@/services/api.ts'
 
 type AuthUser = {
   user_id?: string
@@ -52,6 +52,7 @@ export const authStore = reactive({
   clearAuthState() {
     this.isAuthenticated = false
     this.user = null
+    clearLocalAccessToken()
   },
 
   async logout() {

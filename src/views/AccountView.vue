@@ -60,8 +60,7 @@ async function loadCurrentUser() {
     }
 
     if (!authStore.user) {
-      await router.push('/auth/login').catch(() => {
-      })
+      await router.push('/auth/login').catch(() => {})
       return
     }
 

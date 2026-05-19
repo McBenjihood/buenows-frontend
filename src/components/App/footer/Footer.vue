@@ -8,7 +8,7 @@ import CopyrightBar from '@/components/App/footer/CopyrightBar.vue'
 <template>
   <footer class="footer">
     <Logo />
-    <CopyrightBar/>
+    <CopyrightBar />
     <FooterNavigation />
   </footer>
 </template>

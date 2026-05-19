@@ -10,8 +10,7 @@ async function bootstrap() {
   window.addEventListener('auth:logout', () => {
     authStore.clearAuthState()
 
-    router.push('/auth/login').catch(() => {
-    })
+    router.push('/auth/login').catch(() => {})
   })
 
   const app = createApp(App)

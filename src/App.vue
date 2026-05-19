@@ -16,7 +16,6 @@ import Footer from '@/components/App/footer/Footer.vue'
 </template>
 
 <style>
-
 html,
 body {
   height: 100%;

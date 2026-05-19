@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 import OverviewSection from '@/components/App/home/OverviewSection.vue'
 </script>
 
 <template>
-  <OverviewSection/>
+  <OverviewSection />
 </template>
 
 <style scoped></style>

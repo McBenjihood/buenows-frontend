@@ -168,7 +168,6 @@ async function handleVerifyOtpAndRegister() {
 
     // Proceed with registration
     await api.post('/api/user/auth/register', {
-      email: trimmedEmail,
       first_name: firstName.value.trim(),
       last_name: lastName.value.trim(),
       password: password.value,
@@ -350,9 +349,12 @@ async function handleSubmit() {
             <div class="form-group">
               <div class="label-row">
                 <label for="password">{{ t('authPage.passwordLabel') }}</label>
-                <router-link v-if="isLogin" to="/auth/reset-password" class="sub-text contact-link-small">{{
-                  t('authPage.forgotPassword')
-                }}</router-link>
+                <router-link
+                  v-if="isLogin"
+                  to="/auth/reset-password"
+                  class="sub-text contact-link-small"
+                  >{{ t('authPage.forgotPassword') }}</router-link
+                >
               </div>
               <div class="input-wrapper">
                 <img

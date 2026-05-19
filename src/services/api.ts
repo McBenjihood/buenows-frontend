@@ -1,6 +1,19 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
 
 const API_BASE_URL = 'http://localhost:8080'
+const TOKEN_KEY = 'access_token'
+
+export function getLocalAccessToken(): string | null {
+  return localStorage.getItem(TOKEN_KEY)
+}
+
+export function setLocalAccessToken(token: string): void {
+  localStorage.setItem(TOKEN_KEY, token)
+}
+
+export function clearLocalAccessToken(): void {
+  localStorage.removeItem(TOKEN_KEY)
+}
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -33,8 +46,37 @@ const processQueue = (error: unknown = null) => {
   refreshQueue = []
 }
 
+// Request Interceptor to automatically attach Bearer token
+api.interceptors.request.use(
+  (config) => {
+    const token = getLocalAccessToken()
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
+
+// Response Interceptor to capture JWTs on successful auth/refresh and handle 401 retries
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const url = response.config.url ?? ''
+    const isAuthSuccessRoute =
+      url.includes('/api/user/auth/login') ||
+      url.includes('/api/user/auth/register') ||
+      url.includes('/api/user/auth/refresh')
+
+    if (isAuthSuccessRoute && response.data?.successful) {
+      const jwt = response.data?.data?.JWT || response.data?.data?.jwt
+      if (jwt) {
+        setLocalAccessToken(jwt)
+      }
+    }
+    return response
+  },
   async (error) => {
     const originalRequest = error.config as RetryRequestConfig | undefined
 
@@ -69,13 +111,22 @@ api.interceptors.response.use(
       isRefreshing = true
 
       try {
-        await api.post('/api/user/auth/refresh')
+        const refreshResponse = await api.post('/api/user/auth/refresh')
+        const newJwt = refreshResponse.data?.data?.JWT || refreshResponse.data?.data?.jwt
+
+        if (newJwt) {
+          setLocalAccessToken(newJwt)
+          if (originalRequest.headers) {
+            originalRequest.headers['Authorization'] = `Bearer ${newJwt}`
+          }
+        }
 
         processQueue()
 
         return api(originalRequest)
       } catch (refreshError) {
         processQueue(refreshError)
+        clearLocalAccessToken()
 
         window.dispatchEvent(new Event('auth:logout'))
 
