@@ -150,13 +150,6 @@ onMounted(async () => {
           <AccountPasswordReset />
         </div>
 
-        <div v-if="!isAdmin" class="card card-wide">
-          <h2>{{ t('accountPage.customerAreaTitle') }}</h2>
-          <p>
-            {{ t('accountPage.customerAreaText') }}
-          </p>
-        </div>
-
         <div class="card card-wide">
           <h2>{{ t('accountPage.actionsTitle') }}</h2>
           <p>
@@ -194,6 +187,7 @@ onMounted(async () => {
 
 .hero-card h1 {
   margin: 0 0 0.75rem 0;
+  color: #42b883;
 }
 
 .subtitle {

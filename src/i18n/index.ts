@@ -350,9 +350,6 @@ const messages = {
       statusActive: 'Active',
       roleLabel: 'Access level',
 
-      customerAreaTitle: 'Client area',
-      customerAreaText:
-        'Here you will later find project updates, files, requests and information about your collaboration with Bueno Web Solutions.',
 
       inquiriesTitle: 'Contact inquiries',
       inquiriesText: 'View and manage messages submitted through the website contact form.',
@@ -734,9 +731,6 @@ const messages = {
       statusActive: 'Aktiv',
       roleLabel: 'Zugriffsstufe',
 
-      customerAreaTitle: 'Kundenbereich',
-      customerAreaText:
-        'Hier finden Sie später Projektstände, Dateien, Anfragen und Informationen zur Zusammenarbeit mit Bueno Web Solutions.',
 
       inquiriesTitle: 'Kontaktanfragen',
       inquiriesText: 'Nachrichten aus dem Kontaktformular ansehen und verwalten.',
