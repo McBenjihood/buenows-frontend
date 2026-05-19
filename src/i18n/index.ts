@@ -323,7 +323,7 @@ const messages = {
       resetSuccessMessage: 'Your password has been changed successfully. You can now login.',
       backToLogin: 'Back to login',
       checkSpamHint:
-        'If you do not receive an email within a few minutes, please also check your spam folder.',
+        'If you do not receive an email within a short time, please also check your spam folder.',
     },
     accountPage: {
       title: 'Dashboard',
@@ -704,7 +704,7 @@ const messages = {
         'Ihr Passwort wurde erfolgreich geändert. Sie können sich nun einloggen.',
       backToLogin: 'Zurück zum Login',
       checkSpamHint:
-        'Falls Sie innerhalb weniger Minuten keine E-Mail erhalten, prüfen Sie bitte auch Ihren Spam-Ordner.',
+        'Falls Sie innerhalb kurzer Zeit keine E-Mail erhalten, prüfen Sie bitte auch Ihren Spam-Ordner.',
     },
     accountPage: {
       title: 'Dashboard',
