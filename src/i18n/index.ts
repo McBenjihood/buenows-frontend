@@ -296,7 +296,8 @@ const messages = {
 
       enterEmailPassword: 'Please enter your email and password.',
       loginFailedNoJwt: 'Login failed. No access token received.',
-      connectionFailed: 'Could not connect to the server.',
+      connectionFailed: 'This is an error on our end. Please try again, and if it still doesn\'t work, contact support.',
+      rateLimited: 'Too many requests. Please try again later.',
 
       firstNameLabel: 'First name',
       firstNamePlaceholder: 'John',
@@ -678,7 +679,8 @@ const messages = {
 
       enterEmailPassword: 'Bitte E-Mail und Passwort eingeben.',
       loginFailedNoJwt: 'Login fehlgeschlagen. Kein Zugriffstoken erhalten.',
-      connectionFailed: 'Verbindung zum Server fehlgeschlagen.',
+      connectionFailed: 'Dies ist ein Fehler auf unserer Seite. Bitte versuchen Sie es erneut. Wenn es weiterhin nicht funktioniert, kontaktieren Sie den Support.',
+      rateLimited: 'Zu viele Anfragen. Bitte versuchen Sie es später erneut.',
 
       firstNameLabel: 'Vorname',
       firstNamePlaceholder: 'Max',
