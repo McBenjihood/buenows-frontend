@@ -296,7 +296,8 @@ const messages = {
 
       enterEmailPassword: 'Please enter your email and password.',
       loginFailedNoJwt: 'Login failed. No access token received.',
-      connectionFailed: 'Could not connect to the server.',
+      connectionFailed: 'This is an error on our end. Please try again, and if it still doesn\'t work, contact support.',
+      rateLimited: 'Too many requests. Please try again later.',
 
       firstNameLabel: 'First name',
       firstNamePlaceholder: 'John',
@@ -322,7 +323,7 @@ const messages = {
       resetSuccessMessage: 'Your password has been changed successfully. You can now login.',
       backToLogin: 'Back to login',
       checkSpamHint:
-        'If you do not receive an email within a few minutes, please also check your spam folder.',
+        'If you do not receive an email within a short time, please also check your spam folder.',
     },
     accountPage: {
       title: 'Dashboard',
@@ -349,9 +350,6 @@ const messages = {
       statusActive: 'Active',
       roleLabel: 'Access level',
 
-      customerAreaTitle: 'Client area',
-      customerAreaText:
-        'Here you will later find project updates, files, requests and information about your collaboration with Bueno Web Solutions.',
 
       inquiriesTitle: 'Contact inquiries',
       inquiriesText: 'View and manage messages submitted through the website contact form.',
@@ -678,7 +676,8 @@ const messages = {
 
       enterEmailPassword: 'Bitte E-Mail und Passwort eingeben.',
       loginFailedNoJwt: 'Login fehlgeschlagen. Kein Zugriffstoken erhalten.',
-      connectionFailed: 'Verbindung zum Server fehlgeschlagen.',
+      connectionFailed: 'Dies ist ein Fehler auf unserer Seite. Bitte versuchen Sie es erneut. Wenn es weiterhin nicht funktioniert, kontaktieren Sie den Support.',
+      rateLimited: 'Zu viele Anfragen. Bitte versuchen Sie es später erneut.',
 
       firstNameLabel: 'Vorname',
       firstNamePlaceholder: 'Max',
@@ -705,7 +704,7 @@ const messages = {
         'Ihr Passwort wurde erfolgreich geändert. Sie können sich nun einloggen.',
       backToLogin: 'Zurück zum Login',
       checkSpamHint:
-        'Falls Sie innerhalb weniger Minuten keine E-Mail erhalten, prüfen Sie bitte auch Ihren Spam-Ordner.',
+        'Falls Sie innerhalb kurzer Zeit keine E-Mail erhalten, prüfen Sie bitte auch Ihren Spam-Ordner.',
     },
     accountPage: {
       title: 'Dashboard',
@@ -732,9 +731,6 @@ const messages = {
       statusActive: 'Aktiv',
       roleLabel: 'Zugriffsstufe',
 
-      customerAreaTitle: 'Kundenbereich',
-      customerAreaText:
-        'Hier finden Sie später Projektstände, Dateien, Anfragen und Informationen zur Zusammenarbeit mit Bueno Web Solutions.',
 
       inquiriesTitle: 'Kontaktanfragen',
       inquiriesText: 'Nachrichten aus dem Kontaktformular ansehen und verwalten.',

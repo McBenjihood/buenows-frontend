@@ -1,4 +1,5 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
+import i18n from '@/i18n/index.ts'
 
 const API_BASE_URL = 'http://localhost:8080'
 const TOKEN_KEY = 'access_token'
@@ -22,6 +23,8 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
+
 
 type RetryRequestConfig = InternalAxiosRequestConfig & {
   _retry?: boolean
@@ -86,6 +89,13 @@ api.interceptors.response.use(
 
     const status = error.response?.status
     const url = originalRequest.url ?? ''
+
+    if (status === 429) {
+      if (!error.response) error.response = {}
+      if (!error.response.data) error.response.data = {}
+      error.response.data.message = i18n.global.t('authPage.rateLimited')
+      return Promise.reject(error)
+    }
 
     const isAuthRoute =
       url.includes('/api/user/auth/login') ||
