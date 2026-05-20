@@ -19,14 +19,26 @@ const { t } = useI18n()
 
       <div class="team-grid">
         <div class="team-card">
-          <img :src="benjiImage" alt="Benji von Bueno Web Solutions" class="member-image" />
+          <img
+            :src="benjiImage"
+            alt="Benji von Bueno Web Solutions"
+            class="member-image"
+            loading="lazy"
+            decoding="async"
+          />
           <div class="member-content">
             <h2>Benji</h2>
           </div>
         </div>
 
         <div class="team-card">
-          <img :src="liamImage" alt="Liam von Bueno Web Solutions" class="member-image" />
+          <img
+            :src="liamImage"
+            alt="Liam von Bueno Web Solutions"
+            class="member-image"
+            loading="lazy"
+            decoding="async"
+          />
           <div class="member-content">
             <h2>Liam</h2>
           </div>

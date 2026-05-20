@@ -1,6 +1,10 @@
+<script setup lang="ts">
+import logo from '@/assets/img/logo/logo.png'
+</script>
+
 <template>
   <router-link to="/" class="logo-link">
-    <img src="/src/assets/img/logo/logo.png" alt="Logo" />
+    <img :src="logo" alt="Bueno Web Solutions Logo" />
   </router-link>
 </template>
 

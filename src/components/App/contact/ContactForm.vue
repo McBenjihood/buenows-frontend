@@ -51,7 +51,7 @@ async function submitForm() {
     return
   }
 
-  if (trimmedTitle.length > 120) {
+  if (trimmedTitle.length > 100) {
     errorMsg.value = 'Der Betreff ist zu lang.'
     return
   }
@@ -152,7 +152,7 @@ async function submitForm() {
                 type="text"
                 id="title"
                 :placeholder="t('contactPage.subjectPlaceholder')"
-                maxlength="120"
+                maxlength="100"
                 required
               />
             </div>

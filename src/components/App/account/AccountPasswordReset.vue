@@ -120,6 +120,11 @@ async function handleChangePassword() {
     return
   }
 
+  if (password.value.length > 128) {
+    errorMsg.value = 'Das Passwort ist zu lang.'
+    return
+  }
+
   if (password.value !== confirmPassword.value) {
     errorMsg.value = t('authPage.passwordsDoNotMatch')
     return
@@ -240,6 +245,7 @@ async function handleSubmit() {
               id="password"
               :placeholder="t('authPage.passwordPlaceholder')"
               minlength="8"
+              maxlength="128"
               required
             />
           </div>
@@ -259,6 +265,7 @@ async function handleSubmit() {
               id="confirmPassword"
               :placeholder="t('authPage.passwordPlaceholder')"
               minlength="8"
+              maxlength="128"
               required
             />
           </div>

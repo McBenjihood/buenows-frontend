@@ -1,20 +1,26 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
 import i18n from '@/i18n/index.ts'
 
-const API_BASE_URL = 'http://localhost:8080'
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080').replace(/\/$/, '')
 const TOKEN_KEY = 'access_token'
 
 export function getLocalAccessToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY)
+  return null
 }
 
-export function setLocalAccessToken(token: string): void {
-  localStorage.setItem(TOKEN_KEY, token)
+export function setLocalAccessToken(_token: string): void {
+  clearLocalAccessToken()
 }
 
 export function clearLocalAccessToken(): void {
-  localStorage.removeItem(TOKEN_KEY)
+  try {
+    localStorage.removeItem(TOKEN_KEY)
+  } catch {
+    // Ignore storage access errors; auth uses HttpOnly cookies.
+  }
 }
+
+clearLocalAccessToken()
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -52,10 +58,7 @@ const processQueue = (error: unknown = null) => {
 // Request Interceptor to automatically attach Bearer token
 api.interceptors.request.use(
   (config) => {
-    const token = getLocalAccessToken()
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
+    config.headers['Accept-Language'] = i18n.global.locale.value
     return config
   },
   (error) => {
@@ -73,10 +76,7 @@ api.interceptors.response.use(
       url.includes('/api/user/auth/refresh')
 
     if (isAuthSuccessRoute && response.data?.successful) {
-      const jwt = response.data?.data?.JWT || response.data?.data?.jwt
-      if (jwt) {
-        setLocalAccessToken(jwt)
-      }
+      clearLocalAccessToken()
     }
     return response
   },
@@ -103,9 +103,9 @@ api.interceptors.response.use(
       url.includes('/api/user/auth/refresh') ||
       url.includes('/api/user/auth/logout')
 
-    const isUnauthorized = status === 401
+    const isAuthFailure = status === 401 || status === 403
 
-    if (isUnauthorized && !isAuthRoute && !originalRequest._retry) {
+    if (isAuthFailure && !isAuthRoute && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           refreshQueue.push({
@@ -121,15 +121,7 @@ api.interceptors.response.use(
       isRefreshing = true
 
       try {
-        const refreshResponse = await api.post('/api/user/auth/refresh')
-        const newJwt = refreshResponse.data?.data?.JWT || refreshResponse.data?.data?.jwt
-
-        if (newJwt) {
-          setLocalAccessToken(newJwt)
-          if (originalRequest.headers) {
-            originalRequest.headers['Authorization'] = `Bearer ${newJwt}`
-          }
-        }
+        await api.post('/api/user/auth/refresh')
 
         processQueue()
 

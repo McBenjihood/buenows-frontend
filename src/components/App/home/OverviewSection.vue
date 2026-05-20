@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import vueIcon from '/src/assets/img/icons/technologies/vuejs_logo.svg'
-import springIcon from '/src/assets/img/icons/technologies/spring_logo.svg'
-import postgresIcon from '/src/assets/img/icons/technologies/postgres_logo.svg'
-import awsIcon from '/src/assets/img/icons/technologies/aws_logo.svg'
+import vueIcon from '@/assets/img/icons/technologies/vuejs_logo.svg'
+import springIcon from '@/assets/img/icons/technologies/spring_logo.svg'
+import postgresIcon from '@/assets/img/icons/technologies/postgres_logo.svg'
+import awsIcon from '@/assets/img/icons/technologies/aws_logo.svg'
 
 const { t, tm } = useI18n()
 
@@ -145,7 +145,7 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
 
         <div class="tech-grid">
           <div v-for="tech in technologies" :key="tech.name" class="tech-card">
-            <img :src="tech.icon" :alt="tech.name" />
+            <img :src="tech.icon" :alt="tech.name" loading="lazy" decoding="async" />
             <span>{{ tech.name }}</span>
           </div>
         </div>
