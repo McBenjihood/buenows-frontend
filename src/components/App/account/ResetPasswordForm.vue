@@ -309,6 +309,11 @@ async function handleSubmit() {
           <button type="submit" class="submit-btn" :disabled="isLoading">
             {{ submitButtonText }}
           </button>
+
+          <p class="privacy-note">
+            {{ t('authPage.privacyNotice') }}
+            <router-link to="/legal">{{ t('footer.legal') }}</router-link>
+          </p>
         </form>
 
         <div class="auth-footer" v-if="step !== 4">
@@ -502,6 +507,23 @@ h1 {
 .sub-text {
   font-size: 0.9rem;
   color: #888;
+}
+
+.privacy-note {
+  margin: -0.25rem 0 0;
+  color: #a7a7a7;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.privacy-note a {
+  color: #42b883;
+  text-decoration: none;
+}
+
+.privacy-note a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {

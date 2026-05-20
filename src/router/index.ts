@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import('@/views/ContactView.vue'),
     },
     {
+      path: '/legal',
+      name: 'Legal',
+      component: () => import('@/views/LegalView.vue'),
+    },
+    {
       path: '/auth',
       name: 'Auth',
       component: () => import('@/views/AuthView.vue'),

@@ -173,6 +173,11 @@ async function submitForm() {
               {{ isLoading ? t('contactPage.sending') : t('contactPage.sendButton') }}
             </button>
 
+            <p class="privacy-note">
+              {{ t('contactPage.privacyNotice') }}
+              <router-link to="/legal">{{ t('footer.legal') }}</router-link>
+            </p>
+
             <p v-if="successMsg" class="success-message">{{ successMsg }}</p>
             <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
           </form>
@@ -350,6 +355,22 @@ async function submitForm() {
   color: #ff7b7b;
   font-weight: 600;
   line-height: 1.5;
+}
+
+.privacy-note {
+  margin: 0;
+  color: #a7a7a7;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.privacy-note a {
+  color: #42b883;
+  text-decoration: none;
+}
+
+.privacy-note a:hover {
+  text-decoration: underline;
 }
 
 .honeypot {

@@ -254,6 +254,7 @@ const messages = {
 
       emailTitle: 'Email',
       emailText: 'Send us your idea, problem or current situation.',
+      privacyNotice: 'We process your details to respond to your inquiry. Details:',
 
       writeUsTitle: 'What to include',
       writeUsText:
@@ -322,6 +323,7 @@ const messages = {
       changePasswordButton: 'Change Password',
       resetSuccessMessage: 'Your password has been changed successfully. You can now login.',
       backToLogin: 'Back to login',
+      privacyNotice: 'We process the data entered here for authentication and account security. Details:',
       checkSpamHint:
         'If you do not receive an email within a short time, please also check your spam folder.',
     },
@@ -400,6 +402,7 @@ const messages = {
     footer: {
       copyright: '© 2026 Bueno Web Solutions. All rights reserved.',
       socials: 'Socials',
+      legal: 'Legal & privacy',
     },
   },
 
@@ -634,6 +637,7 @@ const messages = {
 
       emailTitle: 'E-Mail',
       emailText: 'Schreiben Sie uns Ihre Idee, Ihr Problem oder Ihre aktuelle Situation.',
+      privacyNotice: 'Wir bearbeiten Ihre Angaben, um Ihre Anfrage zu beantworten. Details:',
 
       writeUsTitle: 'Was Sie schreiben können',
       writeUsText:
@@ -703,6 +707,7 @@ const messages = {
       resetSuccessMessage:
         'Ihr Passwort wurde erfolgreich geändert. Sie können sich nun einloggen.',
       backToLogin: 'Zurück zum Login',
+      privacyNotice: 'Wir bearbeiten die hier eingegebenen Daten für Login und Kontosicherheit. Details:',
       checkSpamHint:
         'Falls Sie innerhalb kurzer Zeit keine E-Mail erhalten, prüfen Sie bitte auch Ihren Spam-Ordner.',
     },
@@ -781,6 +786,7 @@ const messages = {
     footer: {
       copyright: '© 2026 Bueno Web Solutions. Alle Rechte vorbehalten.',
       socials: 'Socials',
+      legal: 'Rechtliches & Datenschutz',
     },
   },
 }
