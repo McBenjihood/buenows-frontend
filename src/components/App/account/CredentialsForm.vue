@@ -19,6 +19,7 @@ const errorMsg = ref<string | null>(null)
 const successMsg = ref<string | null>(null)
 const isLoading = ref(false)
 const step = ref<1 | 2>(1)
+const showDuplicateUserModal = ref(false)
 
 const isLogin = computed(() => route.path.includes('login'))
 const switchRoute = computed(() => `/auth/${String(route.meta.action_string)}`)
@@ -134,6 +135,42 @@ async function handleRequestOtp() {
   }
 }
 
+function isDuplicateUserError(error: any): boolean {
+  const data = error?.response?.data
+  if (!data) return false
+
+  if (typeof data === 'string') {
+    const lower = data.toLowerCase()
+    if (lower.includes('already exists') || lower.includes('duplicate_user')) {
+      return true
+    }
+  }
+
+  if (typeof data === 'object') {
+    const msg = (data.message || '').toLowerCase()
+    const err = (data.error || '').toLowerCase()
+    const code = (data.code || '').toLowerCase()
+    
+    if (
+      msg.includes('already exists') ||
+      msg.includes('duplicate') ||
+      err.includes('already exists') ||
+      err.includes('duplicate') ||
+      code.includes('already exists') ||
+      code.includes('duplicate')
+    ) {
+      return true
+    }
+  }
+
+  return false
+}
+
+async function navigateToLogin() {
+  showDuplicateUserModal.value = false
+  await router.push('/auth/login')
+}
+
 async function handleVerifyOtpAndRegister() {
   const trimmedOtp = otp.value.trim()
   const trimmedEmail = email.value.trim()
@@ -185,7 +222,11 @@ async function handleVerifyOtpAndRegister() {
     await router.push('/account')
   } catch (error: any) {
     console.error('API Error:', error)
-    errorMsg.value = error.response?.data?.message || t('authPage.connectionFailed')
+    if (isDuplicateUserError(error)) {
+      showDuplicateUserModal.value = true
+    } else {
+      errorMsg.value = error.response?.data?.message || t('authPage.connectionFailed')
+    }
   } finally {
     isLoading.value = false
   }
@@ -396,6 +437,31 @@ async function handleSubmit() {
         </div>
       </div>
     </div>
+
+    <!-- Duplicate User Premium Modal -->
+    <Transition name="modal">
+      <div v-if="showDuplicateUserModal" class="modal-overlay" @click.self="showDuplicateUserModal = false">
+        <div class="modal-box">
+          <div class="modal-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#42b883" stroke-width="2" class="modal-icon">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <h2 class="modal-title">{{ t('authPage.duplicateTitle') }}</h2>
+          <p class="modal-description">{{ t('authPage.duplicateDescription') }}</p>
+          <div class="modal-buttons">
+            <button type="button" @click="showDuplicateUserModal = false" class="modal-btn secondary">
+              {{ t('authPage.duplicateCancel') }}
+            </button>
+            <button type="button" @click="navigateToLogin" class="modal-btn primary">
+              {{ t('authPage.duplicateLogin') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -620,6 +686,164 @@ h1 {
 
   .name-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Premium Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background-color: #252525;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 3rem 2.5rem 2.5rem;
+  width: 92%;
+  max-width: 460px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.modal-icon-wrapper {
+  width: 72px;
+  height: 72px;
+  background-color: rgba(66, 184, 131, 0.08);
+  border: 1px solid rgba(66, 184, 131, 0.2);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1.75rem;
+  box-shadow: 0 0 24px rgba(66, 184, 131, 0.1);
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(66, 184, 131, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(66, 184, 131, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(66, 184, 131, 0);
+  }
+}
+
+.modal-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.modal-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.02em;
+}
+
+.modal-description {
+  font-size: 0.95rem;
+  color: #a7a7a7;
+  line-height: 1.6;
+  margin: 0 0 2.25rem;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  font-family: inherit;
+}
+
+.modal-btn.primary {
+  background-color: #42b883;
+  color: #1a1a1a;
+  box-shadow: 0 4px 14px rgba(66, 184, 131, 0.2);
+}
+
+.modal-btn.primary:hover {
+  background-color: #33a06f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 184, 131, 0.35);
+}
+
+.modal-btn.primary:active {
+  transform: translateY(0);
+}
+
+.modal-btn.secondary {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  color: #b8b8b8;
+}
+
+.modal-btn.secondary:hover {
+  border-color: #555;
+  color: #ffffff;
+  background-color: #222;
+  transform: translateY(-2px);
+}
+
+.modal-btn.secondary:active {
+  transform: translateY(0);
+}
+
+/* Modal Transition Animations */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-active .modal-box,
+.modal-leave-active .modal-box {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from .modal-box,
+.modal-leave-to .modal-box {
+  transform: scale(0.9) translateY(-30px);
+}
+
+@media (max-width: 480px) {
+  .modal-box {
+    padding: 2.25rem 1.5rem 1.75rem;
+  }
+  .modal-buttons {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+  .modal-btn {
+    width: 100%;
   }
 }
 </style>

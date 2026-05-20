@@ -299,6 +299,10 @@ const messages = {
       loginFailedNoJwt: 'Login failed. No access token received.',
       connectionFailed: 'This is an error on our end. Please try again, and if it still doesn\'t work, contact support.',
       rateLimited: 'Too many requests. Please try again later.',
+      duplicateTitle: 'Email Already Registered',
+      duplicateDescription: 'A user with this email address is already registered on BuenoWS. Would you like to login instead?',
+      duplicateCancel: 'Back',
+      duplicateLogin: 'Login',
 
       firstNameLabel: 'First name',
       firstNamePlaceholder: 'John',
@@ -682,6 +686,10 @@ const messages = {
       loginFailedNoJwt: 'Login fehlgeschlagen. Kein Zugriffstoken erhalten.',
       connectionFailed: 'Dies ist ein Fehler auf unserer Seite. Bitte versuchen Sie es erneut. Wenn es weiterhin nicht funktioniert, kontaktieren Sie den Support.',
       rateLimited: 'Zu viele Anfragen. Bitte versuchen Sie es später erneut.',
+      duplicateTitle: 'E-Mail bereits registriert',
+      duplicateDescription: 'Ein Benutzer mit dieser E-Mail-Adresse ist bereits auf BuenoWS registriert. Möchten Sie sich stattdessen einloggen?',
+      duplicateCancel: 'Zurück',
+      duplicateLogin: 'Einloggen',
 
       firstNameLabel: 'Vorname',
       firstNamePlaceholder: 'Max',
