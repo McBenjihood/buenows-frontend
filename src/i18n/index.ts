@@ -52,6 +52,13 @@ const messages = {
       reliableText:
         'We focus on solutions that work in real business life — not just designs that look good.',
 
+      referenceLabel: 'Client reference',
+      referenceTitle: 'Coiffeur EK Exklusiv',
+      referenceText:
+        'A simple website for a local salon, built with a clear structure and direct contact path.',
+      referenceDomain: 'coiffeur-ek-exklusiv.ch',
+      referenceButton: 'Open',
+
       servicesLabel: 'Services',
       servicesTitle: 'What we can build for you',
       servicesText:
@@ -440,6 +447,13 @@ const messages = {
       reliableTitle: 'Praktisch und zuverlässig',
       reliableText:
         'Wir bauen Lösungen, die im echten Geschäftsalltag funktionieren — nicht nur Designs, die gut aussehen.',
+
+      referenceLabel: 'Kundenreferenz',
+      referenceTitle: 'Coiffeur EK Exklusiv',
+      referenceText:
+        'Eine einfache Website für einen lokalen Salon, mit klarer Struktur und direktem Weg zur Kontaktaufnahme.',
+      referenceDomain: 'coiffeur-ek-exklusiv.ch',
+      referenceButton: 'Öffnen',
 
       servicesLabel: 'Leistungen',
       servicesTitle: 'Was wir für Sie bauen können',

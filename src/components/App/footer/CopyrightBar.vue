@@ -6,7 +6,7 @@ const { t } = useI18n()
 
 <template>
   <div class="copyright">
-    <h4>{{ t('footer.copyright') }}</h4>
+    <p class="copyright-text">{{ t('footer.copyright') }}</p>
     <router-link to="/legal" class="legal-link">{{ t('footer.legal') }}</router-link>
   </div>
 </template>
@@ -15,23 +15,28 @@ const { t } = useI18n()
 .copyright {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: 1.5rem;
-  color: #666;
+  align-items: center;
+  gap: 0.45rem;
+  color: #777;
+  text-align: center;
 }
 
-.copyright h4 {
+.copyright-text {
   margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .legal-link {
-  color: #8a8a8a;
-  font-size: 0.82rem;
+  color: #a6a6a6;
+  font-size: 0.9rem;
+  line-height: 1.4;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .legal-link:hover {
   color: #42b883;
-  text-decoration: underline;
 }
 </style>

@@ -8,7 +8,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="Navigation">
+  <nav class="footer-navigation" :aria-label="t('footer.socials')">
     <div class="socials">
       <span class="socials-label">{{ t('footer.socials') }}</span>
 
@@ -32,22 +32,23 @@ const { t } = useI18n()
         </a>
       </div>
     </div>
-  </div>
+  </nav>
 </template>
 
 <style scoped>
-.Navigation {
+.footer-navigation {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 1.5rem;
+  justify-self: end;
   color: #666;
 }
 
 .socials {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: flex-start;
+  gap: 0.65rem;
 }
 
 .socials-label {
@@ -55,12 +56,13 @@ const { t } = useI18n()
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 0.25em solid rgb(49, 46, 58);
+  padding-bottom: 0.25rem;
+  border-bottom: 0.2rem solid rgb(49, 46, 58);
 }
 
 .socials-links {
   display: flex;
-  gap: 1rem;
+  gap: 0.85rem;
   align-items: center;
 }
 
@@ -72,6 +74,26 @@ const { t } = useI18n()
 
 .socials-links a {
   display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.socials-links a:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .footer-navigation {
+    justify-self: center;
+  }
+
+  .socials {
+    align-items: center;
+  }
 }
 </style>

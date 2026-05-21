@@ -89,6 +89,24 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
         </div>
       </div>
 
+      <div class="reference-row">
+        <div>
+          <span class="reference-label">{{ t('home.referenceLabel') }}</span>
+          <h2>{{ t('home.referenceTitle') }}</h2>
+          <p>{{ t('home.referenceText') }}</p>
+        </div>
+
+        <a
+          href="https://coiffeur-ek-exklusiv.ch/"
+          class="reference-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>{{ t('home.referenceDomain') }}</span>
+          <strong>{{ t('home.referenceButton') }}</strong>
+        </a>
+      </div>
+
       <div class="section-card">
         <div class="section-heading">
           <span class="section-label">{{ t('home.servicesLabel') }}</span>
@@ -285,6 +303,71 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
   margin: 0;
 }
 
+.reference-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+.reference-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: #42b883;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.reference-row h2 {
+  margin: 0 0 0.55rem 0;
+  color: #ffffff;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+
+.reference-row p {
+  margin: 0;
+  color: #d2d2d2;
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+.reference-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.reference-link span {
+  color: #bdbdbd;
+  font-size: 0.95rem;
+}
+
+.reference-link strong {
+  color: #42b883;
+  font-size: 0.95rem;
+}
+
+.reference-link:hover {
+  background-color: #202020;
+  border-color: #42b883;
+}
+
 .section-card {
   margin-bottom: 2rem;
 }
@@ -418,6 +501,11 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
   .two-column-grid {
     grid-template-columns: 1fr;
   }
+
+  .reference-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 768px) {
@@ -438,6 +526,16 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
   .section-heading h2,
   .cta-card h2 {
     font-size: 1.7rem;
+  }
+
+  .reference-row {
+    padding: 1.5rem 0;
+  }
+
+  .reference-link {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
   }
 
   .tech-card {
