@@ -32,7 +32,7 @@ const { t } = useI18n()
   color: #a6a6a6;
   font-size: 0.9rem;
   line-height: 1.4;
-  text-decoration: none;
+  text-decoration: underline;
   transition: color 0.2s ease;
 }
 

@@ -274,7 +274,10 @@ watch(
     top: calc(100% + 0.75rem);
     right: 0;
     z-index: 50;
-    min-width: 260px;
+    width: max-content;
+    min-width: min(260px, calc(100vw - 2rem));
+    max-width: calc(100vw - 2rem);
+    box-sizing: border-box;
     background-color: #202020;
     border: 1px solid rgb(49, 46, 58);
     border-radius: 16px;
@@ -297,10 +300,11 @@ watch(
   .language-switch-item {
     margin-left: 0;
     margin-top: 0.5rem;
+    padding-left: 0.75rem;
   }
 
   .language-switch {
-    justify-content: center;
+    width: fit-content;
   }
 }
 </style>

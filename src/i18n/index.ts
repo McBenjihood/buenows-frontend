@@ -183,6 +183,16 @@ const messages = {
       targetGroupsLabel: 'Target groups',
       targetGroupsTitle: 'Who this is for',
 
+      workLabel: 'Our work',
+      workTitle: 'Previous client projects',
+      workText:
+        'Our finished websites are shown as individual cards. Open a preview to inspect the live page directly here.',
+      workPreviewButton: 'View preview',
+      workClosePreviewButton: 'Close preview',
+      workPreviewLabel: 'Live preview',
+      workOpenButton: 'Open website',
+      workPreviewTitle: 'website preview',
+
       collaborationLabel: 'How it works',
       collaborationTitle: 'Simple and clear process',
 
@@ -245,6 +255,18 @@ const messages = {
         'Local companies',
         'Service providers',
         'Businesses with repetitive customer requests',
+      ],
+
+      workItems: [
+        {
+          id: 'coiffeur-ek-exklusiv',
+          title: 'Coiffeur EK Exklusiv',
+          description:
+            'A clean website for a local salon with clear service information and a direct path to contact.',
+          url: 'https://coiffeur-ek-exklusiv.ch/',
+          domain: 'coiffeur-ek-exklusiv.ch',
+          embedUrl: 'https://coiffeur-ek-exklusiv.ch/',
+        },
       ],
     },
     contactPage: {
@@ -580,6 +602,16 @@ const messages = {
       targetGroupsLabel: 'Zielgruppen',
       targetGroupsTitle: 'Für wen das gedacht ist',
 
+      workLabel: 'Unsere Arbeiten',
+      workTitle: 'Bisherige Kundenprojekte',
+      workText:
+        'Unsere fertigen Websites werden als einzelne Karten angezeigt. Öffnen Sie eine Vorschau, um die Live-Seite direkt hier anzusehen.',
+      workPreviewButton: 'Vorschau ansehen',
+      workClosePreviewButton: 'Vorschau schliessen',
+      workPreviewLabel: 'Live-Vorschau',
+      workOpenButton: 'Website öffnen',
+      workPreviewTitle: 'Website-Vorschau',
+
       collaborationLabel: 'Ablauf',
       collaborationTitle: 'Einfacher und klarer Prozess',
 
@@ -640,6 +672,18 @@ const messages = {
         'Lokale Unternehmen',
         'Dienstleister',
         'Unternehmen mit vielen Kundenanfragen',
+      ],
+
+      workItems: [
+        {
+          id: 'coiffeur-ek-exklusiv',
+          title: 'Coiffeur EK Exklusiv',
+          description:
+            'Eine klare Website für einen lokalen Salon mit übersichtlichen Informationen und direktem Weg zur Kontaktaufnahme.',
+          url: 'https://coiffeur-ek-exklusiv.ch/',
+          domain: 'coiffeur-ek-exklusiv.ch',
+          embedUrl: 'https://coiffeur-ek-exklusiv.ch/',
+        },
       ],
     },
     contactPage: {

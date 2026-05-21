@@ -1,8 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t, tm } = useI18n()
+
+type WorkItem = {
+  id: string
+  title: string
+  description: string
+  url: string
+  domain: string
+  embedUrl: string
+}
 
 const coreServices = computed(
   () => tm('servicesPage.coreServices') as Array<{ title: string; text: string }>,
@@ -10,12 +19,18 @@ const coreServices = computed(
 
 const upcomingServices = computed(() => tm('servicesPage.upcomingServices') as string[])
 const targetGroups = computed(() => tm('servicesPage.targetGroups') as string[])
+const workItems = computed(() => tm('servicesPage.workItems') as WorkItem[])
+const previewWorkId = ref<string | null>(null)
+
+function togglePreview(workId: string) {
+  previewWorkId.value = previewWorkId.value === workId ? null : workId
+}
 </script>
 
 <template>
   <section class="services-page">
     <div class="services-wrapper">
-      <div class="hero-card">
+      <div class="hero-intro">
         <span class="section-label">{{ t('servicesPage.label') }}</span>
         <h1>{{ t('servicesPage.heroTitle') }}</h1>
         <p class="hero-text">
@@ -37,6 +52,80 @@ const targetGroups = computed(() => tm('servicesPage.targetGroups') as string[])
             <h3>{{ service.title }}</h3>
             <p>{{ service.text }}</p>
           </div>
+        </div>
+      </div>
+
+      <div class="section-card work-card">
+        <div class="section-heading">
+          <span class="section-label">{{ t('servicesPage.workLabel') }}</span>
+          <h2>{{ t('servicesPage.workTitle') }}</h2>
+          <p>
+            {{ t('servicesPage.workText') }}
+          </p>
+        </div>
+
+        <div class="work-grid">
+          <article
+            v-for="work in workItems"
+            :key="work.id"
+            class="project-card"
+            :class="{ expanded: previewWorkId === work.id }"
+          >
+            <div class="project-card-summary">
+              <div>
+                <h3>{{ work.title }}</h3>
+                <p>{{ work.description }}</p>
+              </div>
+
+              <button
+                type="button"
+                class="preview-button"
+                :aria-expanded="previewWorkId === work.id"
+                :aria-label="
+                  previewWorkId === work.id
+                    ? t('servicesPage.workClosePreviewButton')
+                    : t('servicesPage.workPreviewButton')
+                "
+                @click="togglePreview(work.id)"
+              >
+                <span class="preview-button-label">
+                  {{
+                    previewWorkId === work.id
+                      ? t('servicesPage.workClosePreviewButton')
+                      : t('servicesPage.workPreviewButton')
+                  }}
+                </span>
+                <span class="preview-button-icon" aria-hidden="true">×</span>
+              </button>
+            </div>
+
+            <div v-if="previewWorkId === work.id" class="project-preview">
+              <div class="project-preview-header">
+                <div>
+                  <span class="preview-eyebrow">{{ t('servicesPage.workPreviewLabel') }}</span>
+                  <h4>{{ work.title }}</h4>
+                </div>
+
+                <a
+                  :href="work.url"
+                  class="work-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ t('servicesPage.workOpenButton') }}
+                </a>
+              </div>
+
+              <div class="embed-frame">
+                <iframe
+                  :src="work.embedUrl"
+                  :title="`${work.title} ${t('servicesPage.workPreviewTitle')}`"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
 
@@ -146,7 +235,6 @@ const targetGroups = computed(() => tm('servicesPage.targetGroups') as string[])
   letter-spacing: 0.08em;
 }
 
-.hero-card,
 .section-card,
 .process-card,
 .cta-card {
@@ -156,13 +244,17 @@ const targetGroups = computed(() => tm('servicesPage.targetGroups') as string[])
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.hero-card,
 .section-card,
 .process-card {
   margin-bottom: 2rem;
 }
 
-.hero-card h1 {
+.hero-intro {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+.hero-intro h1 {
   margin: 0 0 1rem 0;
   font-size: 2.9rem;
   line-height: 1.15;
@@ -200,6 +292,187 @@ const targetGroups = computed(() => tm('servicesPage.targetGroups') as string[])
 .section-heading.center p {
   margin-left: auto;
   margin-right: auto;
+}
+
+.work-card {
+  overflow: hidden;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  background-color: #1f1f1f;
+  border: 1px solid rgba(66, 184, 131, 0.7);
+  border-radius: 14px;
+  padding: 2rem;
+  min-height: 260px;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-card.expanded {
+  grid-column: 1 / -1;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(66, 184, 131, 0.7);
+  background-color: #202020;
+}
+
+.project-card.expanded:hover {
+  border-color: rgba(66, 184, 131, 0.7);
+}
+
+.project-card h3 {
+  margin: 0 0 0.75rem;
+  color: #42b883;
+  font-size: 1.55rem;
+  line-height: 1.25;
+}
+
+.project-card p {
+  margin: 0;
+  color: #dfdfdf;
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.project-card-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  height: 100%;
+}
+
+.project-card-summary > div {
+  max-width: 620px;
+}
+
+.preview-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid #42b883;
+  border-radius: 10px;
+  background-color: #42b883;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.95rem 1.2rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.preview-button:focus {
+  outline: none;
+}
+
+.preview-button:hover,
+.preview-button:focus-visible,
+.project-card.expanded .preview-button {
+  background-color: #36a774;
+  border-color: #42b883;
+  color: #ffffff;
+}
+
+.preview-button:focus-visible {
+  outline: 2px solid #42b883;
+  outline-offset: 2px;
+}
+
+.preview-button-icon {
+  display: none;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.project-preview {
+  border-top: 1px solid #333;
+  padding-top: 1.5rem;
+}
+
+.project-card.expanded .project-card-summary {
+  align-items: flex-start;
+  flex-direction: row;
+  min-height: auto;
+}
+
+.project-card.expanded .preview-button {
+  max-width: 220px;
+}
+
+.project-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.preview-eyebrow {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #42b883;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.project-preview-header h4 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.45rem;
+}
+
+.work-link {
+  flex: 0 0 auto;
+  color: #42b883;
+  text-decoration: none;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.work-link:hover {
+  background-color: #1f1f1f;
+  border-color: #42b883;
+}
+
+.embed-frame {
+  overflow: hidden;
+  min-height: 680px;
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 14px;
+}
+
+.embed-frame iframe {
+  display: block;
+  width: calc(100% + 18px);
+  height: 100%;
+  min-height: 680px;
+  border: 0;
+  background-color: #ffffff;
 }
 
 .services-grid {
@@ -318,20 +591,75 @@ const targetGroups = computed(() => tm('servicesPage.targetGroups') as string[])
     padding: 2rem 1rem;
   }
 
-  .hero-card,
   .section-card,
   .process-card,
   .cta-card {
     padding: 1.5rem;
   }
 
-  .hero-card h1 {
+  .hero-intro h1 {
     font-size: 2.1rem;
   }
 
   .section-heading h2,
   .cta-card h2 {
     font-size: 1.7rem;
+  }
+
+  .project-card {
+    padding: 1.25rem;
+    min-height: auto;
+  }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card-summary,
+  .project-preview-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .preview-button {
+    width: 100%;
+  }
+
+  .project-card.expanded .preview-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .project-card.expanded {
+    position: relative;
+  }
+
+  .project-card.expanded .project-card-summary {
+    padding-right: 3.5rem;
+  }
+
+  .project-card.expanded .preview-button-label {
+    display: none;
+  }
+
+  .project-card.expanded .preview-button-icon {
+    display: inline-flex;
+  }
+
+  .work-link {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .embed-frame,
+  .embed-frame iframe {
+    min-height: 520px;
   }
 }
 </style>

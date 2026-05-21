@@ -89,7 +89,7 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
         </div>
       </div>
 
-      <div class="reference-row">
+      <div class="reference-card">
         <div>
           <span class="reference-label">{{ t('home.referenceLabel') }}</span>
           <h2>{{ t('home.referenceTitle') }}</h2>
@@ -209,6 +209,7 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
 
 .hero-card,
 .section-card,
+.reference-card,
 .cta-card {
   background-color: #252525;
   border-radius: 18px;
@@ -303,15 +304,12 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
   margin: 0;
 }
 
-.reference-row {
+.reference-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
   margin-bottom: 2rem;
-  padding: 2rem 0;
-  border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
 }
 
 .reference-label {
@@ -324,14 +322,14 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
   letter-spacing: 0.08em;
 }
 
-.reference-row h2 {
+.reference-card h2 {
   margin: 0 0 0.55rem 0;
   color: #ffffff;
   font-size: 1.45rem;
   line-height: 1.25;
 }
 
-.reference-row p {
+.reference-card p {
   margin: 0;
   color: #d2d2d2;
   line-height: 1.6;
@@ -502,7 +500,7 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
     grid-template-columns: 1fr;
   }
 
-  .reference-row {
+  .reference-card {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -515,6 +513,7 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
 
   .hero-card,
   .section-card,
+  .reference-card,
   .cta-card {
     padding: 1.5rem;
   }
@@ -526,10 +525,6 @@ const targetGroups = computed(() => tm('home.targetGroups') as string[])
   .section-heading h2,
   .cta-card h2 {
     font-size: 1.7rem;
-  }
-
-  .reference-row {
-    padding: 1.5rem 0;
   }
 
   .reference-link {
