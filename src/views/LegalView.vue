@@ -41,7 +41,7 @@ const content = {
         title: 'Website und Funktionen',
         paragraphs: [
           'Bueno Web Solutions bietet Informationen zu Websites, Backend-Systemen, Automatisierung, Hosting und Support. Zum Start sind Kontaktformular, Registrierung, Login, Passwort-Reset/OTP, Konto- und Admin-Bereich aktiv.',
-          'Der Admin-Bereich ist technisch erreichbar, aber nur für Nutzer mit der Rolle ROLE_ADMIN vorgesehen.',
+          'Der Admin-Bereich ist auf autorisierte Nutzer mit der erforderlichen Administratorrolle beschränkt. Unbefugter Zugriff ist nicht erlaubt.',
         ],
       },
       {
@@ -114,6 +114,14 @@ const content = {
         ],
       },
       {
+        title: 'Beendigung laufender Services und Übergabe',
+        paragraphs: [
+          'Laufende Services wie Wartung, Support, Hosting-Unterstützung, Backend-Betrieb, Automatisierungen oder KI-basierte E-Mail- und Telefon-Systeme können von beiden Seiten mit einer Frist von mindestens 30 Tagen auf das Ende eines Kalendermonats beendet werden, sofern keine separate schriftliche Vereinbarung etwas anderes regelt.',
+          'Wenn Bueno Web Solutions einen laufenden Service beendet, darf der Kunde die bereits gelieferten und bezahlten Projektergebnisse, zum Beispiel Website, Code, Design oder konfigurierte Systeme, im vereinbarten Umfang weiterverwenden. Nach Ende des Servicezeitraums ist Bueno Web Solutions jedoch nicht mehr für Wartung, Updates, Monitoring, Support, Fehlerbehebungen, Hosting-Betrieb, Drittanbieter-Dienste oder Weiterentwicklungen verantwortlich, sofern keine neue Vereinbarung getroffen wird.',
+          'Externe Dienste wie Domains, Hosting-Accounts, API-Anbieter, E-Mail-Anbieter oder andere Tools können eigenen Bedingungen, Preisen und Verfügbarkeiten unterliegen. Soweit möglich und zumutbar kann Bueno Web Solutions bei einer Übergabe unterstützen. Der weitere Betrieb nach Ende des Services liegt jedoch in der Verantwortung des Kunden, sofern nichts anderes vereinbart wurde.',
+        ],
+      },
+      {
         title: 'Haftung, Verträge und Urheberrechte',
         paragraphs: [
           'Die Inhalte dieser Website dienen der allgemeinen Information. Verbindliche Angebote, Preise, Projektumfang, Rechte an Arbeitsergebnissen, Gewährleistung, Wartung und Haftung sollten in individuellen Offerten, Verträgen oder AGB geregelt werden.',
@@ -143,7 +151,7 @@ const content = {
         title: 'Website and features',
         paragraphs: [
           'Bueno Web Solutions provides information about websites, backend systems, automation, hosting and support. At launch, the contact form, registration, login, password reset/OTP, account area and admin area are active.',
-          'The admin area is technically reachable, but intended only for users with the ROLE_ADMIN role.',
+          'The admin area is restricted to authorized users with the required administrator role. Unauthorized access is not permitted.',
         ],
       },
       {
@@ -213,6 +221,14 @@ const content = {
         title: 'Automated decisions and profiling',
         paragraphs: [
           'At launch, there are no automated individual decisions with legal effect, no tracking-based profiling, no analytics, no advertising pixels and no heatmaps.',
+        ],
+      },
+      {
+        title: 'Service termination and handover',
+        paragraphs: [
+          'Ongoing services such as maintenance, support, hosting assistance, backend operation, automation services or AI-based email and phone systems may be terminated by either party with at least 30 days’ notice to the end of a calendar month, unless a separate written agreement states otherwise.',
+          'If Bueno Web Solutions terminates an ongoing service, the customer may continue to use the delivered and paid project results, such as the website, code, design or configured system, to the extent agreed. After the end of the service period, Bueno Web Solutions is no longer responsible for maintenance, updates, monitoring, support, bug fixes, hosting operation, third-party services or further development, unless a new agreement is made.',
+          'Third-party services such as domains, hosting accounts, API providers, email providers or other tools may remain subject to their own terms, prices and availability. Where possible and reasonable, Bueno Web Solutions may assist with a handover. Continued operation after service termination is the customer’s responsibility unless otherwise agreed.',
         ],
       },
       {
