@@ -21,7 +21,7 @@ const { t } = useI18n()
         <div class="team-card">
           <img
             :src="benjiImage"
-            alt="Benji von Bueno Web Solutions"
+            :alt="t('about.benjiAlt')"
             class="member-image"
             loading="lazy"
             decoding="async"
@@ -34,7 +34,7 @@ const { t } = useI18n()
         <div class="team-card">
           <img
             :src="liamImage"
-            alt="Liam von Bueno Web Solutions"
+            :alt="t('about.liamAlt')"
             class="member-image"
             loading="lazy"
             decoding="async"

@@ -51,13 +51,13 @@ watch(
 </script>
 
 <template>
-  <nav class="nav-wrapper" aria-label="Main navigation">
+  <nav class="nav-wrapper" :aria-label="t('nav.mainNavigation')">
     <button
       type="button"
       class="menu-toggle"
       :class="{ open: isMenuOpen }"
       :aria-expanded="isMenuOpen"
-      aria-label="Navigation öffnen oder schließen"
+      :aria-label="t('nav.toggleNavigation')"
       @click="toggleMenu"
     >
       <span></span>
@@ -118,7 +118,7 @@ watch(
             type="button"
             class="lang-btn"
             :class="{ active: currentLocale === 'en' }"
-            aria-label="Switch language to English"
+            :aria-label="t('nav.switchToEnglish')"
             @click="switchLanguage('en')"
           >
             EN
@@ -128,7 +128,7 @@ watch(
             type="button"
             class="lang-btn"
             :class="{ active: currentLocale === 'de' }"
-            aria-label="Sprache auf Deutsch wechseln"
+            :aria-label="t('nav.switchToGerman')"
             @click="switchLanguage('de')"
           >
             DE

@@ -24,7 +24,7 @@ const content = {
     title: 'Rechtliches & Datenschutz',
     updated: 'Stand: Mai 2026',
     intro:
-      'Diese Seite informiert transparent über Anbieter, Verantwortlichkeit und Datenbearbeitung auf bueno-ws.ch. Sie ist keine Rechtsberatung und ersetzt keine individuellen Projektverträge oder AGB.',
+      'Diese Seite informiert transparent über Anbieter, Verantwortlichkeit und Datenbearbeitung auf bueno-ws.ch. Sie ist keine Rechtsberatung und ersetzt keine individuellen Projektverträge oder Geschäftsbedingungen.',
     providerTitle: 'Anbieter und verantwortliche Stelle',
     providerRows: [
       ['Name', provider.name],
@@ -40,7 +40,7 @@ const content = {
       {
         title: 'Website und Funktionen',
         paragraphs: [
-          'Bueno Web Solutions bietet Informationen zu Websites, Backend-Systemen, Automatisierung, Hosting und Support. Zum Launch sind Kontaktformular, Registrierung, Login, Passwort-Reset/OTP, Konto- und Admin-Bereich aktiv.',
+          'Bueno Web Solutions bietet Informationen zu Websites, Backend-Systemen, Automatisierung, Hosting und Support. Zum Start sind Kontaktformular, Registrierung, Login, Passwort-Reset/OTP, Konto- und Admin-Bereich aktiv.',
           'Der Admin-Bereich ist technisch erreichbar, aber nur für Nutzer mit der Rolle ROLE_ADMIN vorgesehen.',
         ],
       },
@@ -51,7 +51,7 @@ const content = {
           'Registrierung und Login: E-Mail-Adresse, Vorname, Nachname, Rollen/Berechtigungen, Erstellungszeitpunkt und verschlüsselte Passwörter.',
           'Passwort-Reset und OTP: E-Mail-Adresse, einmaliger Bestätigungscode, Versuche, Ablaufzeit, Sperrfristen und verifizierter Token.',
           'Admin-Bereich: Kontaktanfragen und registrierte Nutzer, soweit zur Verwaltung erforderlich.',
-          'Technische Logs: IP-Adresse beziehungsweise technische Anfrageinformationen, Zeitpunkt, URL, Statuscode und Fehlerdaten, soweit für Betrieb und Sicherheit nötig.',
+          'Technische Logs: IP-Adresse beziehungsweise technische Anfrageinformationen, Zeitpunkt, URL, Statuscode und Fehlerdaten, soweit für Betrieb und Sicherheit erforderlich.',
         ],
       },
       {
@@ -59,7 +59,7 @@ const content = {
         items: [
           'Beantwortung von Kontaktanfragen und Vorbereitung möglicher Projekte.',
           'Bereitstellung von Konto, Login, Registrierung, Passwort-Reset und Admin-Funktionen.',
-          'Versand von Bestätigungs- und Passwort-zurücksetzen-E-Mails.',
+          'Versand von Bestätigungs- und Passwort-Reset-E-Mails.',
           'Missbrauchsschutz, Rate-Limits, Sicherheit, Fehleranalyse und Betrieb der Website.',
           'Erfüllung vorvertraglicher, vertraglicher und gesetzlicher Pflichten, soweit anwendbar.',
         ],
@@ -68,7 +68,7 @@ const content = {
         title: 'Hosting, Infrastruktur und Logs',
         items: [
           'Hosting erfolgt über AWS: Frontend über AWS S3/CloudFront, Backend über AWS EC2 und Datenbank über AWS RDS PostgreSQL.',
-          'Als Serverregion ist Europa Zürich / eu-central-2 vorgesehen, sofern final so verwendet und verfügbar.',
+          'Als Serverregion ist Europe (Zurich) / eu-central-2 vorgesehen, sofern diese im finalen Setup verwendet wird und verfügbar ist.',
           'Die Datenbank ist nicht öffentlich vorgesehen und soll nur vom Backend beziehungsweise der EC2-Umgebung erreichbar sein.',
           'Technische Logs werden nach aktuellem Launch-Setup bis zu 14 Tage aufbewahrt, sofern keine längere Aufbewahrung aus Sicherheits- oder Rechtsgründen erforderlich ist.',
         ],
@@ -78,7 +78,7 @@ const content = {
         items: [
           'Für Authentifizierung werden technisch notwendige HttpOnly-Cookies verwendet: access_token mit ca. 1 Stunde Laufzeit und refresh_token mit ca. 7 Tagen Laufzeit. Die Cookies sind Secure, SameSite=Lax und auf passende Pfade begrenzt.',
           'localStorage wird für die Spracheinstellung verwendet.',
-          'Zum Launch werden keine Analytics, keine Werbepixel und keine Heatmaps eingesetzt.',
+          'Zum Start werden keine Analytics, keine Werbepixel und keine Heatmaps eingesetzt.',
           'Google Fonts werden aktuell extern von Google geladen. Dabei können technische Verbindungsdaten an Google übermittelt werden.',
           'OTP- und Authentifizierungs-E-Mails werden über Gmail beziehungsweise Google-Dienste versendet.',
           'Externe Links, zum Beispiel zu GitHub oder LinkedIn, führen zu Websites Dritter. Dort gelten die Datenschutzregeln der jeweiligen Anbieter.',
@@ -110,7 +110,7 @@ const content = {
       {
         title: 'Automatisierte Entscheidungen und Profiling',
         paragraphs: [
-          'Zum Launch finden keine automatisierten Einzelentscheidungen mit rechtlicher Wirkung, kein trackingbasiertes Profiling, keine Analytics, keine Werbepixel und keine Heatmaps statt.',
+          'Zum Start finden keine automatisierten Einzelentscheidungen mit rechtlicher Wirkung, kein trackingbasiertes Profiling, keine Analytics, keine Werbepixel und keine Heatmaps statt.',
         ],
       },
       {
@@ -126,7 +126,7 @@ const content = {
     title: 'Legal Notice & Privacy',
     updated: 'Last updated: May 2026',
     intro:
-      'This page transparently explains the provider, responsibility and data processing on bueno-ws.ch. It is not legal advice and does not replace individual project contracts or terms.',
+      'This page explains the provider, responsibilities and data processing on bueno-ws.ch. It is not legal advice and does not replace individual project contracts or terms.',
     providerTitle: 'Provider and controller',
     providerRows: [
       ['Name', provider.name],
@@ -153,7 +153,7 @@ const content = {
           'Registration and login: email address, first name, last name, roles/permissions, creation time and hashed passwords.',
           'Password reset and OTP: email address, one-time verification code, attempts, expiry time, cooldowns and verified token.',
           'Admin area: contact inquiries and registered users where required for administration.',
-          'Technical logs: IP address or technical request information, time, URL, status code and error data where needed for operation and security.',
+          'Technical logs: IP address or technical request information, time, URL, status code and error data where required for operation and security.',
         ],
       },
       {
@@ -170,7 +170,7 @@ const content = {
         title: 'Hosting, infrastructure and logs',
         items: [
           'Hosting is provided through AWS: frontend via AWS S3/CloudFront, backend via AWS EC2 and database via AWS RDS PostgreSQL.',
-          'Europe Zurich / eu-central-2 is intended as the server region if finally used and available.',
+          'Europe (Zurich) / eu-central-2 is intended as the server region if it is used in the final setup and available.',
           'The database is not intended to be publicly reachable and should only be accessible by the backend or EC2 environment.',
           'Technical logs are kept for up to 14 days under the current launch setup unless longer retention is required for security or legal reasons.',
         ],
@@ -180,7 +180,7 @@ const content = {
         items: [
           'Technically necessary HttpOnly cookies are used for authentication: access_token with about 1 hour lifetime and refresh_token with about 7 days lifetime. Cookies are Secure, SameSite=Lax and limited to appropriate paths.',
           'localStorage is used for the language preference.',
-          'At launch, we use no analytics, no advertising pixels and no heatmaps.',
+          'At launch, we do not use analytics, advertising pixels or heatmaps.',
           'Google Fonts are currently loaded externally from Google. Technical connection data may be transferred to Google.',
           'OTP and authentication emails are sent via Gmail or Google services.',
           'External links, for example to GitHub or LinkedIn, lead to third-party websites. Their privacy rules apply there.',
@@ -218,7 +218,7 @@ const content = {
       {
         title: 'Liability, contracts and copyright',
         paragraphs: [
-          'The contents of this website provide general information. Binding offers, prices, project scope, rights in work results, warranty, maintenance and liability should be governed by individual offers, contracts or terms.',
+          'The contents of this website provide general information. Binding offers, prices, project scope, rights to work results, warranty, maintenance and liability should be governed by individual offers, contracts or terms.',
           'Texts, images, logos, designs and other website content may not be reused without permission unless legal exceptions apply.',
         ],
       },

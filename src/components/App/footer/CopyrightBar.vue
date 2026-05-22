@@ -17,6 +17,7 @@ const { t } = useI18n()
   flex-direction: column;
   align-items: center;
   gap: 0.45rem;
+  max-width: 100%;
   color: #777;
   text-align: center;
 }
@@ -38,5 +39,23 @@ const { t } = useI18n()
 
 .legal-link:hover {
   color: #42b883;
+}
+
+@media (max-width: 640px) {
+  .copyright {
+    gap: 0.3rem;
+  }
+
+  .copyright-text {
+    max-width: 22rem;
+    color: #898989;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .legal-link {
+    font-size: 0.78rem;
+  }
 }
 </style>

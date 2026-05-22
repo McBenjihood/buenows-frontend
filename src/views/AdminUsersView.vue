@@ -65,7 +65,7 @@ function startDelete(userId: string) {
   errorMsg.value = ''
 
   if (isCurrentUser(userId)) {
-    errorMsg.value = 'Du kannst deinen eigenen Admin-Account nicht löschen.'
+    errorMsg.value = t('accountPage.selfAdminDeleteError')
     return
   }
 
@@ -74,7 +74,7 @@ function startDelete(userId: string) {
 
 function continueDelete(userId: string) {
   if (isCurrentUser(userId)) {
-    errorMsg.value = 'Du kannst deinen eigenen Admin-Account nicht löschen.'
+    errorMsg.value = t('accountPage.selfAdminDeleteError')
     deleteStage.value[userId] = 0
     return
   }
@@ -180,7 +180,7 @@ async function updateRole(userId: string, nextRole: 'ROLE_USER' | 'ROLE_ADMIN') 
   errorMsg.value = ''
 
   if (isCurrentUser(userId) && nextRole === 'ROLE_USER') {
-    errorMsg.value = 'Du kannst dich nicht selbst zum normalen User machen.'
+    errorMsg.value = t('accountPage.selfRoleChangeError')
     return
   }
 
@@ -219,17 +219,17 @@ async function saveProfile(userId: string) {
     const trimmedLastName = fields.last_name.trim()
 
     if (!trimmedFirstName || !trimmedLastName) {
-      errorMsg.value = 'Vorname und Nachname dürfen nicht leer sein.'
+      errorMsg.value = t('accountPage.userFullNameRequired')
       return
     }
 
     if (trimmedFirstName.length > 50) {
-      errorMsg.value = 'Der Vorname ist zu lang.'
+      errorMsg.value = t('accountPage.userFirstNameTooLong')
       return
     }
 
     if (trimmedLastName.length > 50) {
-      errorMsg.value = 'Der Nachname ist zu lang.'
+      errorMsg.value = t('accountPage.userLastNameTooLong')
       return
     }
 
@@ -254,7 +254,7 @@ async function confirmDelete(userId: string) {
   errorMsg.value = ''
 
   if (isCurrentUser(userId)) {
-    errorMsg.value = 'Du kannst deinen eigenen Admin-Account nicht löschen.'
+    errorMsg.value = t('accountPage.selfAdminDeleteError')
     deleteStage.value[userId] = 0
     return
   }
@@ -296,7 +296,7 @@ onMounted(async () => {
             class="nav-icon-button"
             :disabled="reloadLoading"
             @click="reloadUsers"
-            :title="reloadLoading ? 'Loading...' : 'Reload users'"
+            :title="reloadLoading ? t('authPage.loading') : t('accountPage.reloadUsers')"
           >
             ↻
           </button>
@@ -329,7 +329,9 @@ onMounted(async () => {
               <div class="user-main">
                 <span class="primary-text">
                   {{ user.email }}
-                  <span v-if="isCurrentUser(user.user_id)" class="self-label">(du)</span>
+                  <span v-if="isCurrentUser(user.user_id)" class="self-label">
+                    ({{ t('accountPage.currentUser') }})
+                  </span>
                 </span>
 
                 <span :class="getRoleClass(user.authorities)">
@@ -391,7 +393,7 @@ onMounted(async () => {
             </div>
 
             <div v-if="isCurrentUser(user.user_id)" class="info-box">
-              Du kannst deinen eigenen Account hier nicht löschen oder zum normalen User machen.
+              {{ t('accountPage.selfAdminInfo') }}
             </div>
 
             <div class="action-row">

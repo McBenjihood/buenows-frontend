@@ -158,7 +158,7 @@ onMounted(async () => {
             class="nav-icon-button"
             :disabled="reloadLoading"
             @click="reloadInquiries"
-            :title="reloadLoading ? 'Loading...' : 'Reload inquiries'"
+            :title="reloadLoading ? t('authPage.loading') : t('accountPage.reloadInquiries')"
           >
             ↻
           </button>

@@ -26,23 +26,27 @@ const messages = {
       about: 'About',
       services: 'Services',
       contact: 'Contact',
-      personalArea: 'Personal Area',
-      login: 'Login',
-      logout: 'Logout',
+      personalArea: 'Client area',
+      login: 'Log in',
+      logout: 'Log out',
       language: 'Language',
+      mainNavigation: 'Main navigation',
+      toggleNavigation: 'Open or close navigation',
+      switchToEnglish: 'Switch language to English',
+      switchToGerman: 'Switch language to German',
     },
     home: {
       brand: 'Bueno Web Solutions',
       heroTitle:
-        'We build websites and AI systems that help small businesses get more customers and save time.',
+        'We build websites and AI systems that help small businesses win customers and save time.',
       heroText:
-        'We help small and medium-sized businesses build a professional online presence, automate customer communication and turn their website into a real business tool.',
+        'We help small and medium-sized businesses build a professional online presence, automate customer communication, and turn their website into a practical business tool.',
       requestProject: 'Request a project',
       moreAboutUs: 'More about us',
 
       modernTitle: 'Professional online presence',
       modernText:
-        'We build clean, modern websites that make your business look trustworthy and serious.',
+        'We build clean, modern websites that make your business look trustworthy and credible.',
 
       customTitle: 'Built for your business',
       customText:
@@ -50,12 +54,12 @@ const messages = {
 
       reliableTitle: 'Practical and reliable',
       reliableText:
-        'We focus on solutions that work in real business life — not just designs that look good.',
+        'We focus on solutions that work in day-to-day business, not just designs that look good.',
 
       referenceLabel: 'Client reference',
       referenceTitle: 'Coiffeur EK Exklusiv',
       referenceText:
-        'A simple website for a local salon, built with a clear structure and direct contact path.',
+        'A simple website for a local salon, built with a clear structure and a direct path to contact.',
       referenceDomain: 'coiffeur-ek-exklusiv.ch',
       referenceButton: 'Open',
 
@@ -73,12 +77,12 @@ const messages = {
       technologiesLabel: 'Technologies',
       technologiesTitle: 'Built on a strong technical foundation',
       technologiesText:
-        'We use modern technologies to build websites and systems that are stable, expandable and easy to maintain.',
+        'We use modern technologies to build websites and systems that are stable, scalable, and easy to maintain.',
 
       contactLabel: 'Contact',
       ctaTitle: 'Ready to improve your website or automate your customer communication?',
       ctaText:
-        'Tell us what you need. We will look at your situation and suggest a solution that makes sense for your business.',
+        'Tell us what you need. We will look at your situation and suggest a solution that fits your business.',
       contactNow: 'Get in touch',
 
       services: {
@@ -99,7 +103,7 @@ const messages = {
           text: 'We automate repetitive tasks so you save time and can focus more on your customers and your work.',
         },
         aiSolutions: {
-          title: 'AI email replier',
+          title: 'AI email responder',
           text: 'We create AI-powered reply systems that help businesses answer customer inquiries faster and more consistently.',
         },
         hosting: {
@@ -112,7 +116,7 @@ const messages = {
         'Professional websites instead of generic templates',
         'Digital solutions adapted to your real business needs',
         'AI automation that can save time in customer communication',
-        'Modern backend systems for serious and expandable projects',
+        'Modern backend systems for serious, scalable projects',
       ],
 
       targetGroups: [
@@ -124,9 +128,11 @@ const messages = {
     },
     about: {
       label: 'About us',
-      heroTitle: 'We are building digital solutions that actually help small businesses grow.',
+      heroTitle: 'We build digital solutions that actually help small businesses grow.',
       heroText:
         'We are two developers from Lucerne focused on building websites, backend systems and automations that solve real problems in everyday business.',
+      benjiAlt: 'Benji from Bueno Web Solutions',
+      liamAlt: 'Liam from Bueno Web Solutions',
 
       whoWeAreTitle: 'Who we are',
       whoWeAreText1:
@@ -134,7 +140,7 @@ const messages = {
       whoWeAreText2:
         'Alongside school, we are building Bueno Web Solutions to gain real experience, work with real businesses and create digital solutions that go beyond simple websites.',
       whoWeAreText3:
-        'We both work across web design, frontend, backend, automation and AI solutions. That means every project benefits from both of our ideas, our technical skills and our shared focus on building something useful for the client.',
+        'We both work across web design, frontend, backend, automation and AI solutions. Every project benefits from our combined ideas, technical skills and shared focus on building something useful for the client.',
 
       whyTitle: 'Why we started',
       whyText1:
@@ -148,7 +154,7 @@ const messages = {
 
       differenceTitle: 'What makes us different',
       differenceText1:
-        'We work directly, personally and without unnecessary complexity. You communicate with us directly — no middlemen, no agency layers.',
+        'We work directly, personally and without unnecessary complexity. You communicate with us directly, with no middlemen and no agency layers.',
       differenceText2:
         'Our focus is not just design, but practical solutions that actually help your business: getting more inquiries, saving time and simplifying processes.',
 
@@ -156,7 +162,7 @@ const messages = {
       howWeWorkText1:
         'We keep everything simple and transparent. We communicate directly, often via chat or call, and keep you updated during the whole process.',
       howWeWorkText2:
-        'Our goal is to understand your business first and then build something that truly fits your needs — not just a standard solution.',
+        'Our goal is to understand your business first and then build something that truly fits your needs, not just a standard solution.',
 
       futureTitle: 'What we are building',
       futureText1:
@@ -168,17 +174,17 @@ const messages = {
       label: 'Services',
       heroTitle: 'Websites, automation and AI solutions that actually help your business.',
       heroText:
-        'We build websites and systems that do more than just look good — they help you get customers, save time and improve your daily workflow.',
+        'We build websites and systems that do more than look good: they help you win customers, save time and improve your daily workflow.',
 
       coreLabel: 'Services',
       coreTitle: 'What we build for businesses',
       coreText:
-        'Our focus is on practical solutions: websites that convert, backend systems that work and automations that reduce manual work.',
+        'Our focus is practical: websites that convert, backend systems that work and automations that reduce manual work.',
 
       upcomingLabel: 'In development',
       upcomingTitle: 'What is coming next',
       upcomingText:
-        'We are currently building new AI-based tools that will further improve customer communication and automate repetitive business tasks.',
+        'We are currently building AI-based tools that improve customer communication and automate repetitive business tasks.',
 
       targetGroupsLabel: 'Target groups',
       targetGroupsTitle: 'Who this is for',
@@ -186,7 +192,7 @@ const messages = {
       workLabel: 'Our work',
       workTitle: 'Previous client projects',
       workText:
-        'Our finished websites are shown as individual cards. Open a preview to inspect the live page directly here.',
+        'Explore selected client projects and open a live preview directly on this page.',
       workPreviewButton: 'View preview',
       workClosePreviewButton: 'Close preview',
       workPreviewLabel: 'Live preview',
@@ -198,7 +204,7 @@ const messages = {
 
       step1Title: '1. Understand your business',
       step1Text:
-        'We first look at your current situation, your services and where you lose time or potential customers.',
+        'We first look at your current situation, your services, and where you lose time or potential customers.',
 
       step2Title: '2. Plan the solution',
       step2Text:
@@ -206,7 +212,7 @@ const messages = {
 
       step3Title: '3. Build and implement',
       step3Text:
-        'We develop your website or automation cleanly and keep you updated during the process.',
+        'We build your website or automation cleanly and keep you updated throughout the process.',
 
       step4Title: '4. Improve and scale',
       step4Text:
@@ -214,7 +220,7 @@ const messages = {
 
       contactLabel: 'Contact',
       ctaTitle: 'Want a website or system that actually helps your business?',
-      ctaText: 'Send us a short message and we will tell you what makes sense for your situation.',
+      ctaText: 'Send us a short message and we will tell you what would work best for your situation.',
       ctaButton: 'Request a project',
 
       coreServices: [
@@ -224,7 +230,7 @@ const messages = {
         },
         {
           title: 'Website redesign',
-          text: 'Outdated website? We rebuild it so it looks modern, loads fast and builds trust instantly.',
+          text: 'Outdated website? We rebuild it so it looks modern, loads quickly and builds trust.',
         },
         {
           title: 'Backend & systems',
@@ -232,11 +238,11 @@ const messages = {
         },
         {
           title: 'AI email automation',
-          text: 'We build AI systems that automatically reply to customer inquiries — perfect for repetitive questions.',
+          text: 'We build AI systems that automatically answer customer inquiries, which is useful for repetitive questions.',
         },
         {
           title: 'Process automation',
-          text: 'We automate tasks like requests, emails or workflows so you save time every day.',
+          text: 'We automate requests, emails and workflows so you save time every day.',
         },
         {
           title: 'Hosting & support',
@@ -272,9 +278,9 @@ const messages = {
     contactPage: {
       label: 'Contact',
       heroTitle:
-        'Tell us what you need — we will show you what actually makes sense for your business.',
+        'Tell us what you need, and we will show you what fits your business.',
       heroText:
-        'Whether you need a new website, a redesign, backend features or AI automation — send us a short message and we will look at what makes sense for your business.',
+        'Whether you need a new website, a redesign, backend features or AI automation, send us a short message and we will look at the best next step for your business.',
 
       directContactTitle: 'Direct contact',
 
@@ -293,10 +299,10 @@ const messages = {
       emailLabel: 'Your email',
       emailPlaceholder: "name{'@'}company.com",
       subjectLabel: 'What do you need?',
-      subjectPlaceholder: 'New website, redesign, AI email replier ...',
+      subjectPlaceholder: 'New website, redesign, AI email responder ...',
       messageLabel: 'Your message',
       messagePlaceholder:
-        'Briefly describe your business, your goal and what you would like us to build or improve ...',
+        'Briefly describe your business, your goal, and what you would like us to build or improve ...',
 
       fillAllFields: 'Please fill in all fields.',
       sending: 'Sending ...',
@@ -305,7 +311,7 @@ const messages = {
       errorDefault: 'Something went wrong while sending your message.',
     },
     authPage: {
-      loginTitle: 'Login to your account',
+      loginTitle: 'Log in to your account',
       registerTitle: 'Create your account and get access to your project dashboard',
 
       emailLabel: 'Email address',
@@ -315,23 +321,23 @@ const messages = {
       passwordPlaceholder: '••••••••',
       forgotPassword: 'Forgot password?',
 
-      signIn: 'Login',
+      signIn: 'Log in',
       register: 'Create account',
       loading: 'Please wait...',
 
       noAccount: "Don't have an account yet?",
       haveAccount: 'Already have an account?',
       createOne: 'Create one',
-      signInLink: 'Login',
+      signInLink: 'Log in',
 
       enterEmailPassword: 'Please enter your email and password.',
       loginFailedNoJwt: 'Login failed. No access token received.',
       connectionFailed: 'This is an error on our end. Please try again, and if it still doesn\'t work, contact support.',
       rateLimited: 'Too many requests. Please try again later.',
-      duplicateTitle: 'Email Already Registered',
-      duplicateDescription: 'A user with this email address is already registered on BuenoWS. Would you like to login instead?',
+      duplicateTitle: 'Email already registered',
+      duplicateDescription: 'A user with this email address is already registered on BuenoWS. Would you like to log in instead?',
       duplicateCancel: 'Back',
-      duplicateLogin: 'Login',
+      duplicateLogin: 'Log in',
 
       firstNameLabel: 'First name',
       firstNamePlaceholder: 'John',
@@ -342,20 +348,20 @@ const messages = {
 
       resetPasswordTitle: 'Reset your password',
       resetPasswordSubtitle: 'Enter your email to receive a verification code.',
-      requestOtpButton: 'Send Verification Code',
-      otpLabel: 'Verification Code (OTP)',
+      requestOtpButton: 'Send verification code',
+      otpLabel: 'Verification code (OTP)',
       otpPlaceholder: '123456',
       verifyOtpTitle: 'Verify your code',
       verifyOtpSubtitle: 'Enter the 6-digit code sent to your email.',
-      verifyOtpButton: 'Verify Code',
-      newPasswordLabel: 'New Password',
+      verifyOtpButton: 'Verify code',
+      newPasswordLabel: 'New password',
       newPasswordTitle: 'Set new password',
       newPasswordSubtitle: 'Enter your new password below.',
-      confirmPasswordLabel: 'Confirm Password',
+      confirmPasswordLabel: 'Confirm password',
       passwordsDoNotMatch: 'Passwords do not match.',
-      changePasswordButton: 'Change Password',
-      resetSuccessMessage: 'Your password has been changed successfully. You can now login.',
-      backToLogin: 'Back to login',
+      changePasswordButton: 'Change password',
+      resetSuccessMessage: 'Your password has been changed successfully. You can now log in.',
+      backToLogin: 'Back to log in',
       privacyNotice: 'We process the data entered here for authentication and account security. Details:',
       checkSpamHint:
         'If you do not receive an email within a short time, please also check your spam folder.',
@@ -364,9 +370,12 @@ const messages = {
       title: 'Dashboard',
       subtitle: 'Manage your website, account and project tools in one place.',
       back: 'Back',
+      reloadUsers: 'Reload users',
+      reloadInquiries: 'Reload inquiries',
+      currentUser: 'you',
 
       loadingTitle: 'Loading',
-      loadingText: 'Your account data is being loaded ...',
+      loadingText: 'Loading your account data ...',
 
       errorTitle: 'Error',
       sessionError: 'Your session could not be confirmed.',
@@ -376,7 +385,7 @@ const messages = {
 
       editorTitle: 'Website editor',
       editorText:
-        'Open the editor area to manage website content, pages and updates when editing features are available.',
+        'Manage website content, pages and updates here once editing features are available.',
       soon: 'Coming soon',
 
       accountTitle: 'Account overview',
@@ -388,7 +397,7 @@ const messages = {
 
       inquiriesTitle: 'Contact inquiries',
       inquiriesText: 'View and manage messages submitted through the website contact form.',
-      inquiriesLoading: 'Contact inquiries are being loaded ...',
+      inquiriesLoading: 'Loading contact inquiries ...',
       inquiriesEmpty: 'No contact inquiries yet.',
       inquiryEmail: 'Email',
       inquirySubject: 'Subject',
@@ -396,12 +405,12 @@ const messages = {
       inquiryCreated: 'Created',
 
       actionsTitle: 'Account actions',
-      actionsText: 'Log out safely from your account.',
-      logout: 'Logout',
+      actionsText: 'Log out of your account safely.',
+      logout: 'Log out',
 
       usersTitle: 'User management',
       usersText: 'View registered users, manage roles and keep admin access under control.',
-      usersLoading: 'Users are being loaded ...',
+      usersLoading: 'Loading users ...',
       usersEmpty: 'No users found.',
       usersError: 'Users could not be loaded.',
       userFirstName: 'First name',
@@ -412,11 +421,11 @@ const messages = {
       inquiriesOpenButton: 'Open inquiries',
 
       makeAdmin: 'Make admin',
-      makeUser: 'Make user',
+      makeUser: 'Make standard user',
       deleteUser: 'Delete user',
       deleteWarning: 'This action can permanently remove the user account.',
       deleteStepTwo: 'I understand, continue',
-      deleteConfirm: 'Confirm delete',
+      deleteConfirm: 'Confirm deletion',
       cancel: 'Cancel',
       roleUpdateError: 'Role could not be updated.',
       deleteUserError: 'User could not be deleted.',
@@ -431,6 +440,12 @@ const messages = {
       deleteInquiryWarning: 'This action can permanently remove the inquiry.',
       deleteInquiryError: 'Inquiry could not be deleted.',
       inquiryDeletedSuccess: 'Inquiry deleted successfully.',
+      selfAdminDeleteError: 'You cannot delete your own admin account.',
+      selfRoleChangeError: 'You cannot change your own account to a standard user.',
+      userFullNameRequired: 'First name and last name must not be empty.',
+      userFirstNameTooLong: 'The first name is too long.',
+      userLastNameTooLong: 'The last name is too long.',
+      selfAdminInfo: 'You cannot delete your own account or change it to a standard user here.',
     },
     footer: {
       copyright: '© 2026 Bueno Web Solutions. All rights reserved.',
@@ -441,20 +456,24 @@ const messages = {
 
   de: {
     nav: {
-      home: 'Home',
+      home: 'Startseite',
       about: 'Über uns',
-      services: 'Services',
+      services: 'Leistungen',
       contact: 'Kontakt',
-      personalArea: 'Persönlicher Bereich',
-      login: 'Login',
-      logout: 'Logout',
+      personalArea: 'Kundenbereich',
+      login: 'Einloggen',
+      logout: 'Ausloggen',
       language: 'Sprache',
+      mainNavigation: 'Hauptnavigation',
+      toggleNavigation: 'Navigation öffnen oder schliessen',
+      switchToEnglish: 'Sprache auf Englisch wechseln',
+      switchToGerman: 'Sprache auf Deutsch wechseln',
     },
     home: {
       brand: 'Bueno Web Solutions',
-      heroTitle: 'Websites, Backend-Systeme und AI-Automatisierung für wachsende Unternehmen.',
+      heroTitle: 'Websites, Backend-Systeme und KI-Automatisierung für wachsende Unternehmen.',
       heroText:
-        'Wir helfen kleinen und mittelgrossen Unternehmen dabei, professionell online aufzutreten, Kundenkommunikation zu automatisieren und ihre Website zu einem echten Werkzeug fürs Geschäft zu machen.',
+        'Wir helfen kleinen und mittelgrossen Unternehmen, professionell online aufzutreten, Kundenkommunikation zu automatisieren und ihre Website zu einem echten Werkzeug fürs Geschäft zu machen.',
       requestProject: 'Projekt anfragen',
       moreAboutUs: 'Mehr über uns',
 
@@ -468,7 +487,7 @@ const messages = {
 
       reliableTitle: 'Praktisch und zuverlässig',
       reliableText:
-        'Wir bauen Lösungen, die im echten Geschäftsalltag funktionieren — nicht nur Designs, die gut aussehen.',
+        'Wir bauen Lösungen, die im Geschäftsalltag funktionieren, nicht nur Designs, die gut aussehen.',
 
       referenceLabel: 'Kundenreferenz',
       referenceTitle: 'Coiffeur EK Exklusiv',
@@ -480,7 +499,7 @@ const messages = {
       servicesLabel: 'Leistungen',
       servicesTitle: 'Was wir für Sie bauen können',
       servicesText:
-        'Von neuen Websites über Backend-Systeme bis zu AI-gestützten Antworten entwickeln wir digitale Lösungen, die Zeit sparen und Ihr Unternehmen stärken.',
+        'Von neuen Websites über Backend-Systeme bis zu KI-gestützten Antworten entwickeln wir digitale Lösungen, die Zeit sparen und Ihr Unternehmen stärken.',
 
       benefitsLabel: 'Vorteile',
       benefitsTitle: 'Warum BuenoWS?',
@@ -517,8 +536,8 @@ const messages = {
           text: 'Wir automatisieren wiederkehrende Aufgaben, damit Sie Zeit sparen und sich stärker auf Ihre Kunden und Arbeit konzentrieren können.',
         },
         aiSolutions: {
-          title: 'AI E-Mail-Replier',
-          text: 'Wir entwickeln AI-gestützte Antwortsysteme, mit denen Unternehmen Kundenanfragen schneller und einheitlicher beantworten können.',
+          title: 'KI-E-Mail-Assistent',
+          text: 'Wir entwickeln KI-gestützte Antwortsysteme, mit denen Unternehmen Kundenanfragen schneller und einheitlicher beantworten können.',
         },
         hosting: {
           title: 'Hosting & Support',
@@ -529,7 +548,7 @@ const messages = {
       benefits: [
         'Professionelle Websites statt generische Baukasten-Lösungen',
         'Digitale Lösungen passend zu echten Geschäftsprozessen',
-        'AI-Automatisierung, die Zeit in der Kundenkommunikation sparen kann',
+        'KI-Automatisierung, die Zeit in der Kundenkommunikation sparen kann',
         'Moderne Backend-Systeme für seriöse und erweiterbare Projekte',
       ],
 
@@ -545,6 +564,8 @@ const messages = {
       heroTitle: 'Wir entwickeln digitale Lösungen, die kleinen Unternehmen wirklich helfen.',
       heroText:
         'Wir sind zwei Entwickler aus Luzern und bauen Websites, Backend-Systeme und Automatisierungen, die echte Probleme im Geschäftsalltag lösen.',
+      benjiAlt: 'Benji von Bueno Web Solutions',
+      liamAlt: 'Liam von Bueno Web Solutions',
 
       whoWeAreTitle: 'Wer wir sind',
       whoWeAreText1:
@@ -552,13 +573,13 @@ const messages = {
       whoWeAreText2:
         'Neben der Schule bauen wir Bueno Web Solutions auf, um echte Projekte umzusetzen, mit Unternehmen zu arbeiten und praktische Erfahrung zu sammeln.',
       whoWeAreText3:
-        'Wir arbeiten beide an Webdesign, Frontend, Backend, Automatisierung und AI-Lösungen. Dadurch profitiert jedes Projekt von unseren gemeinsamen Ideen, unseren technischen Fähigkeiten und unserem Ziel, für Kunden wirklich nützliche Lösungen zu bauen.',
+        'Wir arbeiten beide an Webdesign, Frontend, Backend, Automatisierung und KI-Lösungen. Dadurch profitiert jedes Projekt von unseren gemeinsamen Ideen, unseren technischen Fähigkeiten und unserem Ziel, für Kunden wirklich nützliche Lösungen zu bauen.',
 
       whyTitle: 'Warum wir gestartet haben',
       whyText1:
         'Wir haben gesehen, dass viele kleinere Unternehmen veraltete Websites haben oder keine funktionierenden digitalen Systeme nutzen.',
       whyText2:
-        'Gleichzeitig wollten wir selbst etwas aufbauen – nicht nur Theorie lernen, sondern echte Lösungen entwickeln und ein eigenes Business starten.',
+        'Gleichzeitig wollten wir selbst etwas aufbauen: nicht nur Theorie lernen, sondern echte Lösungen entwickeln und ein eigenes Unternehmen starten.',
 
       targetTitle: 'Für wen wir arbeiten',
       targetText:
@@ -566,7 +587,7 @@ const messages = {
 
       differenceTitle: 'Was uns unterscheidet',
       differenceText1:
-        'Wir arbeiten direkt, persönlich und ohne unnötige Umwege. Sie sprechen direkt mit uns – ohne Agentur-Strukturen oder komplizierte Prozesse.',
+        'Wir arbeiten direkt, persönlich und ohne unnötige Umwege. Sie sprechen direkt mit uns, ohne Agentur-Strukturen oder komplizierte Prozesse.',
       differenceText2:
         'Unser Fokus liegt nicht nur auf Design, sondern auf Lösungen, die im Alltag wirklich helfen: mehr Anfragen, weniger Aufwand und klarere Prozesse.',
 
@@ -578,16 +599,16 @@ const messages = {
 
       futureTitle: 'Woran wir arbeiten',
       futureText1:
-        'Aktuell bauen wir unser Angebot mit AI-gestützten Lösungen aus, wie automatische E-Mail-Antworten, intelligente Kundenkommunikation und Automatisierungen.',
+        'Aktuell bauen wir unser Angebot mit KI-gestützten Lösungen aus, zum Beispiel automatische E-Mail-Antworten, intelligente Kundenkommunikation und Automatisierungen.',
       futureText2:
         'Langfristig wollen wir Systeme entwickeln, die Unternehmen Zeit sparen, manuelle Arbeit reduzieren und Abläufe effizienter machen.',
     },
     servicesPage: {
-      label: 'Services',
+      label: 'Leistungen',
       heroTitle:
-        'Websites, Automatisierung und AI-Lösungen, die Ihrem Unternehmen wirklich helfen.',
+        'Websites, Automatisierung und KI-Lösungen, die Ihrem Unternehmen wirklich helfen.',
       heroText:
-        'Wir entwickeln Websites und Systeme, die mehr machen als gut aussehen — sie bringen Kunden, sparen Zeit und verbessern Ihren Arbeitsalltag.',
+        'Wir entwickeln Websites und Systeme, die mehr leisten als gut aussehen: Sie bringen Kunden, sparen Zeit und verbessern Ihren Arbeitsalltag.',
 
       coreLabel: 'Leistungen',
       coreTitle: 'Was wir für Unternehmen bauen',
@@ -597,7 +618,7 @@ const messages = {
       upcomingLabel: 'In Entwicklung',
       upcomingTitle: 'Was als Nächstes kommt',
       upcomingText:
-        'Wir entwickeln aktuell weitere AI-Lösungen, die Kundenkommunikation verbessern und repetitive Aufgaben automatisieren.',
+        'Wir entwickeln aktuell weitere KI-Lösungen, die Kundenkommunikation verbessern und repetitive Aufgaben automatisieren.',
 
       targetGroupsLabel: 'Zielgruppen',
       targetGroupsTitle: 'Für wen das gedacht ist',
@@ -605,7 +626,7 @@ const messages = {
       workLabel: 'Unsere Arbeiten',
       workTitle: 'Bisherige Kundenprojekte',
       workText:
-        'Unsere fertigen Websites werden als einzelne Karten angezeigt. Öffnen Sie eine Vorschau, um die Live-Seite direkt hier anzusehen.',
+        'Entdecken Sie ausgewählte Kundenprojekte und öffnen Sie die Live-Vorschau direkt auf dieser Seite.',
       workPreviewButton: 'Vorschau ansehen',
       workClosePreviewButton: 'Vorschau schliessen',
       workPreviewLabel: 'Live-Vorschau',
@@ -620,14 +641,16 @@ const messages = {
         'Wir schauen uns an, wie Ihr Unternehmen aktuell arbeitet und wo Zeit oder Kunden verloren gehen.',
 
       step2Title: '2. Lösung planen',
-      step2Text: 'Wir definieren genau, was Ihre Website oder Ihr System leisten soll.',
+      step2Text:
+        'Wir definieren genau, was Ihre Website oder Ihr System leisten soll und wie es Ihrem Unternehmen hilft.',
 
       step3Title: '3. Umsetzen',
       step3Text:
         'Wir entwickeln Ihre Website oder Automatisierung sauber und halten Sie auf dem Laufenden.',
 
       step4Title: '4. Weiterentwickeln',
-      step4Text: 'Nach dem Start kann alles Schritt für Schritt erweitert werden.',
+      step4Text:
+        'Nach dem Start können wir Ihr System Schritt für Schritt erweitern und verbessern.',
 
       contactLabel: 'Kontakt',
       ctaTitle: 'Möchten Sie eine Website oder ein System, das wirklich hilft?',
@@ -636,7 +659,7 @@ const messages = {
 
       coreServices: [
         {
-          title: 'Websites die Kunden bringen',
+          title: 'Websites, die Kunden bringen',
           text: 'Wir erstellen Websites, die Ihre Leistungen klar zeigen und Besucher zu echten Anfragen machen.',
         },
         {
@@ -645,11 +668,11 @@ const messages = {
         },
         {
           title: 'Backend & Systeme',
-          text: 'Wir bauen Adminbereiche, Login-Systeme und Datenbanken, damit Ihre Website ein echtes Werkzeug wird.',
+          text: 'Wir bauen Admin-Bereiche, Login-Systeme und Datenbanken, damit Ihre Website ein echtes Werkzeug wird.',
         },
         {
-          title: 'AI E-Mail-Automation',
-          text: 'Wir entwickeln AI-Systeme, die automatisch auf Kundenanfragen antworten.',
+          title: 'KI-E-Mail-Automatisierung',
+          text: 'Wir entwickeln KI-Systeme, die automatisch auf Kundenanfragen antworten.',
         },
         {
           title: 'Prozess-Automatisierung',
@@ -662,9 +685,9 @@ const messages = {
       ],
 
       upcomingServices: [
-        'AI Telefonassistent für Unternehmen',
-        'AI Chatbot für Websites',
-        'Automatisierte Verkaufs- und Leadsysteme',
+        'KI-Telefonassistent für Unternehmen',
+        'KI-Chatbot für Websites',
+        'Automatisierte Verkaufs- und Lead-Systeme',
       ],
 
       targetGroups: [
@@ -690,7 +713,7 @@ const messages = {
       label: 'Kontakt',
       heroTitle: 'Erzählen Sie uns, was Sie bauen oder verbessern möchten.',
       heroText:
-        'Ob neue Website, Redesign, Backend-Funktionen oder AI-Automatisierung — schreiben Sie uns kurz und wir schauen, welche Lösung für Ihr Unternehmen sinnvoll ist.',
+        'Ob neue Website, Redesign, Backend-Funktionen oder KI-Automatisierung: Schreiben Sie uns kurz und wir schauen, welche Lösung für Ihr Unternehmen sinnvoll ist.',
 
       directContactTitle: 'Direkter Kontakt',
 
@@ -709,7 +732,7 @@ const messages = {
       emailLabel: 'Ihre E-Mail',
       emailPlaceholder: "name{'@'}firma.ch",
       subjectLabel: 'Was brauchen Sie?',
-      subjectPlaceholder: 'Neue Website, Redesign, AI E-Mail-Replier ...',
+      subjectPlaceholder: 'Neue Website, Redesign, KI-E-Mail-Assistent ...',
       messageLabel: 'Ihre Nachricht',
       messagePlaceholder:
         'Beschreiben Sie kurz Ihr Unternehmen, Ihr Ziel und was wir für Sie bauen oder verbessern sollen ...',
@@ -745,7 +768,8 @@ const messages = {
       connectionFailed: 'Dies ist ein Fehler auf unserer Seite. Bitte versuchen Sie es erneut. Wenn es weiterhin nicht funktioniert, kontaktieren Sie den Support.',
       rateLimited: 'Zu viele Anfragen. Bitte versuchen Sie es später erneut.',
       duplicateTitle: 'E-Mail bereits registriert',
-      duplicateDescription: 'Ein Benutzer mit dieser E-Mail-Adresse ist bereits auf BuenoWS registriert. Möchten Sie sich stattdessen einloggen?',
+      duplicateDescription:
+        'Ein Benutzer mit dieser E-Mail-Adresse ist bereits bei BuenoWS registriert. Möchten Sie sich stattdessen einloggen?',
       duplicateCancel: 'Zurück',
       duplicateLogin: 'Einloggen',
 
@@ -781,6 +805,9 @@ const messages = {
       title: 'Dashboard',
       subtitle: 'Verwalten Sie Website, Konto und Projektfunktionen an einem Ort.',
       back: 'Zurück',
+      reloadUsers: 'Benutzer neu laden',
+      reloadInquiries: 'Anfragen neu laden',
+      currentUser: 'Sie',
 
       loadingTitle: 'Laden',
       loadingText: 'Ihre Kontodaten werden geladen ...',
@@ -793,7 +820,7 @@ const messages = {
 
       editorTitle: 'Website-Editor',
       editorText:
-        'Öffnen Sie den Editorbereich, um Inhalte, Seiten und Aktualisierungen Ihrer Website zu verwalten, sobald die Bearbeitungsfunktionen verfügbar sind.',
+        'Verwalten Sie hier Inhalte, Seiten und Aktualisierungen Ihrer Website, sobald die Bearbeitungsfunktionen verfügbar sind.',
       soon: 'Bald verfügbar',
 
       accountTitle: 'Kontoübersicht',
@@ -814,7 +841,7 @@ const messages = {
 
       actionsTitle: 'Konto-Aktionen',
       actionsText: 'Melden Sie sich sicher von Ihrem Konto ab.',
-      logout: 'Logout',
+      logout: 'Ausloggen',
 
       usersTitle: 'Benutzerverwaltung',
       usersText: 'Registrierte Benutzer ansehen, Rollen verwalten und Admin-Zugriff kontrollieren.',
@@ -829,11 +856,11 @@ const messages = {
       inquiriesOpenButton: 'Anfragen öffnen',
 
       makeAdmin: 'Zu Admin machen',
-      makeUser: 'Zu User machen',
+      makeUser: 'Zu normalem Benutzer machen',
       deleteUser: 'Benutzer löschen',
       deleteWarning: 'Diese Aktion kann das Benutzerkonto dauerhaft löschen.',
       deleteStepTwo: 'Ich verstehe, weiter',
-      deleteConfirm: 'Löschen bestätigen',
+      deleteConfirm: 'Löschung bestätigen',
       cancel: 'Abbrechen',
       roleUpdateError: 'Rolle konnte nicht geändert werden.',
       deleteUserError: 'Benutzer konnte nicht gelöscht werden.',
@@ -848,6 +875,14 @@ const messages = {
       deleteInquiryWarning: 'Diese Aktion kann die Anfrage dauerhaft löschen.',
       deleteInquiryError: 'Anfrage konnte nicht gelöscht werden.',
       inquiryDeletedSuccess: 'Anfrage erfolgreich gelöscht.',
+      selfAdminDeleteError: 'Sie können Ihren eigenen Admin-Account nicht löschen.',
+      selfRoleChangeError:
+        'Sie können Ihren eigenen Account nicht zu einem normalen Benutzer machen.',
+      userFullNameRequired: 'Vorname und Nachname dürfen nicht leer sein.',
+      userFirstNameTooLong: 'Der Vorname ist zu lang.',
+      userLastNameTooLong: 'Der Nachname ist zu lang.',
+      selfAdminInfo:
+        'Sie können Ihren eigenen Account hier nicht löschen oder zu einem normalen Benutzer machen.',
     },
     footer: {
       copyright: '© 2026 Bueno Web Solutions. Alle Rechte vorbehalten.',

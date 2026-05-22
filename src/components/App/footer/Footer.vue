@@ -8,7 +8,7 @@ import CopyrightBar from '@/components/App/footer/CopyrightBar.vue'
   <footer class="footer">
     <Logo class="footer-logo" />
     <CopyrightBar />
-    <FooterNavigation />
+    <FooterNavigation class="footer-socials" />
   </footer>
 </template>
 
@@ -38,13 +38,33 @@ import CopyrightBar from '@/components/App/footer/CopyrightBar.vue'
   .footer {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: 1.25rem;
-    padding: 2rem 1rem;
+    gap: 0.85rem;
+    min-height: auto;
+    padding: 1.25rem 1rem;
     text-align: center;
   }
 
   .footer-logo {
     justify-self: center;
+  }
+
+  .footer-logo :deep(img) {
+    height: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    gap: 0.55rem;
+    padding: 1rem 0.875rem;
+  }
+
+  .footer-logo :deep(img) {
+    height: 3.35rem;
+  }
+
+  .footer-socials {
+    display: none;
   }
 }
 </style>

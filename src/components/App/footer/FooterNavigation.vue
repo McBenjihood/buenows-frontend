@@ -94,6 +94,15 @@ const { t } = useI18n()
 
   .socials {
     align-items: center;
+    gap: 0.45rem;
+  }
+
+  .socials-label {
+    display: none;
+  }
+
+  .socials-links img {
+    height: 1.35rem;
   }
 }
 </style>
