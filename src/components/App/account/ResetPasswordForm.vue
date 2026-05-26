@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import api from '@/services/api.ts'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const email = ref('')
 const otp = ref('')
@@ -72,7 +72,7 @@ async function handleRequestOtp() {
   isLoading.value = true
 
   try {
-    await api.post('/api/user/request-otp', { contact_information: trimmedEmail })
+    await api.post('/api/user/request-otp', { contact_information: trimmedEmail, language: locale.value })
     email.value = trimmedEmail
     step.value = 2
   } catch (error: any) {

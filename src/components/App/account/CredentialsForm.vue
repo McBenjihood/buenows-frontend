@@ -7,7 +7,7 @@ import api from '@/services/api.ts'
 
 const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const firstName = ref('')
 const lastName = ref('')
@@ -123,7 +123,7 @@ async function handleRequestOtp() {
   isLoading.value = true
 
   try {
-    await api.post('/api/user/request-otp', { contact_information: trimmedEmail })
+    await api.post('/api/user/request-otp', { contact_information: trimmedEmail, language: locale.value })
     step.value = 2
     return true
   } catch (error: any) {

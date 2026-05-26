@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import api, { getCurrentUserFromBackend, clearLocalAccessToken } from '@/services/api.ts'
+import { getCurrentUserFromBackend, clearLocalAccessToken, logoutAuth } from '@/services/api.ts'
 
 type AuthUser = {
   user_id?: string
@@ -57,7 +57,7 @@ export const authStore = reactive({
 
   async logout() {
     try {
-      await api.post('/api/user/auth/logout')
+      await logoutAuth()
     } catch (error) {
       console.error('Logout failed:', error)
     } finally {

@@ -122,9 +122,11 @@ async function confirmDelete(inquiryId: number) {
   deleteLoadingInquiryId.value = inquiryId
 
   try {
-    const response = await api.delete(
-      `/api/admin/inquiries/${encodeURIComponent(String(inquiryId))}`,
-    )
+    const response = await api.delete('/api/admin/inquiries/delete', {
+      data: {
+        inquiryID: inquiryId,
+      },
+    })
 
     deleteStage.value[inquiryId] = 0
 

@@ -24,8 +24,18 @@ const api = axios.create({
   },
 })
 
+const cookieAuthApi = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+})
+
 type RetryRequestConfig = InternalAxiosRequestConfig & {
   _retry?: boolean
+}
+
+type CsrfToken = {
+  headerName: string
+  token: string
 }
 
 let isRefreshing = false
@@ -45,6 +55,60 @@ const processQueue = (error: unknown = null) => {
   })
 
   refreshQueue = []
+}
+
+function getJwtFromResponseData(data: unknown): string | null {
+  if (!data || typeof data !== 'object') return null
+
+  const responseData = data as {
+    data?: {
+      JWT?: string
+      jwt?: string
+    }
+  }
+
+  return responseData.data?.JWT || responseData.data?.jwt || null
+}
+
+export async function getCsrfToken(): Promise<CsrfToken> {
+  const response = await cookieAuthApi.get('/api/user/auth/csrf')
+  const headerName = response.data?.data?.header_name
+  const token = response.data?.data?.token
+
+  if (!headerName || !token) {
+    throw new Error('CSRF token response is missing header_name or token.')
+  }
+
+  return {
+    headerName,
+    token,
+  }
+}
+
+export async function refreshAuth() {
+  const csrf = await getCsrfToken()
+  const response = await cookieAuthApi.post('/api/user/auth/refresh', undefined, {
+    headers: {
+      [csrf.headerName]: csrf.token,
+    },
+  })
+
+  const jwt = getJwtFromResponseData(response.data)
+  if (jwt) {
+    setLocalAccessToken(jwt)
+  }
+
+  return response
+}
+
+export async function logoutAuth() {
+  const csrf = await getCsrfToken()
+
+  await cookieAuthApi.post('/api/user/auth/logout', undefined, {
+    headers: {
+      [csrf.headerName]: csrf.token,
+    },
+  })
 }
 
 // Request Interceptor to automatically attach Bearer token
@@ -71,7 +135,7 @@ api.interceptors.response.use(
       url.includes('/api/user/auth/refresh')
 
     if (isAuthSuccessRoute && response.data?.successful) {
-      const jwt = response.data?.data?.JWT || response.data?.data?.jwt
+      const jwt = getJwtFromResponseData(response.data)
       if (jwt) {
         setLocalAccessToken(jwt)
       }
@@ -119,11 +183,10 @@ api.interceptors.response.use(
       isRefreshing = true
 
       try {
-        const refreshResponse = await api.post('/api/user/auth/refresh')
-        const newJwt = refreshResponse.data?.data?.JWT || refreshResponse.data?.data?.jwt
+        const refreshResponse = await refreshAuth()
+        const newJwt = getJwtFromResponseData(refreshResponse.data)
 
         if (newJwt) {
-          setLocalAccessToken(newJwt)
           if (originalRequest.headers) {
             originalRequest.headers['Authorization'] = `Bearer ${newJwt}`
           }

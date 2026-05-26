@@ -141,6 +141,10 @@ function getRoleClass(authorities: string[] = []) {
   return 'role-chip'
 }
 
+function toAdminRoleRequestRole(role: 'ROLE_USER' | 'ROLE_ADMIN') {
+  return role.replace('ROLE_', '')
+}
+
 async function loadUsers(showLoader = true) {
   if (showLoader) {
     isLoading.value = true
@@ -187,8 +191,9 @@ async function updateRole(userId: string, nextRole: 'ROLE_USER' | 'ROLE_ADMIN') 
   roleLoadingUserId.value = userId
 
   try {
-    const response = await api.put(`/api/admin/users/${encodeURIComponent(userId)}/role`, {
-      role: nextRole,
+    const response = await api.put('/api/admin/users/update-role', {
+      role: toAdminRoleRequestRole(nextRole),
+      userID: userId,
     })
 
     successMsg.value = response.data?.message || t('accountPage.roleUpdatedSuccess')
@@ -233,9 +238,10 @@ async function saveProfile(userId: string) {
       return
     }
 
-    const response = await api.put(`/api/admin/users/${encodeURIComponent(userId)}/profile`, {
+    const response = await api.put('/api/admin/users/update-profile', {
       first_name: trimmedFirstName,
       last_name: trimmedLastName,
+      userID: userId,
     })
 
     successMsg.value = response.data?.message || t('accountPage.userProfileUpdatedSuccess')
@@ -262,7 +268,11 @@ async function confirmDelete(userId: string) {
   deleteLoadingUserId.value = userId
 
   try {
-    const response = await api.delete(`/api/admin/users/${encodeURIComponent(userId)}`)
+    const response = await api.delete('/api/admin/users/delete', {
+      data: {
+        userID: userId,
+      },
+    })
 
     deleteStage.value[userId] = 0
 

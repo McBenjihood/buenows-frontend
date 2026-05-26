@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import api from '@/services/api.ts'
 import { authStore } from '@/services/auth.ts'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const router = useRouter()
 
 const email = ref('')
@@ -47,7 +47,7 @@ async function handleRequestOtp() {
   isLoading.value = true
 
   try {
-    await api.post('/api/user/request-otp', { contact_information: email.value })
+    await api.post('/api/user/request-otp', { contact_information: email.value, language: locale.value })
     step.value = 2
   } catch (error: any) {
     console.error('API Error:', error)
