@@ -7,6 +7,7 @@ import aboutIcon from '@/assets/img/icons/navbar/about_us.svg'
 import servicesIcon from '@/assets/img/icons/navbar/about_us.svg'
 import contactIcon from '@/assets/img/icons/navbar/contact.svg'
 import accountIcon from '@/assets/img/icons/navbar/account_circle.svg'
+import { syncDocumentLanguage, type SupportedLocale } from '@/i18n/index.ts'
 import { authStore } from '@/services/auth.ts'
 
 const route = useRoute()
@@ -28,12 +29,13 @@ function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value
 }
 
-function switchLanguage(lang: 'en' | 'de') {
+function switchLanguage(lang: SupportedLocale) {
   if (lang !== 'en' && lang !== 'de') {
     return
   }
 
   locale.value = lang
+  syncDocumentLanguage(lang)
 
   try {
     localStorage.setItem('locale', lang)

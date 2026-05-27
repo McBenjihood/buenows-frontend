@@ -42,22 +42,22 @@ async function submitForm() {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
   if (!emailPattern.test(trimmedEmail)) {
-    errorMsg.value = 'Bitte gib eine gültige E-Mail-Adresse ein.'
+    errorMsg.value = t('contactPage.invalidEmail')
     return
   }
 
   if (trimmedEmail.length > 254) {
-    errorMsg.value = 'Die E-Mail-Adresse ist zu lang.'
+    errorMsg.value = t('contactPage.emailTooLong')
     return
   }
 
   if (trimmedTitle.length > 100) {
-    errorMsg.value = 'Der Betreff ist zu lang.'
+    errorMsg.value = t('contactPage.subjectTooLong')
     return
   }
 
   if (trimmedMessage.length > 2000) {
-    errorMsg.value = 'Die Nachricht ist zu lang.'
+    errorMsg.value = t('contactPage.messageTooLong')
     return
   }
 

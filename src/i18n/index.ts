@@ -1,16 +1,18 @@
 import { createI18n } from 'vue-i18n'
 
-type SupportedLocale = 'en' | 'de'
+export type SupportedLocale = 'en' | 'de'
+
+export function resolveSupportedLocale(value: unknown): SupportedLocale {
+  return value === 'de' || value === 'en' ? value : 'en'
+}
+
+export function syncDocumentLanguage(locale: SupportedLocale): void {
+  document.documentElement.lang = locale
+}
 
 function getSavedLocale(): SupportedLocale {
   try {
-    const savedLocale = localStorage.getItem('locale')
-
-    if (savedLocale === 'en' || savedLocale === 'de') {
-      return savedLocale
-    }
-
-    return 'en'
+    return resolveSupportedLocale(localStorage.getItem('locale'))
   } catch (error) {
     console.error('Could not read saved locale:', error)
     return 'en'
@@ -18,6 +20,7 @@ function getSavedLocale(): SupportedLocale {
 }
 
 const savedLocale = getSavedLocale()
+syncDocumentLanguage(savedLocale)
 
 const messages = {
   en: {
@@ -309,6 +312,10 @@ const messages = {
       sendButton: 'Send request',
       successDefault: 'Thank you. Your request has been sent successfully.',
       errorDefault: 'Something went wrong while sending your message.',
+      invalidEmail: 'Please enter a valid email address.',
+      emailTooLong: 'The email address is too long.',
+      subjectTooLong: 'The subject is too long.',
+      messageTooLong: 'The message is too long.',
     },
     authPage: {
       loginTitle: 'Log in to your account',
@@ -742,6 +749,10 @@ const messages = {
       sendButton: 'Anfrage senden',
       successDefault: 'Vielen Dank. Ihre Anfrage wurde erfolgreich gesendet.',
       errorDefault: 'Beim Senden Ihrer Nachricht ist etwas schiefgelaufen.',
+      invalidEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+      emailTooLong: 'Die E-Mail-Adresse ist zu lang.',
+      subjectTooLong: 'Der Betreff ist zu lang.',
+      messageTooLong: 'Die Nachricht ist zu lang.',
     },
     authPage: {
       loginTitle: 'In Ihr Konto einloggen',

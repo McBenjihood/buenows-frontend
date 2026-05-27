@@ -1,42 +1,59 @@
-# SalesForce
+# Bueno Web Solutions Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 / Vite frontend for `bueno-ws.ch`.
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+Create `.env` from `.env.example`:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080
+VITE_CHATBOT_BASE_URL=http://localhost:3001
+```
+
+Production example:
+
+```env
+VITE_API_BASE_URL=https://api.bueno-ws.ch
+VITE_CHATBOT_BASE_URL=https://chat.bueno-ws.ch
+```
+
+`VITE_API_BASE_URL` is the main Bueno backend for auth and contact inquiries.
+`VITE_CHATBOT_BASE_URL` is the separate chatbot backend that serves `/widget.js`, `/widget.css`, `/api/session` and `/api/chat`.
+
+The OpenAI API key must stay only on the chatbot backend. It is never used in this frontend.
+
+## Development
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+## Checks
 
 ```sh
+npm run type-check
 npm run build
 ```
+
+## Chatbot integration
+
+The chatbot is loaded by `src/components/App/chatbot/ChatbotWidget.vue`.
+
+- The widget language follows the selected website language.
+- The chatbot backend keeps each session language fixed after session creation.
+- In local development, the widget defaults to `http://localhost:3001` if `VITE_CHATBOT_BASE_URL` is not set.
+- In production, set `VITE_CHATBOT_BASE_URL` explicitly.
+
+Required chatbot backend production settings:
+
+```env
+ALLOWED_ORIGINS=https://bueno-ws.ch,https://www.bueno-ws.ch
+RATE_LIMITS=active
+```
+
+Run the chatbot live hardtest against the deployed chatbot backend before launch.

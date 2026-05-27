@@ -51,6 +51,7 @@ const content = {
           'Registrierung und Login: E-Mail-Adresse, Vorname, Nachname, Rollen/Berechtigungen, Erstellungszeitpunkt und verschlüsselte Passwörter.',
           'Passwort-Reset und OTP: E-Mail-Adresse, einmaliger Bestätigungscode, Versuche, Ablaufzeit, Sperrfristen und verifizierter Token.',
           'Admin-Bereich: Kontaktanfragen und registrierte Nutzer, soweit zur Verwaltung erforderlich.',
+          'Website-Chatbot: eingegebene Chatnachrichten, gewählte Sprache, temporäre Session-ID und technische Anfrageinformationen. Inhalte können zur Antwortgenerierung an den eingesetzten KI-Anbieter verarbeitet werden.',
           'Technische Logs: IP-Adresse beziehungsweise technische Anfrageinformationen, Zeitpunkt, URL, Statuscode und Fehlerdaten, soweit für Betrieb und Sicherheit erforderlich.',
         ],
       },
@@ -60,6 +61,7 @@ const content = {
           'Beantwortung von Kontaktanfragen und Vorbereitung möglicher Projekte.',
           'Bereitstellung von Konto, Login, Registrierung, Passwort-Reset und Admin-Funktionen.',
           'Versand von Bestätigungs- und Passwort-Reset-E-Mails.',
+          'Bereitstellung des Website-Chatbots, Beantwortung von Fragen zu Bueno Web Solutions und Vorbereitung von Projektanfragen.',
           'Missbrauchsschutz, Rate-Limits, Sicherheit, Fehleranalyse und Betrieb der Website.',
           'Erfüllung vorvertraglicher, vertraglicher und gesetzlicher Pflichten, soweit anwendbar.',
         ],
@@ -78,6 +80,7 @@ const content = {
         items: [
           'Für Authentifizierung werden technisch notwendige HttpOnly-Cookies verwendet: access_token mit ca. 1 Stunde Laufzeit und refresh_token mit ca. 7 Tagen Laufzeit. Die Cookies sind Secure, SameSite=Lax und auf passende Pfade begrenzt.',
           'localStorage wird für die Spracheinstellung verwendet.',
+          'Der Chatbot verwendet localStorage für eine temporäre Session-ID und die feste Chat-Sprache. Die Chat-Sprache kann während einer laufenden Session nicht gewechselt werden.',
           'Zum Start werden keine Analytics, keine Werbepixel und keine Heatmaps eingesetzt.',
           'Google Fonts werden aktuell extern von Google geladen. Dabei können technische Verbindungsdaten an Google übermittelt werden.',
           'OTP- und Authentifizierungs-E-Mails werden über Gmail beziehungsweise Google-Dienste versendet.',
@@ -91,6 +94,7 @@ const content = {
           'Nutzerkonten bleiben bestehen, bis sie gelöscht werden oder eine weitere Aufbewahrung erforderlich ist.',
           'Access Tokens laufen nach ca. 1 Stunde ab, Refresh Tokens nach ca. 7 Tagen oder bei Logout.',
           'OTP-Codes laufen nach ca. 15 Minuten ab und werden nach Nutzung, Ablauf oder zu vielen Versuchen deaktiviert.',
+          'Chatbot-Sessions werden serverseitig temporär gehalten und nach Ablauf der Session-Frist gelöscht. Die lokale Session-ID wird entfernt, wenn der Chat beendet wird oder der Browser-Speicher gelöscht wird.',
           'Technische Logs werden grundsätzlich 14 Tage aufbewahrt.',
         ],
       },
@@ -105,6 +109,7 @@ const content = {
         title: 'Sicherheit',
         paragraphs: [
           'Wir setzen technische und organisatorische Massnahmen ein, darunter HTTPS, verschlüsselte Passwörter, HttpOnly-Cookies, rollenbasierte Zugriffe, Rate-Limits und eingeschränkte Datenbank-Erreichbarkeit. Absolute Sicherheit kann dennoch nicht garantiert werden.',
+          'Der Chatbot darf keine Passwörter, Zahlungsdaten, Ausweise oder privaten Dokumente anfordern. KI-Antworten können Fehler enthalten und ersetzen keine verbindliche Offerte, keinen Vertrag und keine Rechtsberatung.',
         ],
       },
       {
@@ -161,6 +166,7 @@ const content = {
           'Registration and login: email address, first name, last name, roles/permissions, creation time and hashed passwords.',
           'Password reset and OTP: email address, one-time verification code, attempts, expiry time, cooldowns and verified token.',
           'Admin area: contact inquiries and registered users where required for administration.',
+          'Website chatbot: entered chat messages, selected language, temporary session ID and technical request information. Content may be processed by the AI provider used to generate replies.',
           'Technical logs: IP address or technical request information, time, URL, status code and error data where required for operation and security.',
         ],
       },
@@ -170,6 +176,7 @@ const content = {
           'Responding to contact inquiries and preparing possible projects.',
           'Providing account, login, registration, password reset and admin functions.',
           'Sending verification and password reset emails.',
+          'Providing the website chatbot, answering questions about Bueno Web Solutions and preparing project inquiries.',
           'Abuse prevention, rate limits, security, error analysis and website operation.',
           'Meeting pre-contractual, contractual and legal obligations where applicable.',
         ],
@@ -188,6 +195,7 @@ const content = {
         items: [
           'Technically necessary HttpOnly cookies are used for authentication: access_token with about 1 hour lifetime and refresh_token with about 7 days lifetime. Cookies are Secure, SameSite=Lax and limited to appropriate paths.',
           'localStorage is used for the language preference.',
+          'The chatbot uses localStorage for a temporary session ID and the fixed chat language. The chat language cannot be changed during an active session.',
           'At launch, we do not use analytics, advertising pixels or heatmaps.',
           'Google Fonts are currently loaded externally from Google. Technical connection data may be transferred to Google.',
           'OTP and authentication emails are sent via Gmail or Google services.',
@@ -201,6 +209,7 @@ const content = {
           'User accounts remain until deleted or further retention is required.',
           'Access tokens expire after about 1 hour, refresh tokens after about 7 days or on logout.',
           'OTP codes expire after about 15 minutes and are disabled after use, expiry or too many attempts.',
+          'Chatbot sessions are stored temporarily on the server and deleted after the session period expires. The local session ID is removed when the chat ends or browser storage is cleared.',
           'Technical logs are generally retained for 14 days.',
         ],
       },
@@ -215,6 +224,7 @@ const content = {
         title: 'Security',
         paragraphs: [
           'We use technical and organizational measures, including HTTPS, hashed passwords, HttpOnly cookies, role-based access, rate limits and restricted database reachability. Absolute security cannot be guaranteed.',
+          'The chatbot must not request passwords, payment data, ID documents or private documents. AI replies may contain mistakes and do not replace a binding offer, contract or legal advice.',
         ],
       },
       {
