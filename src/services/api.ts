@@ -1,7 +1,7 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
 import i18n from '@/i18n/index.ts'
 
-const API_BASE_URL = 'http://localhost:8080'
+const API_BASE_URL = 'https://bu-70cb19fff2f04692a8b7ca8082d04c6a.ecs.eu-central-2.on.aws/'
 const TOKEN_KEY = 'access_token'
 
 export function getLocalAccessToken(): string | null {
