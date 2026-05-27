@@ -7,7 +7,7 @@ type ChatbotRegistry = Record<string, { destroy?: () => void }>
 type ChatbotWindow = Window & { BuenoWebsiteChatbots?: ChatbotRegistry }
 
 const rootId = 'bws-chatbot'
-const localChatbotBaseUrl = 'http://localhost:3001'
+const localBackendBaseUrl = 'http://localhost:8080'
 const chatbotBaseUrl = getChatbotBaseUrl()
 
 const { locale } = useI18n({ useScope: 'global' })
@@ -40,12 +40,17 @@ function reloadWidget(): void {
 
 function getChatbotBaseUrl(): string {
   const configuredBaseUrl = import.meta.env.VITE_CHATBOT_BASE_URL?.trim()
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
 
   if (configuredBaseUrl) {
     return configuredBaseUrl.replace(/\/$/, '')
   }
 
-  return import.meta.env.DEV ? localChatbotBaseUrl : ''
+  if (apiBaseUrl) {
+    return apiBaseUrl.replace(/\/$/, '')
+  }
+
+  return import.meta.env.DEV ? localBackendBaseUrl : ''
 }
 
 function loadWidget(): void {
@@ -75,14 +80,14 @@ function ensureRoot(): HTMLElement {
 function loadStylesheet(): void {
   stylesheetElement = document.createElement('link')
   stylesheetElement.rel = 'stylesheet'
-  stylesheetElement.href = `${chatbotBaseUrl}/widget.css`
+  stylesheetElement.href = `${chatbotBaseUrl}/chatbot/widget.css`
   stylesheetElement.dataset.bwsChatbotAsset = 'stylesheet'
   document.head.appendChild(stylesheetElement)
 }
 
 function loadScript(): void {
   scriptElement = document.createElement('script')
-  scriptElement.src = `${chatbotBaseUrl}/widget.js`
+  scriptElement.src = `${chatbotBaseUrl}/chatbot/widget.js`
   scriptElement.async = true
   scriptElement.dataset.apiBase = chatbotBaseUrl
   scriptElement.dataset.language = resolveSupportedLocale(locale.value)
