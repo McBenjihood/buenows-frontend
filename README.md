@@ -52,7 +52,11 @@ The chatbot is loaded by `src/components/App/chatbot/ChatbotWidget.vue`.
 Required chatbot backend production settings:
 
 ```env
-ALLOWED_ORIGINS=https://bueno-ws.ch,https://www.bueno-ws.ch
+APP_CORS_ALLOWED_ORIGINS=https://bueno-ws.ch,https://www.bueno-ws.ch
+APP_PUBLIC_BASE_URL=https://api.bueno-ws.ch
+APP_SECURITY_REQUIRE_HTTPS=true
+APP_TRUSTED_PROXY_CIDRS=loopback,private
+SERVER_FORWARD_HEADERS_STRATEGY=framework
 RATE_LIMITS=active
 ```
 
