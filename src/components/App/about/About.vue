@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import benjiImage from '@/assets/img/team/Benji_BuenoWS.png'
-import liamImage from '@/assets/img/team/Liam_BuenoWS.jpeg'
+import liamImage from '@/assets/img/team/Liam_BuenoWS.png'
 
 const { t } = useI18n()
 </script>
