@@ -1,7 +1,7 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
 import i18n from '@/i18n/index.ts'
 
-const API_BASE_URL = 'http://localhost:8080'
+const API_BASE_URL = 'https://api.bueno-ws.ch'
 const TOKEN_KEY = 'access_token'
 
 export function getLocalAccessToken(): string | null {
