@@ -379,6 +379,7 @@ const messages = {
       back: 'Back',
       reloadUsers: 'Reload users',
       reloadInquiries: 'Reload inquiries',
+      reloadChatbotConversations: 'Reload chatbot conversations',
       currentUser: 'you',
 
       loadingTitle: 'Loading',
@@ -389,6 +390,9 @@ const messages = {
       noJwt: 'No login token found.',
       profileError: 'Your profile could not be loaded.',
       inquiriesError: 'Contact inquiries could not be loaded.',
+      chatbotConversationsError: 'Chatbot conversations could not be loaded.',
+      chatbotConversationError: 'Chatbot conversation could not be loaded.',
+      chatbotCompaniesError: 'Chatbot companies could not be loaded.',
 
       editorTitle: 'Website editor',
       editorText:
@@ -411,6 +415,25 @@ const messages = {
       inquiryMessage: 'Message',
       inquiryCreated: 'Created',
 
+      chatbotConversationsTitle: 'Chatbot conversations',
+      chatbotConversationsText:
+        'View stored chatbot conversations for quality review and delete entries when they are no longer needed.',
+      chatbotConversationsLoading: 'Loading chatbot conversations ...',
+      chatbotConversationsEmpty: 'No chatbot conversations found.',
+      chatbotCompanyLabel: 'Company',
+      chatbotNoPreview: 'No preview available',
+      chatbotMessagesLabel: 'messages',
+      chatbotStatusLabel: 'Status',
+      chatbotCreated: 'Created',
+      chatbotExpires: 'Deletes automatically',
+      chatbotConversationLoading: 'Loading conversation ...',
+      chatbotUser: 'User',
+      chatbotAssistant: 'Assistant',
+      chatbotStatusActive: 'Active',
+      chatbotStatusCompleted: 'Completed',
+      chatbotStatusRejected: 'Rejected',
+      chatbotStatusError: 'Error',
+
       actionsTitle: 'Account actions',
       actionsText: 'Log out of your account safely.',
       logout: 'Log out',
@@ -426,6 +449,7 @@ const messages = {
 
       usersOpenButton: 'Open user management',
       inquiriesOpenButton: 'Open inquiries',
+      chatbotConversationsOpenButton: 'Open chatbot conversations',
 
       makeAdmin: 'Make admin',
       makeUser: 'Make standard user',
@@ -447,6 +471,11 @@ const messages = {
       deleteInquiryWarning: 'This action can permanently remove the inquiry.',
       deleteInquiryError: 'Inquiry could not be deleted.',
       inquiryDeletedSuccess: 'Inquiry deleted successfully.',
+      deleteChatbotConversation: 'Delete conversation',
+      deleteChatbotConversationWarning:
+        'This action permanently removes the selected chatbot conversation and its messages.',
+      deleteChatbotConversationError: 'Chatbot conversation could not be deleted.',
+      chatbotConversationDeletedSuccess: 'Chatbot conversation deleted successfully.',
       selfAdminDeleteError: 'You cannot delete your own admin account.',
       selfRoleChangeError: 'You cannot change your own account to a standard user.',
       userFullNameRequired: 'First name and last name must not be empty.',
@@ -818,6 +847,7 @@ const messages = {
       back: 'Zurück',
       reloadUsers: 'Benutzer neu laden',
       reloadInquiries: 'Anfragen neu laden',
+      reloadChatbotConversations: 'Chatbot-Gespräche neu laden',
       currentUser: 'Sie',
 
       loadingTitle: 'Laden',
@@ -828,6 +858,9 @@ const messages = {
       noJwt: 'Kein Login-Token gefunden.',
       profileError: 'Ihr Profil konnte nicht geladen werden.',
       inquiriesError: 'Kontaktanfragen konnten nicht geladen werden.',
+      chatbotConversationsError: 'Chatbot-Gespräche konnten nicht geladen werden.',
+      chatbotConversationError: 'Chatbot-Gespräch konnte nicht geladen werden.',
+      chatbotCompaniesError: 'Chatbot-Betriebe konnten nicht geladen werden.',
 
       editorTitle: 'Website-Editor',
       editorText:
@@ -850,6 +883,25 @@ const messages = {
       inquiryMessage: 'Nachricht',
       inquiryCreated: 'Erstellt',
 
+      chatbotConversationsTitle: 'Chatbot-Gespräche',
+      chatbotConversationsText:
+        'Gespeicherte Chatbot-Gespräche zur Qualitätskontrolle ansehen und Einträge löschen, wenn sie nicht mehr benötigt werden.',
+      chatbotConversationsLoading: 'Chatbot-Gespräche werden geladen ...',
+      chatbotConversationsEmpty: 'Keine Chatbot-Gespräche gefunden.',
+      chatbotCompanyLabel: 'Betrieb',
+      chatbotNoPreview: 'Keine Vorschau vorhanden',
+      chatbotMessagesLabel: 'Nachrichten',
+      chatbotStatusLabel: 'Status',
+      chatbotCreated: 'Erstellt',
+      chatbotExpires: 'Automatische Löschung',
+      chatbotConversationLoading: 'Gespräch wird geladen ...',
+      chatbotUser: 'Nutzer',
+      chatbotAssistant: 'Assistent',
+      chatbotStatusActive: 'Aktiv',
+      chatbotStatusCompleted: 'Abgeschlossen',
+      chatbotStatusRejected: 'Abgelehnt',
+      chatbotStatusError: 'Fehler',
+
       actionsTitle: 'Konto-Aktionen',
       actionsText: 'Melden Sie sich sicher von Ihrem Konto ab.',
       logout: 'Ausloggen',
@@ -865,6 +917,7 @@ const messages = {
 
       usersOpenButton: 'Benutzerverwaltung öffnen',
       inquiriesOpenButton: 'Anfragen öffnen',
+      chatbotConversationsOpenButton: 'Chatbot-Gespräche öffnen',
 
       makeAdmin: 'Zu Admin machen',
       makeUser: 'Zu normalem Benutzer machen',
@@ -886,6 +939,11 @@ const messages = {
       deleteInquiryWarning: 'Diese Aktion kann die Anfrage dauerhaft löschen.',
       deleteInquiryError: 'Anfrage konnte nicht gelöscht werden.',
       inquiryDeletedSuccess: 'Anfrage erfolgreich gelöscht.',
+      deleteChatbotConversation: 'Gespräch löschen',
+      deleteChatbotConversationWarning:
+        'Diese Aktion löscht das ausgewählte Chatbot-Gespräch und alle Nachrichten dauerhaft.',
+      deleteChatbotConversationError: 'Chatbot-Gespräch konnte nicht gelöscht werden.',
+      chatbotConversationDeletedSuccess: 'Chatbot-Gespräch erfolgreich gelöscht.',
       selfAdminDeleteError: 'Sie können Ihren eigenen Admin-Account nicht löschen.',
       selfRoleChangeError:
         'Sie können Ihren eigenen Account nicht zu einem normalen Benutzer machen.',

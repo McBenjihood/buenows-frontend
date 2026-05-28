@@ -89,6 +89,15 @@ const router = createRouter({
       },
     },
     {
+      path: '/account/admin/chatbot',
+      name: 'AdminChatbotConversations',
+      component: () => import('@/views/AdminChatbotConversationsView.vue'),
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true,
+      },
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('@/views/NotFoundView.vue'),

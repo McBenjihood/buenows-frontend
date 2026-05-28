@@ -31,6 +31,10 @@ const openInquiries = async () => {
   await router.push('/account/admin/inquiries')
 }
 
+const openChatbotConversations = async () => {
+  await router.push('/account/admin/chatbot')
+}
+
 async function handleLogout() {
   if (isLogoutLoading.value) {
     return
@@ -116,6 +120,14 @@ onMounted(async () => {
           <p>{{ t('accountPage.inquiriesText') }}</p>
           <button class="primary-button" @click="openInquiries">
             {{ t('accountPage.inquiriesOpenButton') }}
+          </button>
+        </div>
+
+        <div v-if="isAdmin" class="card">
+          <h2>{{ t('accountPage.chatbotConversationsTitle') }}</h2>
+          <p>{{ t('accountPage.chatbotConversationsText') }}</p>
+          <button class="primary-button" @click="openChatbotConversations">
+            {{ t('accountPage.chatbotConversationsOpenButton') }}
           </button>
         </div>
 
