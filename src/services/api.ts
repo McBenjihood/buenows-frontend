@@ -3,19 +3,33 @@ import i18n from '@/i18n/index.ts'
 
 const DEFAULT_API_BASE_URL = 'https://api.bueno-ws.ch'
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/$/, '')
-const TOKEN_KEY = 'access_token'
+const LEGACY_TOKEN_KEY = 'access_token'
+
+let accessToken: string | null = null
 
 export function getLocalAccessToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY)
+  return accessToken
 }
 
 export function setLocalAccessToken(token: string): void {
-  localStorage.setItem(TOKEN_KEY, token)
+  accessToken = token
+  clearLegacyStoredAccessToken()
 }
 
 export function clearLocalAccessToken(): void {
-  localStorage.removeItem(TOKEN_KEY)
+  accessToken = null
+  clearLegacyStoredAccessToken()
 }
+
+function clearLegacyStoredAccessToken(): void {
+  try {
+    localStorage.removeItem(LEGACY_TOKEN_KEY)
+  } catch {
+    // Auth still works with the HttpOnly refresh cookie.
+  }
+}
+
+clearLegacyStoredAccessToken()
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -56,6 +70,35 @@ const processQueue = (error: unknown = null) => {
   })
 
   refreshQueue = []
+}
+
+function getRetryAfterSeconds(error: any): number | null {
+  const value = error.response?.data?.retryAfter ?? error.response?.data?.retry_after ?? error.response?.headers?.['retry-after']
+  const seconds = Number(value)
+  return Number.isFinite(seconds) && seconds > 0 ? Math.ceil(seconds) : null
+}
+
+function formatRetryAfter(seconds: number): string {
+  const locale = String(i18n.global.locale.value)
+  if (seconds < 60) {
+    return locale === 'de' ? `Bitte in ${seconds} Sekunden erneut versuchen.` : `Please try again in ${seconds} seconds.`
+  }
+
+  const minutes = Math.ceil(seconds / 60)
+  return locale === 'de' ? `Bitte in ${minutes} Minuten erneut versuchen.` : `Please try again in ${minutes} minutes.`
+}
+
+function buildRateLimitMessage(error: any): string {
+  const data = error.response?.data
+  const fallback = i18n.global.t('authPage.rateLimited')
+  const baseMessage = data?.message || data?.error || fallback
+  const retryAfter = getRetryAfterSeconds(error)
+
+  if (!retryAfter) {
+    return baseMessage
+  }
+
+  return `${baseMessage} ${formatRetryAfter(retryAfter)}`
 }
 
 function getJwtFromResponseData(data: unknown): string | null {
@@ -156,7 +199,7 @@ api.interceptors.response.use(
     if (status === 429) {
       if (!error.response) error.response = {}
       if (!error.response.data) error.response.data = {}
-      error.response.data.message = i18n.global.t('authPage.rateLimited')
+      error.response.data.message = buildRateLimitMessage(error)
       return Promise.reject(error)
     }
 

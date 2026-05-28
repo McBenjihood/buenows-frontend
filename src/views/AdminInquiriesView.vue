@@ -14,6 +14,9 @@ const reloadLoading = ref(false)
 const deleteLoadingInquiryId = ref<number | null>(null)
 const openInquiryId = ref<number | null>(null)
 const deleteStage = ref<Record<number, number>>({})
+const currentPage = ref(0)
+const pageSize = 20
+const hasNextPage = ref(false)
 
 const inquiries = ref<
   {
@@ -88,8 +91,23 @@ async function loadInquiries(showLoader = true) {
   errorMsg.value = ''
 
   try {
-    const response = await api.get('/api/admin/inquiries')
-    inquiries.value = response.data?.data ?? []
+    const response = await api.get('/api/admin/inquiries', {
+      params: {
+        page: currentPage.value,
+        size: pageSize + 1,
+      },
+    })
+    const loadedInquiries = response.data?.data ?? []
+
+    if (!loadedInquiries.length && currentPage.value > 0) {
+      currentPage.value -= 1
+      await loadInquiries(false)
+      return
+    }
+
+    inquiries.value = loadedInquiries.slice(0, pageSize)
+    hasNextPage.value = loadedInquiries.length > pageSize
+    openInquiryId.value = null
   } catch (error: any) {
     console.error('Error loading inquiries:', error)
     errorMsg.value = error.response?.data?.message || t('accountPage.inquiriesError')
@@ -102,6 +120,18 @@ async function loadInquiries(showLoader = true) {
 async function reloadInquiries() {
   errorMsg.value = ''
   successMsg.value = ''
+  await loadInquiries(false)
+}
+
+async function goToPreviousPage() {
+  if (currentPage.value <= 0 || reloadLoading.value) return
+  currentPage.value -= 1
+  await loadInquiries(false)
+}
+
+async function goToNextPage() {
+  if (!hasNextPage.value || reloadLoading.value) return
+  currentPage.value += 1
   await loadInquiries(false)
 }
 
@@ -122,11 +152,7 @@ async function confirmDelete(inquiryId: number) {
   deleteLoadingInquiryId.value = inquiryId
 
   try {
-    const response = await api.delete('/api/admin/inquiries/delete', {
-      data: {
-        inquiryID: inquiryId,
-      },
-    })
+    const response = await api.delete(`/api/admin/inquiries/${inquiryId}`)
 
     deleteStage.value[inquiryId] = 0
 
@@ -263,6 +289,16 @@ onMounted(async () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="pagination-row">
+          <button class="secondary-button" :disabled="currentPage === 0 || reloadLoading" @click="goToPreviousPage">
+            &larr;
+          </button>
+          <span>{{ currentPage + 1 }}</span>
+          <button class="secondary-button" :disabled="!hasNextPage || reloadLoading" @click="goToNextPage">
+            &rarr;
+          </button>
         </div>
       </div>
     </div>
@@ -552,6 +588,16 @@ onMounted(async () => {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.85rem;
+}
+
+.pagination-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  color: #d0d0d0;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {

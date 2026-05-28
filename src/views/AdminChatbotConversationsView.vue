@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import api from '@/services/api.ts'
@@ -46,11 +46,15 @@ const openConversationId = ref<string | null>(null)
 const loadingDetailId = ref<string | null>(null)
 const deleteLoadingConversationId = ref<string | null>(null)
 const selectedCompanyKey = ref('')
+const currentPage = ref(0)
+const pageSize = 20
+const hasNextPage = ref(false)
 
 const deleteStage = ref<Record<string, number>>({})
 const detailsById = reactive<Record<string, ChatbotConversationDetail | undefined>>({})
 const companies = ref<ChatbotCompany[]>([])
 const conversations = ref<ChatbotConversationSummary[]>([])
+const visibleConversations = computed(() => conversations.value.slice(0, pageSize))
 
 async function goBack() {
   await router.push('/account')
@@ -111,6 +115,7 @@ async function loadCompanies() {
 async function loadConversations(showLoader = true) {
   if (!selectedCompanyKey.value) {
     conversations.value = []
+    hasNextPage.value = false
     return
   }
 
@@ -126,9 +131,20 @@ async function loadConversations(showLoader = true) {
     const response = await api.get('/api/admin/chatbot/conversations', {
       params: {
         companyKey: selectedCompanyKey.value,
+        page: currentPage.value,
+        size: pageSize + 1,
       },
     })
-    conversations.value = response.data?.data ?? []
+    const loadedConversations = response.data?.data ?? []
+
+    if (!loadedConversations.length && currentPage.value > 0) {
+      currentPage.value -= 1
+      await loadConversations(false)
+      return
+    }
+
+    conversations.value = loadedConversations.slice(0, pageSize)
+    hasNextPage.value = loadedConversations.length > pageSize
     openConversationId.value = null
   } catch (error: any) {
     console.error('Error loading chatbot conversations:', error)
@@ -174,6 +190,18 @@ async function reloadConversations() {
   await loadConversations(false)
 }
 
+async function goToPreviousPage() {
+  if (currentPage.value <= 0 || reloadLoading.value) return
+  currentPage.value -= 1
+  await loadConversations(false)
+}
+
+async function goToNextPage() {
+  if (!hasNextPage.value || reloadLoading.value) return
+  currentPage.value += 1
+  await loadConversations(false)
+}
+
 async function confirmDelete(conversationId: string) {
   successMsg.value = ''
   errorMsg.value = ''
@@ -200,6 +228,7 @@ async function confirmDelete(conversationId: string) {
 
 watch(selectedCompanyKey, async (current, previous) => {
   if (current && previous && current !== previous) {
+    currentPage.value = 0
     await loadConversations(false)
   }
 })
@@ -273,7 +302,7 @@ onMounted(async () => {
 
       <div v-else class="list">
         <div
-          v-for="conversation in conversations"
+          v-for="conversation in visibleConversations"
           :key="conversation.conversation_id"
           class="accordion-item"
         >
@@ -378,6 +407,16 @@ onMounted(async () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="pagination-row">
+          <button class="secondary-button" :disabled="currentPage === 0 || reloadLoading" @click="goToPreviousPage">
+            &larr;
+          </button>
+          <span>{{ currentPage + 1 }}</span>
+          <button class="secondary-button" :disabled="!hasNextPage || reloadLoading" @click="goToNextPage">
+            &rarr;
+          </button>
         </div>
       </div>
     </div>
@@ -720,6 +759,16 @@ onMounted(async () => {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.85rem;
+}
+
+.pagination-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  color: #d0d0d0;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {

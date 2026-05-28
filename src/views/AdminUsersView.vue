@@ -16,6 +16,9 @@ const roleLoadingUserId = ref<string | null>(null)
 const deleteLoadingUserId = ref<string | null>(null)
 const saveLoadingUserId = ref<string | null>(null)
 const reloadLoading = ref(false)
+const currentPage = ref(0)
+const pageSize = 20
+const hasNextPage = ref(false)
 
 const deleteStage = ref<Record<string, number>>({})
 const editMode = ref<Record<string, boolean>>({})
@@ -155,8 +158,23 @@ async function loadUsers(showLoader = true) {
   errorMsg.value = ''
 
   try {
-    const response = await api.get('/api/admin/users')
-    adminUsers.value = response.data?.data ?? []
+    const response = await api.get('/api/admin/users', {
+      params: {
+        page: currentPage.value,
+        size: pageSize + 1,
+      },
+    })
+    const loadedUsers = response.data?.data ?? []
+
+    if (!loadedUsers.length && currentPage.value > 0) {
+      currentPage.value -= 1
+      await loadUsers(false)
+      return
+    }
+
+    adminUsers.value = loadedUsers.slice(0, pageSize)
+    hasNextPage.value = loadedUsers.length > pageSize
+    openUserId.value = null
 
     for (const user of adminUsers.value) {
       editFields[user.user_id] = {
@@ -176,6 +194,18 @@ async function loadUsers(showLoader = true) {
 async function reloadUsers() {
   successMsg.value = ''
   errorMsg.value = ''
+  await loadUsers(false)
+}
+
+async function goToPreviousPage() {
+  if (currentPage.value <= 0 || reloadLoading.value) return
+  currentPage.value -= 1
+  await loadUsers(false)
+}
+
+async function goToNextPage() {
+  if (!hasNextPage.value || reloadLoading.value) return
+  currentPage.value += 1
   await loadUsers(false)
 }
 
@@ -268,11 +298,7 @@ async function confirmDelete(userId: string) {
   deleteLoadingUserId.value = userId
 
   try {
-    const response = await api.delete('/api/admin/users/delete', {
-      data: {
-        userID: userId,
-      },
-    })
+    const response = await api.delete(`/api/admin/users/${userId}`)
 
     deleteStage.value[userId] = 0
 
@@ -482,6 +508,16 @@ onMounted(async () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="pagination-row">
+          <button class="secondary-button" :disabled="currentPage === 0 || reloadLoading" @click="goToPreviousPage">
+            &larr;
+          </button>
+          <span>{{ currentPage + 1 }}</span>
+          <button class="secondary-button" :disabled="!hasNextPage || reloadLoading" @click="goToNextPage">
+            &rarr;
+          </button>
         </div>
       </div>
     </div>
@@ -834,6 +870,16 @@ onMounted(async () => {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.85rem;
+}
+
+.pagination-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  color: #d0d0d0;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {
