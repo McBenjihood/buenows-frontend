@@ -20,22 +20,43 @@ const currentPage = ref(0)
 const pageSize = 20
 const hasNextPage = ref(false)
 
+type PageResponse<T> = {
+  items: T[]
+  page: number
+  size: number
+  has_next: boolean
+}
+
+type AdminUser = {
+  user_id: string
+  email: string
+  first_name: string | null
+  last_name: string | null
+  authorities: string[]
+  created_at: string | null
+}
+
 const deleteStage = ref<Record<string, number>>({})
 const editMode = ref<Record<string, boolean>>({})
 const editFields = reactive<Record<string, { first_name: string; last_name: string }>>({})
 
 const currentUserId = computed(() => authStore.user?.user_id ?? null)
 
-const adminUsers = ref<
-  {
-    user_id: string
-    email: string
-    first_name: string | null
-    last_name: string | null
-    authorities: string[]
-    created_at: string | null
-  }[]
->([])
+const adminUsers = ref<AdminUser[]>([])
+
+function readPageResponse<T>(payload: unknown): PageResponse<T> {
+  if (payload && typeof payload === 'object' && Array.isArray((payload as PageResponse<T>).items)) {
+    return payload as PageResponse<T>
+  }
+
+  const items = Array.isArray(payload) ? (payload as T[]) : []
+  return {
+    items: items.slice(0, pageSize),
+    page: currentPage.value,
+    size: pageSize,
+    has_next: items.length > pageSize,
+  }
+}
 
 async function goBack() {
   await router.push('/account')
@@ -161,10 +182,11 @@ async function loadUsers(showLoader = true) {
     const response = await api.get('/api/admin/users', {
       params: {
         page: currentPage.value,
-        size: pageSize + 1,
+        size: pageSize,
       },
     })
-    const loadedUsers = response.data?.data ?? []
+    const pageData = readPageResponse<AdminUser>(response.data?.data)
+    const loadedUsers = pageData.items
 
     if (!loadedUsers.length && currentPage.value > 0) {
       currentPage.value -= 1
@@ -172,8 +194,8 @@ async function loadUsers(showLoader = true) {
       return
     }
 
-    adminUsers.value = loadedUsers.slice(0, pageSize)
-    hasNextPage.value = loadedUsers.length > pageSize
+    adminUsers.value = loadedUsers
+    hasNextPage.value = pageData.has_next
     openUserId.value = null
 
     for (const user of adminUsers.value) {

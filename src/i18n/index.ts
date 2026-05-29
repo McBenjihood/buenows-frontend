@@ -299,6 +299,8 @@ const messages = {
         'Tell us what your business does, what you need and what your current website or process looks like. A short description is enough to start.',
 
       formTitle: 'Request a project',
+      chatbotDraftLoaded:
+        'Project details from the chatbot were added. Please review them before submitting.',
       emailLabel: 'Your email',
       emailPlaceholder: "name{'@'}company.com",
       subjectLabel: 'What do you need?',
@@ -765,6 +767,8 @@ const messages = {
         'Sagen Sie uns kurz, was Ihr Unternehmen macht, was Sie brauchen und wie Ihre aktuelle Website oder Ihr aktueller Ablauf aussieht. Eine kurze Beschreibung reicht für den Start.',
 
       formTitle: 'Projekt anfragen',
+      chatbotDraftLoaded:
+        'Die Projektangaben aus dem Chatbot wurden übernommen. Bitte prüfen Sie sie vor dem Absenden.',
       emailLabel: 'Ihre E-Mail',
       emailPlaceholder: "name{'@'}firma.ch",
       subjectLabel: 'Was brauchen Sie?',

@@ -1,9 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import api from '@/services/api.ts'
 
 const { t } = useI18n()
+const contactDraftStorageKey = 'bws_contact_form_draft'
+const contactDraftMaxAgeMs = 30 * 60 * 1000
+
+type ContactFormDraft = {
+  email?: string
+  title?: string
+  message?: string
+  createdAt?: string
+}
+
+type NormalizedContactDraft = {
+  email: string
+  title: string
+  message: string
+}
 
 const email = ref('')
 const title = ref('')
@@ -17,6 +32,66 @@ const website = ref('')
 const isLoading = ref(false)
 const successMsg = ref('')
 const errorMsg = ref('')
+const infoMsg = ref('')
+
+onMounted(loadChatbotDraft)
+
+function loadChatbotDraft() {
+  const rawDraft = readAndClearContactDraft()
+
+  if (!rawDraft || isExpiredDraft(rawDraft)) {
+    return
+  }
+
+  const draft = normalizeContactDraft(rawDraft)
+
+  if (!draft.email && !draft.title && !draft.message) {
+    return
+  }
+
+  if (draft.email) email.value = draft.email
+  if (draft.title) title.value = draft.title
+  if (draft.message) message.value = draft.message
+
+  infoMsg.value = t('contactPage.chatbotDraftLoaded')
+}
+
+function readAndClearContactDraft(): ContactFormDraft | null {
+  try {
+    const storedDraft = window.sessionStorage.getItem(contactDraftStorageKey)
+    window.sessionStorage.removeItem(contactDraftStorageKey)
+
+    if (!storedDraft) {
+      return null
+    }
+
+    const parsedDraft = JSON.parse(storedDraft)
+    return parsedDraft && typeof parsedDraft === 'object' ? parsedDraft : null
+  } catch {
+    return null
+  }
+}
+
+function isExpiredDraft(draft: ContactFormDraft) {
+  const createdAt = Date.parse(String(draft.createdAt || ''))
+
+  return Number.isFinite(createdAt) && Date.now() - createdAt > contactDraftMaxAgeMs
+}
+
+function normalizeContactDraft(draft: ContactFormDraft): NormalizedContactDraft {
+  return {
+    email: cleanDraftText(draft.email, 254),
+    title: cleanDraftText(draft.title, 100),
+    message: cleanDraftText(draft.message, 2000),
+  }
+}
+
+function cleanDraftText(value: unknown, maxLength: number) {
+  return String(value || '')
+    .replace(/\u0000/g, '')
+    .trim()
+    .slice(0, maxLength)
+}
 
 async function submitForm() {
   successMsg.value = ''
@@ -76,6 +151,7 @@ async function submitForm() {
     title.value = ''
     message.value = ''
     website.value = ''
+    infoMsg.value = ''
   } catch (error: any) {
     console.error('Error sending contact form:', error)
     errorMsg.value = error.response?.data?.message || t('contactPage.errorDefault')
@@ -122,6 +198,7 @@ async function submitForm() {
 
         <div class="form-card">
           <h2>{{ t('contactPage.formTitle') }}</h2>
+          <p v-if="infoMsg" class="info-message">{{ infoMsg }}</p>
 
           <form class="contact-form" @submit.prevent="submitForm">
             <input
@@ -353,6 +430,17 @@ async function submitForm() {
 .error-message {
   margin: 0;
   color: #ff7b7b;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.info-message {
+  margin: 0 0 1.25rem;
+  padding: 0.9rem 1rem;
+  color: #dff8ed;
+  background: rgba(66, 184, 131, 0.14);
+  border: 1px solid rgba(66, 184, 131, 0.32);
+  border-radius: 10px;
   font-weight: 600;
   line-height: 1.5;
 }

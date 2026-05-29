@@ -78,9 +78,10 @@ const content = {
       {
         title: 'Cookies, localStorage und externe Dienste',
         items: [
-          'Für Authentifizierung werden technisch notwendige HttpOnly-Cookies verwendet: access_token mit ca. 1 Stunde Laufzeit und refresh_token mit ca. 7 Tagen Laufzeit. Die Cookies sind Secure, SameSite=Lax und auf passende Pfade begrenzt.',
+          'Für Authentifizierung wird ein technisch notwendiges HttpOnly-Cookie für den refresh_token mit ca. 7 Tagen Laufzeit verwendet. Der kurzlebige Access Token wird vom Frontend nur im Arbeitsspeicher gehalten und nicht dauerhaft im Browser gespeichert.',
           'localStorage wird für die Spracheinstellung verwendet.',
           'Der Chatbot verwendet localStorage für eine temporäre Session-ID und die feste Chat-Sprache. Die Chat-Sprache kann während einer laufenden Session nicht gewechselt werden.',
+          'Wenn der Chatbot eine Projektanfrage vorbereitet, können die vorbereiteten Formularangaben kurzzeitig in sessionStorage gespeichert werden, damit das Kontaktformular vorausgefüllt werden kann.',
           'Zum Start werden keine Analytics, keine Werbepixel und keine Heatmaps eingesetzt.',
           'Google Fonts werden aktuell extern von Google geladen. Dabei können technische Verbindungsdaten an Google übermittelt werden.',
           'OTP- und Authentifizierungs-E-Mails werden über Gmail beziehungsweise Google-Dienste versendet.',
@@ -193,9 +194,10 @@ const content = {
       {
         title: 'Cookies, localStorage and external services',
         items: [
-          'Technically necessary HttpOnly cookies are used for authentication: access_token with about 1 hour lifetime and refresh_token with about 7 days lifetime. Cookies are Secure, SameSite=Lax and limited to appropriate paths.',
+          'A technically necessary HttpOnly cookie is used for authentication for the refresh_token with about 7 days lifetime. The short-lived access token is kept by the frontend only in memory and is not stored permanently in the browser.',
           'localStorage is used for the language preference.',
           'The chatbot uses localStorage for a temporary session ID and the fixed chat language. The chat language cannot be changed during an active session.',
+          'When the chatbot prepares a project inquiry, the prepared form details may be stored briefly in sessionStorage so the contact form can be prefilled.',
           'At launch, we do not use analytics, advertising pixels or heatmaps.',
           'Google Fonts are currently loaded externally from Google. Technical connection data may be transferred to Google.',
           'OTP and authentication emails are sent via Gmail or Google services.',

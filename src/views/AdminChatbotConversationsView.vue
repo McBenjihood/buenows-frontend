@@ -35,6 +35,13 @@ type ChatbotConversationDetail = ChatbotConversationSummary & {
   messages: ChatbotMessage[]
 }
 
+type PageResponse<T> = {
+  items: T[]
+  page: number
+  size: number
+  has_next: boolean
+}
+
 const { t, locale } = useI18n()
 const router = useRouter()
 
@@ -55,6 +62,20 @@ const detailsById = reactive<Record<string, ChatbotConversationDetail | undefine
 const companies = ref<ChatbotCompany[]>([])
 const conversations = ref<ChatbotConversationSummary[]>([])
 const visibleConversations = computed(() => conversations.value.slice(0, pageSize))
+
+function readPageResponse<T>(payload: unknown): PageResponse<T> {
+  if (payload && typeof payload === 'object' && Array.isArray((payload as PageResponse<T>).items)) {
+    return payload as PageResponse<T>
+  }
+
+  const items = Array.isArray(payload) ? (payload as T[]) : []
+  return {
+    items: items.slice(0, pageSize),
+    page: currentPage.value,
+    size: pageSize,
+    has_next: items.length > pageSize,
+  }
+}
 
 async function goBack() {
   await router.push('/account')
@@ -132,10 +153,11 @@ async function loadConversations(showLoader = true) {
       params: {
         companyKey: selectedCompanyKey.value,
         page: currentPage.value,
-        size: pageSize + 1,
+        size: pageSize,
       },
     })
-    const loadedConversations = response.data?.data ?? []
+    const pageData = readPageResponse<ChatbotConversationSummary>(response.data?.data)
+    const loadedConversations = pageData.items
 
     if (!loadedConversations.length && currentPage.value > 0) {
       currentPage.value -= 1
@@ -143,8 +165,8 @@ async function loadConversations(showLoader = true) {
       return
     }
 
-    conversations.value = loadedConversations.slice(0, pageSize)
-    hasNextPage.value = loadedConversations.length > pageSize
+    conversations.value = loadedConversations
+    hasNextPage.value = pageData.has_next
     openConversationId.value = null
   } catch (error: any) {
     console.error('Error loading chatbot conversations:', error)

@@ -18,15 +18,36 @@ const currentPage = ref(0)
 const pageSize = 20
 const hasNextPage = ref(false)
 
-const inquiries = ref<
-  {
-    inquiry_id: number
-    email: string
-    title: string
-    message: string
-    created_at: string | null
-  }[]
->([])
+type PageResponse<T> = {
+  items: T[]
+  page: number
+  size: number
+  has_next: boolean
+}
+
+type Inquiry = {
+  inquiry_id: number
+  email: string
+  title: string
+  message: string
+  created_at: string | null
+}
+
+const inquiries = ref<Inquiry[]>([])
+
+function readPageResponse<T>(payload: unknown): PageResponse<T> {
+  if (payload && typeof payload === 'object' && Array.isArray((payload as PageResponse<T>).items)) {
+    return payload as PageResponse<T>
+  }
+
+  const items = Array.isArray(payload) ? (payload as T[]) : []
+  return {
+    items: items.slice(0, pageSize),
+    page: currentPage.value,
+    size: pageSize,
+    has_next: items.length > pageSize,
+  }
+}
 
 async function goBack() {
   await router.push('/account')
@@ -94,10 +115,11 @@ async function loadInquiries(showLoader = true) {
     const response = await api.get('/api/admin/inquiries', {
       params: {
         page: currentPage.value,
-        size: pageSize + 1,
+        size: pageSize,
       },
     })
-    const loadedInquiries = response.data?.data ?? []
+    const pageData = readPageResponse<Inquiry>(response.data?.data)
+    const loadedInquiries = pageData.items
 
     if (!loadedInquiries.length && currentPage.value > 0) {
       currentPage.value -= 1
@@ -105,8 +127,8 @@ async function loadInquiries(showLoader = true) {
       return
     }
 
-    inquiries.value = loadedInquiries.slice(0, pageSize)
-    hasNextPage.value = loadedInquiries.length > pageSize
+    inquiries.value = loadedInquiries
+    hasNextPage.value = pageData.has_next
     openInquiryId.value = null
   } catch (error: any) {
     console.error('Error loading inquiries:', error)
